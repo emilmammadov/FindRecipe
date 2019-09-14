@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "772283787028",
+    "firebase_url": "https://find-recipe-5e567.firebaseio.com",
+    "project_id": "find-recipe-5e567",
+    "storage_bucket": "find-recipe-5e567.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:772283787028:android:8f835dacca65cb497d4401",
+        "android_client_info": {
+          "package_name": "com.gilas.findrecipe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "772283787028-f0gim2t1aoabmlbt9or0l82q9hur52ek.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gilas.findrecipe",
+            "certificate_hash": "5ebeb806e0309694998821feb693418a406cc617"
+          }
+        },
+        {
+          "client_id": "772283787028-4hsggla780kmf83442ir2bvvgjtqe997.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC82fUpYt_8-bzo72qu48yVWcOIZMor4dY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "772283787028-4hsggla780kmf83442ir2bvvgjtqe997.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
