@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/etLoginUsername"
+            android:hint="@string/username"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:boxStrokeColor="@color/primaryButton">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/etLoginPassword"
+            android:hint="@string/password"
+            android:layout_marginTop="15dp"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnLogin"
+        android:text="@string/login"
+        android:textColor="#ffffff"
+        android:background="@drawable/round_button"
+        android:layout_marginTop="15dp"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnSignUp"
+        android:text="@string/signup"
+        android:textColor="#ffffff"
+        android:background="@drawable/round_button"
+        android:layout_marginTop="15dp"/>
+
+</LinearLayout>
