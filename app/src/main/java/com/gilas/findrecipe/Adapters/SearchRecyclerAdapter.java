@@ -1,4 +1,4 @@
-package com.gilas.findrecipe;
+package com.gilas.findrecipe.Adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,14 +9,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.gilas.findrecipe.Database.Tags;
+import com.gilas.findrecipe.R;
 
 import java.util.ArrayList;
 
-public class AdapterClass extends RecyclerView.Adapter<AdapterClass.MyViewHolder>{
+public class SearchRecyclerAdapter extends RecyclerView.Adapter<SearchRecyclerAdapter.MyViewHolder>{
 
     ArrayList<Tags> tags;
 
-    public AdapterClass(ArrayList<Tags> tags) {
+    public SearchRecyclerAdapter(ArrayList<Tags> tags) {
         this.tags = tags;
     }
 
@@ -26,7 +27,7 @@ public class AdapterClass extends RecyclerView.Adapter<AdapterClass.MyViewHolder
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_holder, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.search_card_holder, parent, false);
 
         return new MyViewHolder(view);
     }

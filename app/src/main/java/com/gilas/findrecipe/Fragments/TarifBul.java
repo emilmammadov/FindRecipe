@@ -3,10 +3,8 @@ package com.gilas.findrecipe.Fragments;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
-import com.gilas.findrecipe.Fragments.PageAdapter;
 import com.gilas.findrecipe.R;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
@@ -16,7 +14,7 @@ public class TarifBul extends AppCompatActivity {
     TabLayout tabLayout;
     TabItem tabHome, tabRecipe, tabFav;
     ViewPager viewPager;
-    PageAdapter pageAdapter;
+    FragmentPageAdapter fragmentPageAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +27,8 @@ public class TarifBul extends AppCompatActivity {
         tabFav = findViewById(R.id.tabFav);
         viewPager = findViewById(R.id.viewPager);
 
-        pageAdapter = new PageAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
-        viewPager.setAdapter(pageAdapter);
+        fragmentPageAdapter = new FragmentPageAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+        viewPager.setAdapter(fragmentPageAdapter);
 
         tabLayoutListener();
     }
