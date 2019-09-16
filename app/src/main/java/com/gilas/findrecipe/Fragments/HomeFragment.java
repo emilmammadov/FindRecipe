@@ -24,7 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements View.OnClickListener {
 
     private static String TAG = "HomeFragment";
     DatabaseReference myRef;
@@ -45,6 +45,7 @@ public class HomeFragment extends Fragment {
         myRef = FirebaseDatabase.getInstance().getReference().child("Tags");
         recyclerView = view.findViewById(R.id.searchRecyclerView);
         searchView = view.findViewById(R.id.searchView);
+        searchView.setOnClickListener(this);
 
         return view;
     }
@@ -105,5 +106,12 @@ public class HomeFragment extends Fragment {
         AdapterClass adapterClass = new AdapterClass(list);
         recyclerView.setAdapter(adapterClass);
 
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view == searchView) {
+            searchView.onActionViewExpanded();
+        }
     }
 }
