@@ -11,7 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
+import android.widget.Toast;
 
+import com.chootdev.recycleclick.RecycleClick;
 import com.gilas.findrecipe.Adapters.FlexRecyclerAdapter;
 import com.gilas.findrecipe.Adapters.SearchRecyclerAdapter;
 import com.gilas.findrecipe.Database.Tags;
@@ -30,10 +32,15 @@ import java.util.ArrayList;
 public class HomeFragment extends Fragment implements View.OnClickListener {
 
     private static String TAG = "HomeFragment";
-    DatabaseReference myRef;
-    ArrayList<Tags> listTags;
-    RecyclerView searchRecyclerView, flexBoxRecyclerView;
-    SearchView searchView;
+
+    private static ArrayList<Tags> listSearchedTags;
+    private static ArrayList<Tags> listSelectedTags;
+    private static ArrayList<String> listSelectedTagNames;
+    private DatabaseReference myRef;
+    private ArrayList<Tags> listTags;
+    private RecyclerView searchRecyclerView, flexBoxRecyclerView;
+    private SearchView searchView;
+    private View view;
 
     public HomeFragment() {
     }
@@ -43,14 +50,19 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        view = inflater.inflate(R.layout.fragment_home, container, false);
 
         myRef = FirebaseDatabase.getInstance().getReference().child("Tags");
         searchRecyclerView = view.findViewById(R.id.searchRecyclerView);
         searchView = view.findViewById(R.id.searchView);
         searchView.setOnClickListener(this);
 
-        flexBox(view);
+        listSelectedTags = new ArrayList<>();
+        listSelectedTagNames = new ArrayList<>();
+
+        flexBox();
+
+        recycleClick();
 
 
 
@@ -58,24 +70,31 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         return view;
     }
 
-    private void flexBox(View view) {
+    private void recycleClick() {
+        RecycleClick.addTo(searchRecyclerView).setOnItemClickListener(new RecycleClick.OnItemClickListener() {
+            @Override
+            public void onItemClicked(RecyclerView recyclerView, int i, View view) {
+                Toast.makeText(getContext(), listSearchedTags.get(i).getName()+"", Toast.LENGTH_SHORT).show();
+                if (!listSelectedTags.contains(listSearchedTags.get(i))) {
+                    listSelectedTags.add(listSearchedTags.get(i));
+                    listSelectedTagNames.add(listSearchedTags.get(i).getName());
+                    flexBox();
+                }
+
+            }
+        });
+    }
+
+    private void flexBox() {
 
         flexBoxRecyclerView = view.findViewById(R.id.flexBoxRecyclerView);
 
         FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(getContext());
         layoutManager.setFlexDirection(FlexDirection.ROW);
-        layoutManager.setJustifyContent(JustifyContent.FLEX_END);
+        layoutManager.setJustifyContent(JustifyContent.FLEX_START);
         flexBoxRecyclerView.setLayoutManager(layoutManager);
 
-        ArrayList<String> den = new ArrayList<>();
-        den.add("deneme");
-        den.add("denemeEmil");
-        den.add("denemeFuad");
-        den.add("denemeNahid");
-        den.add("denemeKenan");
-        den.add("denemeBilmem");
-
-        RecyclerView.Adapter adapter = new FlexRecyclerAdapter(den);
+        RecyclerView.Adapter adapter = new FlexRecyclerAdapter(listSelectedTagNames);
         flexBoxRecyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
@@ -129,18 +148,18 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     // SearchBar için arama fonksiyonu
     private void search(String str) {
-        ArrayList<Tags> list = new ArrayList<>();
+        listSearchedTags = new ArrayList<>();
 
         if (listTags != null) {
             for(Tags object: listTags) {
                 String tagName = object.getName().toLowerCase();
                 if (tagName.contains(str.toLowerCase()) && str.length() != 0) {
-                    list.add(object);
+                    listSearchedTags.add(object);
                 }
             }
         }
 
-        SearchRecyclerAdapter searchRecyclerAdapter = new SearchRecyclerAdapter(list);
+        SearchRecyclerAdapter searchRecyclerAdapter = new SearchRecyclerAdapter(listSearchedTags);
         searchRecyclerView.setAdapter(searchRecyclerAdapter);
 
     }
