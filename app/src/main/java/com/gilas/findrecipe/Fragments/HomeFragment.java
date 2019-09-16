@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
 
+import com.gilas.findrecipe.Adapters.FlexRecyclerAdapter;
 import com.gilas.findrecipe.Adapters.SearchRecyclerAdapter;
 import com.gilas.findrecipe.Database.Tags;
 import com.gilas.findrecipe.R;
@@ -66,15 +67,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         layoutManager.setJustifyContent(JustifyContent.FLEX_END);
         flexBoxRecyclerView.setLayoutManager(layoutManager);
 
-        ArrayList<Tags> den = new ArrayList<>();
-        den.add(new Tags(1,"deneme"));
-        den.add(new Tags(1,"denemeEmil"));
-        den.add(new Tags(1,"denemeFuad"));
-        den.add(new Tags(1,"denemeNahid"));
-        den.add(new Tags(1,"denemeKenan"));
-        den.add(new Tags(1,"denemeBilmem"));
+        ArrayList<String> den = new ArrayList<>();
+        den.add("deneme");
+        den.add("denemeEmil");
+        den.add("denemeFuad");
+        den.add("denemeNahid");
+        den.add("denemeKenan");
+        den.add("denemeBilmem");
 
-        RecyclerView.Adapter adapter = new SearchRecyclerAdapter(den);
+        RecyclerView.Adapter adapter = new FlexRecyclerAdapter(den);
         flexBoxRecyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
