@@ -24,7 +24,7 @@ public class FlexRecyclerAdapter extends RecyclerView.Adapter<FlexRecyclerAdapte
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_flex_box, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.flexbox_item, parent, false);
         return new FlexRecyclerAdapter.MyViewHolder(view);
     }
 
