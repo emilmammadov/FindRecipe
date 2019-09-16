@@ -7,9 +7,11 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -40,7 +42,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private ArrayList<Tags> listTags;
     private RecyclerView searchRecyclerView, flexBoxRecyclerView;
     private SearchView searchView;
-    private View view;
+    private View view,view2;
 
     public HomeFragment() {
     }
@@ -94,7 +96,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         layoutManager.setJustifyContent(JustifyContent.FLEX_START);
         flexBoxRecyclerView.setLayoutManager(layoutManager);
 
-        RecyclerView.Adapter adapter = new FlexRecyclerAdapter(listSelectedTagNames);
+        RecyclerView.Adapter adapter = new FlexRecyclerAdapter(listSelectedTagNames, new FlexRecyclerAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Log.e(TAG, "onItemClick: "+" Nasilsiniz"+position);
+            }
+        });
         flexBoxRecyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 

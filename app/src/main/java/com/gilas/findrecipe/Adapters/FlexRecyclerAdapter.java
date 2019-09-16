@@ -1,8 +1,10 @@
 package com.gilas.findrecipe.Adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,9 +18,23 @@ public class FlexRecyclerAdapter extends RecyclerView.Adapter<FlexRecyclerAdapte
 
     ArrayList<String> tags;
 
-    public FlexRecyclerAdapter(ArrayList<String> tags) {
+
+
+    private OnItemClickListener mOnItemClickListener;
+
+    public interface OnItemClickListener {
+        void onItemClick(int position); // buradaki parametlere activity'deki textview'a ne göndermek istiyorsanız onları yazın. Atıyorum "String kalori, String yemekAdi" vs.
+    }
+
+    // constructor'ımıza listener koyalım)
+    public FlexRecyclerAdapter(ArrayList<String> tags, OnItemClickListener onItemClickListener) {
+        mOnItemClickListener = onItemClickListener;
         this.tags = tags;
     }
+
+    /*public FlexRecyclerAdapter(ArrayList<String> tags) {
+        this.tags = tags;
+    }*/
 
     @NonNull
     @Override
@@ -29,8 +45,18 @@ public class FlexRecyclerAdapter extends RecyclerView.Adapter<FlexRecyclerAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
         holder.tvTag.setText(tags.get(position));
+
+
+
+        holder.btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e("TAGTAGTAG", "onClick: "+ position );
+                mOnItemClickListener.onItemClick(position);
+            }
+        });
     }
 
     @Override
@@ -47,11 +73,14 @@ public class FlexRecyclerAdapter extends RecyclerView.Adapter<FlexRecyclerAdapte
     class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView tvTag;
+        Button btnDelete;
 
         public MyViewHolder(@NonNull View itemView) {
 
             super(itemView);
             tvTag = itemView.findViewById(R.id.flexItemTextView);
+            btnDelete = itemView.findViewById(R.id.flexBoxDeleteButton);
+
         }
     }
 }
