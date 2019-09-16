@@ -100,6 +100,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onItemClick(int position) {
                 Log.e(TAG, "onItemClick: "+" Nasilsiniz"+position);
+                listSelectedTags.remove(position);
+                listSelectedTagNames.remove(position);
+                flexBox();
             }
         });
         flexBoxRecyclerView.setAdapter(adapter);
