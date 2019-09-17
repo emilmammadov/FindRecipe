@@ -19,22 +19,18 @@ public class FlexRecyclerAdapter extends RecyclerView.Adapter<FlexRecyclerAdapte
     ArrayList<String> tags;
 
 
-
     private OnItemClickListener mOnItemClickListener;
 
     public interface OnItemClickListener {
-        void onItemClick(int position); // buradaki parametlere activity'deki textview'a ne göndermek istiyorsanız onları yazın. Atıyorum "String kalori, String yemekAdi" vs.
+        // Buradaki parametlere activity'ye göndermek istediklerinizi yazın
+        void onItemClick(int position);
     }
 
-    // constructor'ımıza listener koyalım)
+    // constructor'ımıza listener koyalım
     public FlexRecyclerAdapter(ArrayList<String> tags, OnItemClickListener onItemClickListener) {
         mOnItemClickListener = onItemClickListener;
         this.tags = tags;
     }
-
-    /*public FlexRecyclerAdapter(ArrayList<String> tags) {
-        this.tags = tags;
-    }*/
 
     @NonNull
     @Override
@@ -49,11 +45,9 @@ public class FlexRecyclerAdapter extends RecyclerView.Adapter<FlexRecyclerAdapte
         holder.tvTag.setText(tags.get(position));
 
 
-
         holder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.e("TAGTAGTAG", "onClick: "+ position );
                 mOnItemClickListener.onItemClick(position);
             }
         });
@@ -63,10 +57,6 @@ public class FlexRecyclerAdapter extends RecyclerView.Adapter<FlexRecyclerAdapte
     public int getItemCount() {
         return tags.size();
     }
-
-
-
-
 
 
 

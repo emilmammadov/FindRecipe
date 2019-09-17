@@ -14,7 +14,7 @@ import com.gilas.findrecipe.R;
 
 import java.util.ArrayList;
 
-public class SearchRecyclerAdapter extends RecyclerView.Adapter<SearchRecyclerAdapter.MyViewHolder>{
+public class SearchRecyclerAdapter extends RecyclerView.Adapter<SearchRecyclerAdapter.MyViewHolder> {
 
     ArrayList<Tags> tags;
     //private final View.OnClickListener mOnClickListener = new View.OnClickListener(this);
@@ -22,7 +22,6 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<SearchRecyclerAd
     public SearchRecyclerAdapter(ArrayList<Tags> tags) {
         this.tags = tags;
     }
-
 
 
     @NonNull
@@ -43,12 +42,6 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<SearchRecyclerAd
     public int getItemCount() {
         return tags.size();
     }
-
-
-
-
-
-
 
 
     class MyViewHolder extends RecyclerView.ViewHolder {

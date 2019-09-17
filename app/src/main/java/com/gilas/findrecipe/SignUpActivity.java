@@ -3,20 +3,19 @@ package com.gilas.findrecipe;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.gilas.findrecipe.Database.User;
+import com.gilas.findrecipe.Database.Users;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
 
-    EditText etUsername,etPassword;
+    EditText etUsername, etPassword;
     Button btnRegister;
-    public static String TAG = "tag";
+    public static String TAG = "TAG";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +33,10 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     }
 
-    public void writeNewUser(DatabaseReference ref, String username, String password){
-        User user = new User(username, password);
+    public void writeNewUser(DatabaseReference ref, String username, String password) {
+        Users users = new Users(username, password);
 
-        ref.child("Users").child(user.username).setValue(user);
+        ref.child("Users").child(users.getUsername()).setValue(users);
     }
 
     @Override
@@ -46,7 +45,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             DatabaseReference myRef = database.getReference();
-            writeNewUser(myRef, etUsername.getText().toString(),etPassword.getText().toString());
+            writeNewUser(myRef, etUsername.getText().toString(), etPassword.getText().toString());
         }
     }
 }
