@@ -9,7 +9,7 @@ import android.widget.Button;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
-    Button btnLogin,btnSignUp;
+    Button btnLogin, btnSignUp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,19 +23,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         btnSignUp.setOnClickListener(this);
 
 
-
-
-
-
     }
-
 
 
     @Override
     public void onClick(View view) {
         if (view == btnLogin) {
             // Do Login
-        }else if (view == btnSignUp) {
+        } else if (view == btnSignUp) {
             Intent intent = new Intent(this, SignUpActivity.class);
             startActivity(intent);
         }

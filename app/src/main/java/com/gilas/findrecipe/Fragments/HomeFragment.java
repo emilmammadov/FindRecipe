@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -42,7 +41,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private ArrayList<Tags> listTags;
     private RecyclerView searchRecyclerView, flexBoxRecyclerView;
     private SearchView searchView;
-    private View view,view2;
+    private View view, view2;
 
     public HomeFragment() {
     }
@@ -56,6 +55,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         myRef = FirebaseDatabase.getInstance().getReference().child("Tags");
         searchRecyclerView = view.findViewById(R.id.searchRecyclerView);
+        flexBoxRecyclerView = view.findViewById(R.id.flexBoxRecyclerView);
         searchView = view.findViewById(R.id.searchView);
         searchView.setOnClickListener(this);
 
@@ -64,19 +64,17 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         flexBox();
 
-        recycleClick();
-
-
+        searchRecycleClick();
 
 
         return view;
     }
 
-    private void recycleClick() {
+    private void searchRecycleClick() {
         RecycleClick.addTo(searchRecyclerView).setOnItemClickListener(new RecycleClick.OnItemClickListener() {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int i, View view) {
-                Toast.makeText(getContext(), listSearchedTags.get(i).getName()+"", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), listSearchedTags.get(i).getName() + "", Toast.LENGTH_SHORT).show();
                 if (!listSelectedTags.contains(listSearchedTags.get(i))) {
                     listSelectedTags.add(listSearchedTags.get(i));
                     listSelectedTagNames.add(listSearchedTags.get(i).getName());
@@ -89,8 +87,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     private void flexBox() {
 
-        flexBoxRecyclerView = view.findViewById(R.id.flexBoxRecyclerView);
-
         FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(getContext());
         layoutManager.setFlexDirection(FlexDirection.ROW);
         layoutManager.setJustifyContent(JustifyContent.FLEX_START);
@@ -99,7 +95,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         RecyclerView.Adapter adapter = new FlexRecyclerAdapter(listSelectedTagNames, new FlexRecyclerAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Log.e(TAG, "onItemClick: "+" Nasilsiniz"+position);
+                Log.e(TAG, "onItemClick: " + " Nasilsiniz " + position);
                 listSelectedTags.remove(position);
                 listSelectedTagNames.remove(position);
                 flexBox();
@@ -116,13 +112,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void onStart() {
         super.onStart();
 
-        if(myRef != null) {
+        if (myRef != null) {
             myRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if (dataSnapshot.exists()) {
                         listTags = new ArrayList<>();
-                        for (DataSnapshot ds: dataSnapshot.getChildren()) {
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
                             listTags.add(ds.getValue(Tags.class));
                         }
                         //SearchRecyclerAdapter adapterClass = new SearchRecyclerAdapter(listTags);
@@ -138,7 +134,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             });
         }
 
-        if(searchView != null) {
+        if (searchView != null) {
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String s) {
@@ -161,7 +157,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         listSearchedTags = new ArrayList<>();
 
         if (listTags != null) {
-            for(Tags object: listTags) {
+            for (Tags object : listTags) {
                 String tagName = object.getName().toLowerCase();
                 if (tagName.contains(str.toLowerCase()) && str.length() != 0) {
                     listSearchedTags.add(object);
