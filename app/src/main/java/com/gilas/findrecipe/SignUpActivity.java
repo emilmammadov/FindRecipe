@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.gilas.findrecipe.Database.DatabaseOperations;
 import com.gilas.findrecipe.Database.Users;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -33,19 +34,13 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     }
 
-    public void writeNewUser(DatabaseReference ref, String username, String password) {
-        Users users = new Users(username, password);
-
-        ref.child("Users").child(users.getUsername()).setValue(users);
-    }
-
     @Override
     public void onClick(View view) {
         if (view == btnRegister) {
+            String username = etUsername.getText().toString();
+            String password = etPassword.getText().toString();
+            //new DatabaseOperations().AddUser(username, password);
 
-            FirebaseDatabase database = FirebaseDatabase.getInstance();
-            DatabaseReference myRef = database.getReference();
-            writeNewUser(myRef, etUsername.getText().toString(), etPassword.getText().toString());
         }
     }
 }

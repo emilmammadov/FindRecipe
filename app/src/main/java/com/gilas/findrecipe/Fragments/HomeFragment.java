@@ -11,12 +11,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.chootdev.recycleclick.RecycleClick;
 import com.gilas.findrecipe.Adapters.FlexRecyclerAdapter;
 import com.gilas.findrecipe.Adapters.SearchRecyclerAdapter;
+import com.gilas.findrecipe.Database.DatabaseOperations;
 import com.gilas.findrecipe.Database.Tags;
 import com.gilas.findrecipe.R;
 import com.google.android.flexbox.FlexDirection;
@@ -41,7 +43,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private ArrayList<Tags> listTags;
     private RecyclerView searchRecyclerView, flexBoxRecyclerView;
     private SearchView searchView;
-    private View view, view2;
+    private View view;
+    private Button btnSearch;
 
     public HomeFragment() {
     }
@@ -58,6 +61,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         flexBoxRecyclerView = view.findViewById(R.id.flexBoxRecyclerView);
         searchView = view.findViewById(R.id.searchView);
         searchView.setOnClickListener(this);
+        btnSearch = view.findViewById(R.id.btnSearch);
+        btnSearch.setOnClickListener(this);
 
         listSelectedTags = new ArrayList<>();
         listSelectedTagNames = new ArrayList<>();
@@ -121,8 +126,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                         for (DataSnapshot ds : dataSnapshot.getChildren()) {
                             listTags.add(ds.getValue(Tags.class));
                         }
-                        //SearchRecyclerAdapter adapterClass = new SearchRecyclerAdapter(listTags);
-                        //searchRecyclerView.setAdapter(adapterClass);
 
                     }
                 }
@@ -174,6 +177,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         if (view == searchView) {
             searchView.onActionViewExpanded();
+        } else if (view == btnSearch) {
         }
     }
 }
