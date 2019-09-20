@@ -2,11 +2,6 @@ package com.gilas.findrecipe.Fragments;
 
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +9,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.chootdev.recycleclick.RecycleClick;
 import com.gilas.findrecipe.Adapters.FlexRecyclerAdapter;
@@ -24,11 +22,6 @@ import com.gilas.findrecipe.R;
 import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexboxLayoutManager;
 import com.google.android.flexbox.JustifyContent;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -116,6 +109,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         super.onStart();
 
         new DatabaseOperations().getAllTags(getContext());
+
 
 //        if (myRef != null) {
 //            myRef.addValueEventListener(new ValueEventListener() {

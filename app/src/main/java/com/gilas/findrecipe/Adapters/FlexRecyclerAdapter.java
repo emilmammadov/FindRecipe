@@ -1,6 +1,5 @@
 package com.gilas.findrecipe.Adapters;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,7 +56,6 @@ public class FlexRecyclerAdapter extends RecyclerView.Adapter<FlexRecyclerAdapte
     public int getItemCount() {
         return tags.size();
     }
-
 
 
     class MyViewHolder extends RecyclerView.ViewHolder {

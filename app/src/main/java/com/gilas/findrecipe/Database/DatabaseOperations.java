@@ -1,19 +1,14 @@
 package com.gilas.findrecipe.Database;
 
-import android.app.DownloadManager;
 import android.content.Context;
-import android.media.MediaSync;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -25,7 +20,7 @@ import java.util.Map;
 public class DatabaseOperations {
 
     private static final String TAG = "TAG";
-    private static final String ip = "192.168.137.1";
+    private static final String ip = "192.168.0.11";
 
     public void login(final Context context, final String username, final String password) {
 
@@ -94,7 +89,7 @@ public class DatabaseOperations {
     }
 
     public void getAllTags(final Context context) {
-        String url = "http://192.168.137.1/get_all_tags.php";
+        String url = "http://" + ip + "/get_all_tags.php";
 
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
