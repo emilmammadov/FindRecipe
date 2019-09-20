@@ -1,6 +1,5 @@
 package com.gilas.findrecipe.Adapters;
 
-import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
