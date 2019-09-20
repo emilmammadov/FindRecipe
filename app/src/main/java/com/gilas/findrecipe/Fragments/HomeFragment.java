@@ -39,12 +39,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private static ArrayList<Tags> listSearchedTags;
     private static ArrayList<Tags> listSelectedTags;
     private static ArrayList<String> listSelectedTagNames;
-    private DatabaseReference myRef;
     private ArrayList<Tags> listTags;
     private RecyclerView searchRecyclerView, flexBoxRecyclerView;
     private SearchView searchView;
     private View view;
-    private Button btnSearch;
+    private Button btnSearchRecipe;
 
     public HomeFragment() {
     }
@@ -56,13 +55,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        myRef = FirebaseDatabase.getInstance().getReference().child("Tags");
         searchRecyclerView = view.findViewById(R.id.searchRecyclerView);
         flexBoxRecyclerView = view.findViewById(R.id.flexBoxRecyclerView);
         searchView = view.findViewById(R.id.searchView);
         searchView.setOnClickListener(this);
-        btnSearch = view.findViewById(R.id.btnSearch);
-        btnSearch.setOnClickListener(this);
+        btnSearchRecipe = view.findViewById(R.id.btnSearch);
+        btnSearchRecipe.setOnClickListener(this);
 
         listSelectedTags = new ArrayList<>();
         listSelectedTagNames = new ArrayList<>();
@@ -117,25 +115,27 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void onStart() {
         super.onStart();
 
-        if (myRef != null) {
-            myRef.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.exists()) {
-                        listTags = new ArrayList<>();
-                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                            listTags.add(ds.getValue(Tags.class));
-                        }
+        new DatabaseOperations().getAllTags(getContext());
 
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-        }
+//        if (myRef != null) {
+//            myRef.addValueEventListener(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                    if (dataSnapshot.exists()) {
+//                        listTags = new ArrayList<>();
+//                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+//                            listTags.add(ds.getValue(Tags.class));
+//                        }
+//
+//                    }
+//                }
+//
+//                @Override
+//                public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                }
+//            });
+//        }
 
         if (searchView != null) {
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -177,7 +177,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         if (view == searchView) {
             searchView.onActionViewExpanded();
-        } else if (view == btnSearch) {
+        } else if (view == btnSearchRecipe) {
         }
     }
 }
