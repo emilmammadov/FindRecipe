@@ -7,12 +7,17 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,10 +25,11 @@ import java.util.Map;
 public class DatabaseOperations {
 
     private static final String TAG = "TAG";
+    private static final String ip = "192.168.137.1";
 
     public void login(final Context context, final String username, final String password) {
 
-        String url = "http://192.168.137.1/login.php";
+        String url = "http://" + ip + "/login.php";
 
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -59,7 +65,7 @@ public class DatabaseOperations {
 
     public void register(final Context context, final String username, final String password) {
 
-        String url = "http://192.168.137.1/register.php";
+        String url = "http://" + ip + "/register.php";
 
 
         RequestQueue requestQueue = Volley.newRequestQueue(context);
@@ -85,6 +91,26 @@ public class DatabaseOperations {
         };
 
         requestQueue.add(stringRequest);
+    }
+
+    public void getAllTags(final Context context) {
+        String url = "http://192.168.137.1/get_all_tags.php";
+
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
+                url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.e(TAG, "onResponse: " + response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        requestQueue.add(jsonObjectRequest);
     }
 
 
