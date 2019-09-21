@@ -2,13 +2,11 @@ package com.gilas.findrecipe.Fragments;
 
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
@@ -46,6 +44,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        listTags = new DatabaseOperations().getAllTags(getContext());
+
         view = inflater.inflate(R.layout.fragment_home, container, false);
 
         searchRecyclerView = view.findViewById(R.id.searchRecyclerView);
@@ -70,7 +70,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         RecycleClick.addTo(searchRecyclerView).setOnItemClickListener(new RecycleClick.OnItemClickListener() {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int i, View view) {
-                Toast.makeText(getContext(), listSearchedTags.get(i).getName() + "", Toast.LENGTH_SHORT).show();
+
+
                 if (!listSelectedTags.contains(listSearchedTags.get(i))) {
                     listSelectedTags.add(listSearchedTags.get(i));
                     listSelectedTagNames.add(listSearchedTags.get(i).getName());
@@ -91,7 +92,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         RecyclerView.Adapter adapter = new FlexRecyclerAdapter(listSelectedTagNames, new FlexRecyclerAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Log.e(TAG, "onItemClick: " + " Nasilsiniz " + position);
+
                 listSelectedTags.remove(position);
                 listSelectedTagNames.remove(position);
                 flexBox();
@@ -107,29 +108,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onStart() {
         super.onStart();
-
-        new DatabaseOperations().getAllTags(getContext());
-
-
-//        if (myRef != null) {
-//            myRef.addValueEventListener(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                    if (dataSnapshot.exists()) {
-//                        listTags = new ArrayList<>();
-//                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
-//                            listTags.add(ds.getValue(Tags.class));
-//                        }
-//
-//                    }
-//                }
-//
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//                }
-//            });
-//        }
 
         if (searchView != null) {
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
