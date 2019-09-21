@@ -12,8 +12,11 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -88,15 +91,35 @@ public class DatabaseOperations {
         requestQueue.add(stringRequest);
     }
 
-    public void getAllTags(final Context context) {
+    public ArrayList<Tags> getAllTags(final Context context) {
         String url = "http://" + ip + "/get_all_tags.php";
+        final ArrayList<Tags> tagsArrayList = new ArrayList<>();
 
-        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        final RequestQueue requestQueue = Volley.newRequestQueue(context);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
                 url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
+
+
                 Log.e(TAG, "onResponse: " + response);
+
+                try {
+                    JSONArray array = response.getJSONArray("tags");
+
+                    for (int i = 0; i < array.length(); i++) {
+                        JSONObject obj = (JSONObject) array.getJSONObject(i).get("tag");
+                        int id = Integer.parseInt(obj.get("id").toString());
+                        String name = obj.get("name").toString();
+                        tagsArrayList.add(new Tags(id, name));
+
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -106,6 +129,8 @@ public class DatabaseOperations {
         });
 
         requestQueue.add(jsonObjectRequest);
+
+        return tagsArrayList;
     }
 
 
