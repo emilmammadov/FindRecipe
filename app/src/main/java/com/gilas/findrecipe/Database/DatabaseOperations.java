@@ -2,6 +2,7 @@ package com.gilas.findrecipe.Database;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -17,6 +18,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -91,18 +93,17 @@ public class DatabaseOperations {
         requestQueue.add(stringRequest);
     }
 
+
     public ArrayList<Tags> getAllTags(final Context context) {
         String url = "http://" + ip + "/get_all_tags.php";
         final ArrayList<Tags> tagsArrayList = new ArrayList<>();
 
-        final RequestQueue requestQueue = Volley.newRequestQueue(context);
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
                 url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
 
-
-                Log.e(TAG, "onResponse: " + response);
 
                 try {
                     JSONArray array = response.getJSONArray("tags");
@@ -131,6 +132,58 @@ public class DatabaseOperations {
         requestQueue.add(jsonObjectRequest);
 
         return tagsArrayList;
+    }
+
+
+    public ArrayList<Recipes> getRecipes(final Context context, ArrayList<Integer> selectedTags) {
+
+        final ArrayList<Recipes> recipesArrayList = new ArrayList<>();
+
+        String url = "http://" + ip + "/get_recipe.php";
+        final Object[] selectedTagsArray = selectedTags.toArray();
+
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        StringRequest jsonObjectRequest = new StringRequest(Request.Method.POST,
+                url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+
+                    JSONObject jsonObject = new JSONObject(response);
+                    JSONArray array = jsonObject.getJSONArray("recipes");
+
+                    for (int i = 0; i < array.length(); i++) {
+                        JSONObject obj = (JSONObject) array.getJSONObject(i).get("recipe");
+                        int id = Integer.parseInt(obj.get("id").toString());
+                        String title = obj.get("title").toString();
+                        String body = obj.get("body").toString();
+                        recipesArrayList.add(new Recipes(id, title, body));
+
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "onErrorResponse: " + error);
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Log.e(TAG, "getParams: ");
+                Map<String, String> params = new HashMap<>();
+                params.put("recipes", Arrays.toString(selectedTagsArray));
+
+                return params;
+            }
+        };
+
+        requestQueue.add(jsonObjectRequest);
+        
+        return recipesArrayList;
     }
 
 
