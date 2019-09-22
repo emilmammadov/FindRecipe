@@ -15,6 +15,7 @@ import com.chootdev.recycleclick.RecycleClick;
 import com.gilas.findrecipe.Adapters.FlexRecyclerAdapter;
 import com.gilas.findrecipe.Adapters.SearchRecyclerAdapter;
 import com.gilas.findrecipe.Database.DatabaseOperations;
+import com.gilas.findrecipe.Database.Recipes;
 import com.gilas.findrecipe.Database.Tags;
 import com.gilas.findrecipe.R;
 import com.google.android.flexbox.FlexDirection;
@@ -35,6 +36,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private SearchView searchView;
     private View view;
     private Button btnSearchRecipe;
+    private ArrayList<Recipes> listRecipes;
 
     public HomeFragment() {
     }
@@ -155,7 +157,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             for (Tags tag : listSelectedTags) {
                 listSelectedTagID.add(tag.getId());
             }
-            new DatabaseOperations().getRecipes(getContext(), listSelectedTagID);
+            listRecipes = new DatabaseOperations().getRecipes(getContext(), listSelectedTagID);
         }
     }
 }
