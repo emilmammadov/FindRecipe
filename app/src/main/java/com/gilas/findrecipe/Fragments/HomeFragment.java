@@ -149,7 +149,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         if (view == searchView) {
             searchView.onActionViewExpanded();
-        } else if (view == btnSearchRecipe) {
+        }
+        if (view == btnSearchRecipe) {
+            ArrayList<Integer> listSelectedTagID = new ArrayList<>();
+            for (Tags tag : listSelectedTags) {
+                listSelectedTagID.add(tag.getId());
+            }
+            new DatabaseOperations().getRecipes(getContext(), listSelectedTagID);
         }
     }
 }
