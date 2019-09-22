@@ -2,7 +2,6 @@ package com.gilas.findrecipe.Database;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -26,7 +25,6 @@ public class DatabaseOperations {
 
     private static final String TAG = "TAG";
     private static final String ip = "192.168.0.11";
-    ArrayList<Recipes> recipesArrayList;
 
     public void login(final Context context, final String username, final String password) {
 
@@ -40,13 +38,11 @@ public class DatabaseOperations {
                     Toast.makeText(context, "basarili", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(context, "basarisiz" + response, Toast.LENGTH_SHORT).show();
-                    Log.e("TAGTAG", "onResponse: " + response);
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context, "hata: " + error.toString(), Toast.LENGTH_SHORT).show();
                 Log.e("TAG", "onErrorResponse: " + error.toString());
             }
         }) {
@@ -136,9 +132,9 @@ public class DatabaseOperations {
     }
 
 
-    public ArrayList<Recipes> getRecipes(final Context context, ArrayList<Integer> selectedTags) {
+    public void getRecipes(final Context context, ArrayList<Integer> selectedTags, final VolleyCallback callback) {
 
-        recipesArrayList = new ArrayList<>();
+        final ArrayList<Recipes> recipesArrayList = new ArrayList<>();
 
         String url = "http://" + ip + "/get_recipe.php";
         final Object[] selectedTagsArray = selectedTags.toArray();
@@ -162,10 +158,12 @@ public class DatabaseOperations {
                         Log.e(TAG, "onResponse: " + title);
                         recipesArrayList.add(new Recipes(id, title, body));
 
-
                     }
+
+                    callback.onSuccess(recipesArrayList);
+
                 } catch (JSONException e) {
-                    e.printStackTrace();
+                    Log.e(TAG, "onERR: " + e);
                 }
             }
         }, new Response.ErrorListener() {
@@ -183,9 +181,12 @@ public class DatabaseOperations {
             }
         };
 
-        requestQueue.add(jsonObjectRequest);
 
-        return recipesArrayList;
+        requestQueue.add(jsonObjectRequest);
+    }
+
+    public interface VolleyCallback {
+        void onSuccess(ArrayList<Recipes> result);
     }
 
 

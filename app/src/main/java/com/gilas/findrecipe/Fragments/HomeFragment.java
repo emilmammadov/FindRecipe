@@ -37,7 +37,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private SearchView searchView;
     private View view;
     private Button btnSearchRecipe;
-    private ArrayList<Recipes> listRecipes;
 
     public HomeFragment() {
     }
@@ -159,11 +158,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             for (Tags tag : listSelectedTags) {
                 listSelectedTagID.add(tag.getId());
             }
-            //listRecipes = new DatabaseOperations().getRecipes(getContext(), listSelectedTagID);
-            listRecipes = new ArrayList<>();
-            listRecipes.add(new Recipes(2,"deneme tarif","deneme tarif"));
-            RecipeRecyclerAdapter adapter = new RecipeRecyclerAdapter(listRecipes);
-            recipeRecyclerView.setAdapter(adapter);
+            new DatabaseOperations().getRecipes(getContext(), listSelectedTagID, new DatabaseOperations.VolleyCallback() {
+                @Override
+                public void onSuccess(ArrayList<Recipes> result) {
+                    RecipeRecyclerAdapter adapter = new RecipeRecyclerAdapter(result);
+                    recipeRecyclerView.setAdapter(adapter);
+                }
+            });
+
+
         }
     }
 }
