@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chootdev.recycleclick.RecycleClick;
 import com.gilas.findrecipe.Adapters.FlexRecyclerAdapter;
+import com.gilas.findrecipe.Adapters.RecipeRecyclerAdapter;
 import com.gilas.findrecipe.Adapters.SearchRecyclerAdapter;
 import com.gilas.findrecipe.Database.DatabaseOperations;
 import com.gilas.findrecipe.Database.Recipes;
@@ -32,7 +33,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private static ArrayList<Tags> listSelectedTags;
     private static ArrayList<String> listSelectedTagNames;
     private ArrayList<Tags> listTags;
-    private RecyclerView searchRecyclerView, flexBoxRecyclerView;
+    private RecyclerView searchRecyclerView, flexBoxRecyclerView, recipeRecyclerView;
     private SearchView searchView;
     private View view;
     private Button btnSearchRecipe;
@@ -52,6 +53,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         searchRecyclerView = view.findViewById(R.id.searchRecyclerView);
         flexBoxRecyclerView = view.findViewById(R.id.flexBoxRecyclerView);
+        recipeRecyclerView = view.findViewById(R.id.recipeRecyclerView);
         searchView = view.findViewById(R.id.searchView);
         searchView.setOnClickListener(this);
         btnSearchRecipe = view.findViewById(R.id.btnSearch);
@@ -157,7 +159,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             for (Tags tag : listSelectedTags) {
                 listSelectedTagID.add(tag.getId());
             }
-            listRecipes = new DatabaseOperations().getRecipes(getContext(), listSelectedTagID);
+            //listRecipes = new DatabaseOperations().getRecipes(getContext(), listSelectedTagID);
+            listRecipes = new ArrayList<>();
+            listRecipes.add(new Recipes(2,"deneme tarif","deneme tarif"));
+            RecipeRecyclerAdapter adapter = new RecipeRecyclerAdapter(listRecipes);
+            recipeRecyclerView.setAdapter(adapter);
         }
     }
 }

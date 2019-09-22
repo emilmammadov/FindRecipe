@@ -59,5 +59,13 @@
             android:layout_marginTop="30dp"
             android:layout_marginBottom="30dp"/>
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recipeRecyclerView"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="100dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
     </LinearLayout>
 </ScrollView>

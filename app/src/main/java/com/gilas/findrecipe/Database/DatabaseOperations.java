@@ -26,6 +26,7 @@ public class DatabaseOperations {
 
     private static final String TAG = "TAG";
     private static final String ip = "192.168.0.11";
+    ArrayList<Recipes> recipesArrayList;
 
     public void login(final Context context, final String username, final String password) {
 
@@ -137,7 +138,7 @@ public class DatabaseOperations {
 
     public ArrayList<Recipes> getRecipes(final Context context, ArrayList<Integer> selectedTags) {
 
-        final ArrayList<Recipes> recipesArrayList = new ArrayList<>();
+        recipesArrayList = new ArrayList<>();
 
         String url = "http://" + ip + "/get_recipe.php";
         final Object[] selectedTagsArray = selectedTags.toArray();
@@ -148,8 +149,9 @@ public class DatabaseOperations {
             @Override
             public void onResponse(String response) {
                 try {
-
                     JSONObject jsonObject = new JSONObject(response);
+
+                    Log.e(TAG, "onResponse: " + jsonObject);
                     JSONArray array = jsonObject.getJSONArray("recipes");
 
                     for (int i = 0; i < array.length(); i++) {
@@ -157,6 +159,7 @@ public class DatabaseOperations {
                         int id = Integer.parseInt(obj.get("id").toString());
                         String title = obj.get("title").toString();
                         String body = obj.get("body").toString();
+                        Log.e(TAG, "onResponse: " + title);
                         recipesArrayList.add(new Recipes(id, title, body));
 
 
@@ -173,7 +176,6 @@ public class DatabaseOperations {
         }) {
             @Override
             protected Map<String, String> getParams() {
-                Log.e(TAG, "getParams: ");
                 Map<String, String> params = new HashMap<>();
                 params.put("recipes", Arrays.toString(selectedTagsArray));
 
