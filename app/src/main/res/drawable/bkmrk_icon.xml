@@ -3,6 +3,6 @@
 
     <item android:drawable="@drawable/ic_turned_in_black_24dp" android:state_checked="true" />
 
-    <item android:drawable="@drawable/ic_turned_in_not_black_24dp" />
+    <item android:drawable="@drawable/ic_turned_in_not_black_24dp" android:state_checked="false" />
 
 </selector>
