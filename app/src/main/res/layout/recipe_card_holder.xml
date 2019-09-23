@@ -21,6 +21,7 @@
             android:orientation="horizontal">
 
             <CheckBox
+                android:id="@+id/chckBookmark"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -29,8 +30,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="5dp"
                 android:background="@drawable/bkmrk_icon"
-                android:button="@null"
-                android:checked="false" />
+                android:button="@null" />
 
             <TextView
                 android:id="@+id/tvTitle"
