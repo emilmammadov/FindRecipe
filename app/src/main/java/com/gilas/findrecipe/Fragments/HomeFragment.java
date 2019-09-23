@@ -53,6 +53,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         searchRecyclerView = view.findViewById(R.id.searchRecyclerView);
         flexBoxRecyclerView = view.findViewById(R.id.flexBoxRecyclerView);
         recipeRecyclerView = view.findViewById(R.id.recipeRecyclerView);
+        //recipeRecyclerView.setNestedScrollingEnabled(false);
         searchView = view.findViewById(R.id.searchView);
         searchView.setOnClickListener(this);
         btnSearchRecipe = view.findViewById(R.id.btnSearch);
