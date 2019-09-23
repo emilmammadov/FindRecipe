@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="3dp"
+    android:layout_marginBottom="10dp"
     android:foreground="?android:attr/selectableItemBackground"
     app:cardBackgroundColor="@android:color/white"
     app:cardCornerRadius="10dp"
@@ -22,14 +23,14 @@
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:background="@drawable/bkmrk_icon"
-                android:button="@null"
-                android:checked="false"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
+                android:layout_gravity="end"
                 android:layout_marginTop="5dp"
-                android:layout_marginRight="5dp"/>
+                android:layout_marginRight="5dp"
+                android:background="@drawable/bkmrk_icon"
+                android:button="@null"
+                android:checked="false" />
 
             <TextView
                 android:id="@+id/tvTitle"
