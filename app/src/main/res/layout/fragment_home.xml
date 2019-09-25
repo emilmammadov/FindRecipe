@@ -23,7 +23,11 @@
             android:layout_marginBottom="5dp"
             android:background="@drawable/searchview_rounded"
             android:iconifiedByDefault="false"
-            android:queryBackground="@android:color/transparent" />
+            android:queryBackground="@android:color/transparent"
+            android:focusedByDefault="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/searchRecyclerView"
