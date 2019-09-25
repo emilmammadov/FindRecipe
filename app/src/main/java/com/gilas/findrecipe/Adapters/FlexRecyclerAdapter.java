@@ -9,13 +9,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.gilas.findrecipe.Database.Tags;
 import com.gilas.findrecipe.R;
 
 import java.util.ArrayList;
 
 public class FlexRecyclerAdapter extends RecyclerView.Adapter<FlexRecyclerAdapter.MyViewHolder> {
 
-    ArrayList<String> tags;
+    ArrayList<Tags> tags;
 
 
     private OnItemClickListener mOnItemClickListener;
@@ -26,7 +27,7 @@ public class FlexRecyclerAdapter extends RecyclerView.Adapter<FlexRecyclerAdapte
     }
 
     // constructor'ımıza listener koyalım
-    public FlexRecyclerAdapter(ArrayList<String> tags, OnItemClickListener onItemClickListener) {
+    public FlexRecyclerAdapter(ArrayList<Tags> tags, OnItemClickListener onItemClickListener) {
         mOnItemClickListener = onItemClickListener;
         this.tags = tags;
     }
@@ -41,7 +42,7 @@ public class FlexRecyclerAdapter extends RecyclerView.Adapter<FlexRecyclerAdapte
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
-        holder.tvTag.setText(tags.get(position));
+        holder.tvTag.setText(tags.get(position).getName());
 
 
         holder.btnDelete.setOnClickListener(new View.OnClickListener() {

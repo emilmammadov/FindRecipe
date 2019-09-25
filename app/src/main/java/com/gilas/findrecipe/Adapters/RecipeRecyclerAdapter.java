@@ -33,7 +33,6 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecipeRecyclerAd
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.tvTitle.setText(recipes.get(position).getTitle());
-        holder.tvBody.setText(recipes.get(position).getBody());
     }
 
     @Override
@@ -43,13 +42,12 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecipeRecyclerAd
 
     class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvTitle, tvBody;
+        TextView tvTitle;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             tvTitle = itemView.findViewById(R.id.tvTitle);
-            tvBody = itemView.findViewById(R.id.tvBody);
         }
     }
 
