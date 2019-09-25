@@ -2,12 +2,12 @@ package com.gilas.findrecipe.Fragments;
 
 
 import android.app.Dialog;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -178,6 +178,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             searchView.onActionViewExpanded();
         }
         if (view == btnSearchRecipe) {
+            hideKeyboard();
+
             ArrayList<Integer> listSelectedTagID = new ArrayList<>();
             for (Tags tag : listSelectedTags) {
                 listSelectedTagID.add(tag.getId());
@@ -194,5 +196,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
 
         }
+    }
+
+    private void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }
