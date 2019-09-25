@@ -3,8 +3,67 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".RecipeActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imgRecipeActivity"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/back_recipe" />
+
+
+        <TextView
+            android:id="@+id/titleRecipeActivity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/imgRecipeActivity"
+            android:text="deneme"
+            android:textColor="#fff"
+            android:textSize="25sp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginBottom="15dp"/>
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/imgRecipeActivity"
+            android:layout_alignBottom="@+id/imgRecipeActivity"
+            android:background="@drawable/bkmrk_icon"
+            android:button="@android:color/transparent"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="12dp"/>
+
+
+    </RelativeLayout>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:cardBackgroundColor="@android:color/white"
+        app:cardElevation="2dp">
+
+
+        <TextView
+            android:id="@+id/bodyRecipeActivity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+
+
+    </androidx.cardview.widget.CardView>
 
 
 
