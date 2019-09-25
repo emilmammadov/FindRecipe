@@ -3,6 +3,8 @@ package com.gilas.findrecipe.Fragments;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,7 +43,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private SearchView searchView;
     private View view;
     private Button btnSearchRecipe;
-    private Dialog mDialog;
 
     public HomeFragment() {
     }
@@ -64,10 +65,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         btnSearchRecipe = view.findViewById(R.id.btnSearch);
         btnSearchRecipe.setOnClickListener(this);
 
-        mDialog = new Dialog(getContext());
-        mDialog.setContentView(R.layout.recipe_dialog);
-        //mDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
         listSelectedTags = new ArrayList<>();
         listSelectedTagNames = new ArrayList<>();
 
@@ -83,12 +80,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         RecycleClick.addTo(recipeRecyclerView).setOnItemClickListener(new RecycleClick.OnItemClickListener() {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int i, View view) {
-                TextView tvDialogTitle = mDialog.findViewById(R.id.tvDialogTitle);
-                TextView tvDialogBody = mDialog.findViewById(R.id.tvDialogBody);
 
-                tvDialogTitle.setText(result.get(i).getTitle());
-                tvDialogBody.setText(result.get(i).getBody());
-                mDialog.show();
             }
         });
     }
@@ -181,9 +173,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             hideKeyboard();
 
             ArrayList<Integer> listSelectedTagID = new ArrayList<>();
-            for (Tags tag : listSelectedTags) {
-                listSelectedTagID.add(tag.getId());
-            }
+//            for (Tags tag : listSelectedTags) {
+//                listSelectedTagID.add(tag.getId());
+//            }
+
+            listSelectedTagID.add(10);
+            listSelectedTagID.add(7);
+
+
             new DatabaseOperations().getRecipes(getContext(), listSelectedTagID, new DatabaseOperations.VolleyCallback() {
                 @Override
                 public void onSuccess(ArrayList<Recipes> result) {
