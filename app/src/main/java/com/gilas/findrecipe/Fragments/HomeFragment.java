@@ -1,10 +1,8 @@
 package com.gilas.findrecipe.Fragments;
 
 
-import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +10,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.SearchView;
-import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,6 +22,7 @@ import com.gilas.findrecipe.Database.DatabaseOperations;
 import com.gilas.findrecipe.Database.Recipes;
 import com.gilas.findrecipe.Database.Tags;
 import com.gilas.findrecipe.R;
+import com.gilas.findrecipe.RecipeActivity;
 import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexboxLayoutManager;
 import com.google.android.flexbox.JustifyContent;
@@ -34,18 +32,16 @@ import java.util.ArrayList;
 public class HomeFragment extends Fragment implements View.OnClickListener {
 
     private static String TAG = "HomeFragment";
+    public static String HOME_RECIPE_ID_EXTRA = "id";
+    public static String HOME_RECIPE_TITLE_EXTRA = "title";
+    public static String HOME_RECIPE_BODY_EXTRA = "body";
 
-    private static ArrayList<Tags> listSearchedTags;
-    private static ArrayList<Tags> listSelectedTags;
-    private static ArrayList<String> listSelectedTagNames;
-    private ArrayList<Tags> listTags;
+    private static ArrayList<Tags> listTags, listSearchedTags, listSelectedTags;
+    private static ArrayList<Recipes> listRecipes;
     private RecyclerView searchRecyclerView, flexBoxRecyclerView, recipeRecyclerView;
     private SearchView searchView;
     private View view;
     private Button btnSearchRecipe;
-
-    public HomeFragment() {
-    }
 
 
     @Override
@@ -59,14 +55,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         searchRecyclerView = view.findViewById(R.id.searchRecyclerView);
         flexBoxRecyclerView = view.findViewById(R.id.flexBoxRecyclerView);
         recipeRecyclerView = view.findViewById(R.id.recipeRecyclerView);
-        //recipeRecyclerView.setNestedScrollingEnabled(false);
         searchView = view.findViewById(R.id.searchView);
-        searchView.setOnClickListener(this);
         btnSearchRecipe = view.findViewById(R.id.btnSearch);
+        searchView.setOnClickListener(this);
         btnSearchRecipe.setOnClickListener(this);
 
         listSelectedTags = new ArrayList<>();
-        listSelectedTagNames = new ArrayList<>();
 
         flexBox();
 
@@ -76,11 +70,17 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         return view;
     }
 
-    private void recipeRecycleClick(final ArrayList<Recipes> result) {
+    private void recipeRecycleClick(final ArrayList<Recipes> listRecipes) {
         RecycleClick.addTo(recipeRecyclerView).setOnItemClickListener(new RecycleClick.OnItemClickListener() {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int i, View view) {
+                Intent intent = new Intent(getContext(), RecipeActivity.class);
+                intent.putExtra(HOME_RECIPE_ID_EXTRA, listRecipes.get(i).getId());
+                intent.putExtra(HOME_RECIPE_TITLE_EXTRA, listRecipes.get(i).getTitle());
+                intent.putExtra(HOME_RECIPE_BODY_EXTRA, listRecipes.get(i).getBody());
+                startActivity(intent);
 
+                searchView.clearFocus();
             }
         });
     }
@@ -90,10 +90,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int i, View view) {
 
-
                 if (!listSelectedTags.contains(listSearchedTags.get(i))) {
                     listSelectedTags.add(listSearchedTags.get(i));
-                    listSelectedTagNames.add(listSearchedTags.get(i).getName());
                     flexBox();
                 }
 
@@ -108,12 +106,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         layoutManager.setJustifyContent(JustifyContent.FLEX_START);
         flexBoxRecyclerView.setLayoutManager(layoutManager);
 
-        RecyclerView.Adapter adapter = new FlexRecyclerAdapter(listSelectedTagNames, new FlexRecyclerAdapter.OnItemClickListener() {
+        RecyclerView.Adapter adapter = new FlexRecyclerAdapter(listSelectedTags, new FlexRecyclerAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
 
                 listSelectedTags.remove(position);
-                listSelectedTagNames.remove(position);
                 flexBox();
             }
         });
@@ -123,7 +120,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
 
-    // Uygulama tıklandığı anda tag verilerini firebase'den çekiyor.
     @Override
     public void onStart() {
         super.onStart();
@@ -146,7 +142,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
 
-    // SearchBar için arama fonksiyonu
+
     private void search(String str) {
         listSearchedTags = new ArrayList<>();
 
@@ -170,22 +166,24 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             searchView.onActionViewExpanded();
         }
         if (view == btnSearchRecipe) {
-            hideKeyboard();
+            searchView.clearFocus();
 
             ArrayList<Integer> listSelectedTagID = new ArrayList<>();
-//            for (Tags tag : listSelectedTags) {
-//                listSelectedTagID.add(tag.getId());
-//            }
+            /*for (Tags tag : listSelectedTags) {
+                listSelectedTagID.add(tag.getId());
+            }*/
 
             listSelectedTagID.add(10);
             listSelectedTagID.add(7);
+            listSelectedTagID.add(5);
 
 
             new DatabaseOperations().getRecipes(getContext(), listSelectedTagID, new DatabaseOperations.VolleyCallback() {
                 @Override
                 public void onSuccess(ArrayList<Recipes> result) {
 
-                    recipeRecycleClick(result);
+                    listRecipes = result;
+                    recipeRecycleClick(listRecipes);
                     RecipeRecyclerAdapter adapter = new RecipeRecyclerAdapter(result);
                     recipeRecyclerView.setAdapter(adapter);
                 }
@@ -195,8 +193,4 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    private void hideKeyboard() {
-        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-    }
 }
