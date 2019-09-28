@@ -33,7 +33,7 @@ public class RecipeActivity extends AppCompatActivity {
 
         Recipes recipeExtra = (Recipes) getIntent().getSerializableExtra(HomeFragment.RECIPE_OBJECT_EXTRA);
 
-        tvTitle.setText(recipeExtra.getIngredientList());
+        tvTitle.setText(recipeExtra.getTitle());
         tvBody.setText(recipeExtra.getBody());
 
 
