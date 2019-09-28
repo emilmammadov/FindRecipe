@@ -41,7 +41,7 @@
 
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/flexBoxRecyclerView"
+            android:id="@+id/tagFlexRecyclerView"
             android:layout_width="280dp"
             android:layout_height="180dp"
             android:layout_gravity="center_horizontal"
