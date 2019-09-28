@@ -30,9 +30,7 @@ import java.util.ArrayList;
 public class HomeFragment extends Fragment implements View.OnClickListener {
 
     private static String TAG = "HomeFragment";
-    public static String HOME_RECIPE_ID_EXTRA = "id";
-    public static String HOME_RECIPE_TITLE_EXTRA = "title";
-    public static String HOME_RECIPE_BODY_EXTRA = "body";
+    public static String RECIPE_OBJECT_EXTRA = "recipe_object";
 
     private static ArrayList<Tags> listTags, listSearchedTags, listSelectedTags;
     private static ArrayList<Recipes> listRecipes;
@@ -73,9 +71,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int i, View view) {
                 Intent intent = new Intent(getContext(), RecipeActivity.class);
-                intent.putExtra(HOME_RECIPE_ID_EXTRA, listRecipes.get(i).getId());
-                intent.putExtra(HOME_RECIPE_TITLE_EXTRA, listRecipes.get(i).getTitle());
-                intent.putExtra(HOME_RECIPE_BODY_EXTRA, listRecipes.get(i).getBody());
+                intent.putExtra(RECIPE_OBJECT_EXTRA, listRecipes.get(i));
                 startActivity(intent);
 
                 searchView.clearFocus();
