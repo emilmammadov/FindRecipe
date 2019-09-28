@@ -4,15 +4,23 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gilas.findrecipe.Database.Recipes;
 import com.gilas.findrecipe.Fragments.HomeFragment;
 
 public class RecipeActivity extends AppCompatActivity {
 
-    String title, body;
-    int id;
+//    private int id;
+//    private String title;
+//    private String ingredientList;
+//    private String body;
+//    private int personCount = -1;
+//    private int prepTimeSec = -1;
+//    private int cookTimeSec = -1;
+
     TextView tvTitle, tvBody;
 
     @Override
@@ -20,14 +28,16 @@ public class RecipeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
 
-        Bundle extras = getIntent().getExtras();
-        title = extras.getString(HomeFragment.HOME_RECIPE_TITLE_EXTRA);
-        body = extras.getString(HomeFragment.HOME_RECIPE_BODY_EXTRA);
-        id = extras.getInt(HomeFragment.HOME_RECIPE_ID_EXTRA);
-
         tvTitle = findViewById(R.id.titleRecipeActivity);
         tvBody = findViewById(R.id.bodyRecipeActivity);
-        tvTitle.setText(title);
-        tvBody.setText(body);
+
+        Recipes recipeExtra = (Recipes) getIntent().getSerializableExtra(HomeFragment.RECIPE_OBJECT_EXTRA);
+
+        tvTitle.setText(recipeExtra.getIngredientList());
+        tvBody.setText(recipeExtra.getBody());
+
+
+
+
     }
 }
