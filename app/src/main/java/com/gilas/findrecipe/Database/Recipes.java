@@ -12,10 +12,14 @@ public class Recipes implements Serializable {
     private int cookTimeSec;
 
 
-    public Recipes(int id, String title, String body) {
+    public Recipes(int id, String title, String ingredientList, String body, int personCount, int prepTimeSec, int cookTimeSec) {
         this.id = id;
         this.title = title;
+        this.ingredientList = ingredientList;
         this.body = body;
+        this.personCount = personCount;
+        this.prepTimeSec = prepTimeSec;
+        this.cookTimeSec = cookTimeSec;
     }
 
     public int getId() {

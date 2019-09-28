@@ -140,23 +140,29 @@ public class DatabaseOperations {
         final Object[] selectedTagsArray = selectedTags.toArray();
 
         RequestQueue requestQueue = Volley.newRequestQueue(context);
-        StringRequest jsonObjectRequest = new StringRequest(Request.Method.POST,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,
                 url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
 
-                    Log.e(TAG, "onResponse: " + jsonObject);
                     JSONArray array = jsonObject.getJSONArray("recipes");
 
                     for (int i = 0; i < array.length(); i++) {
+
                         JSONObject obj = (JSONObject) array.getJSONObject(i).get("recipe");
+
                         int id = Integer.parseInt(obj.get("id").toString());
                         String title = obj.get("title").toString();
+                        String ingredientList = obj.get("ingredient_list").toString();
                         String body = obj.get("body").toString();
-                        Log.e(TAG, "onResponse: " + title);
-                        recipesArrayList.add(new Recipes(id, title, body));
+                        int personCount = Integer.parseInt(obj.get("person_count").toString());
+                        int prepTime = Integer.parseInt(obj.get("prep_time").toString());
+                        int cookTime = Integer.parseInt(obj.get("cook_time").toString());
+
+                        recipesArrayList.add(new Recipes(id, title, ingredientList, body,
+                                personCount, prepTime, cookTime));
 
                     }
 
@@ -182,7 +188,7 @@ public class DatabaseOperations {
         };
 
 
-        requestQueue.add(jsonObjectRequest);
+        requestQueue.add(stringRequest);
     }
 
     public interface VolleyCallback {
