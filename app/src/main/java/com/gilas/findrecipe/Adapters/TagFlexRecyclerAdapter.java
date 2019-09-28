@@ -14,7 +14,7 @@ import com.gilas.findrecipe.R;
 
 import java.util.ArrayList;
 
-public class FlexRecyclerAdapter extends RecyclerView.Adapter<FlexRecyclerAdapter.MyViewHolder> {
+public class TagFlexRecyclerAdapter extends RecyclerView.Adapter<TagFlexRecyclerAdapter.MyViewHolder> {
 
     ArrayList<Tags> tags;
 
@@ -27,7 +27,7 @@ public class FlexRecyclerAdapter extends RecyclerView.Adapter<FlexRecyclerAdapte
     }
 
     // constructor'ımıza listener koyalım
-    public FlexRecyclerAdapter(ArrayList<Tags> tags, OnItemClickListener onItemClickListener) {
+    public TagFlexRecyclerAdapter(ArrayList<Tags> tags, OnItemClickListener onItemClickListener) {
         mOnItemClickListener = onItemClickListener;
         this.tags = tags;
     }
@@ -36,8 +36,8 @@ public class FlexRecyclerAdapter extends RecyclerView.Adapter<FlexRecyclerAdapte
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.flexbox_item, parent, false);
-        return new FlexRecyclerAdapter.MyViewHolder(view);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.tag_flexbox_item, parent, false);
+        return new TagFlexRecyclerAdapter.MyViewHolder(view);
     }
 
     @Override

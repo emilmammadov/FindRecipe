@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chootdev.recycleclick.RecycleClick;
-import com.gilas.findrecipe.Adapters.FlexRecyclerAdapter;
+import com.gilas.findrecipe.Adapters.TagFlexRecyclerAdapter;
 import com.gilas.findrecipe.Adapters.RecipeRecyclerAdapter;
 import com.gilas.findrecipe.Adapters.SearchRecyclerAdapter;
 import com.gilas.findrecipe.Database.DatabaseOperations;
@@ -49,7 +49,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         view = inflater.inflate(R.layout.fragment_home, container, false);
 
         searchRecyclerView = view.findViewById(R.id.searchRecyclerView);
-        flexBoxRecyclerView = view.findViewById(R.id.flexBoxRecyclerView);
+        flexBoxRecyclerView = view.findViewById(R.id.tagFlexRecyclerView);
         recipeRecyclerView = view.findViewById(R.id.recipeRecyclerView);
         searchView = view.findViewById(R.id.searchView);
         btnSearchRecipe = view.findViewById(R.id.btnSearch);
@@ -100,7 +100,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         layoutManager.setJustifyContent(JustifyContent.FLEX_START);
         flexBoxRecyclerView.setLayoutManager(layoutManager);
 
-        RecyclerView.Adapter adapter = new FlexRecyclerAdapter(listSelectedTags, new FlexRecyclerAdapter.OnItemClickListener() {
+        RecyclerView.Adapter adapter = new TagFlexRecyclerAdapter(listSelectedTags, new TagFlexRecyclerAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
 
