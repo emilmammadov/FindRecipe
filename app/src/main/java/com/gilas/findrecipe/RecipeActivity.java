@@ -13,10 +13,11 @@ import android.widget.Toast;
 import com.gilas.findrecipe.Database.DatabaseOperations;
 import com.gilas.findrecipe.Database.Recipes;
 import com.gilas.findrecipe.Fragments.HomeFragment;
+import com.gilas.findrecipe.SQLite.DBHelper;
 
 public class RecipeActivity extends AppCompatActivity {
 
-//    private int id;
+    private int id;
 //    private String title;
 //    private String ingredientList;
 //    private String body;
@@ -38,6 +39,8 @@ public class RecipeActivity extends AppCompatActivity {
 
         final Recipes recipeExtra = (Recipes) getIntent().getSerializableExtra(HomeFragment.RECIPE_OBJECT_EXTRA);
 
+        id = recipeExtra.getId();
+
         tvTitle.setText(recipeExtra.getTitle());
         tvBody.setText(recipeExtra.getBody());
 
@@ -45,9 +48,9 @@ public class RecipeActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked) {
-                    new DatabaseOperations().getFavRecipe(getApplicationContext(), recipeExtra.getId());
+                    new DatabaseOperations().getFavRecipe(getApplicationContext(), id);
                 }else {
-
+                    new DBHelper(getApplicationContext()).deleteRecipe(id);
                 }
             }
         });

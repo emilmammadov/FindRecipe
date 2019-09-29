@@ -21,10 +21,15 @@ public class DBHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, 1);
     }
 
+    public boolean deleteRecipe (int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_RECIPE, "id = " + id, null)>0;
+    }
+
     public boolean isRecipeExists(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String Query = "Select * from recipetbl where id = " + id;
+        String Query = "Select * from "+ TABLE_RECIPE +" where id = " + id;
         Cursor cursor = db.rawQuery(Query, null);
         if(cursor.getCount() <= 0){
             cursor.close();
