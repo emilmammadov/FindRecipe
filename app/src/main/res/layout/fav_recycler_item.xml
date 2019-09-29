@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/fav_flexbox_item_background"
+    android:background="@drawable/fav_recycler_item_background"
     android:layout_margin="10dp">
 
     <RelativeLayout
@@ -22,8 +22,7 @@
             android:id="@+id/tvTitleFav"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/imgRecipeActivity"
-            android:text="deneme"
+            android:layout_alignBottom="@+id/imgFav"
             android:textColor="#fff"
             android:textSize="15sp"
             android:layout_marginLeft="10dp"

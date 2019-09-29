@@ -8,7 +8,7 @@
     tools:context=".Fragments.FavFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/favFlexRecyclerView"
+        android:id="@+id/favRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"

@@ -9,12 +9,10 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.gilas.findrecipe.Adapters.FavFlexRecyclerAdapter;
+import com.gilas.findrecipe.Adapters.FavRecyclerAdapter;
 import com.gilas.findrecipe.Database.Recipes;
 import com.gilas.findrecipe.R;
-import com.google.android.flexbox.FlexDirection;
-import com.google.android.flexbox.FlexboxLayoutManager;
-import com.google.android.flexbox.JustifyContent;
+import com.gilas.findrecipe.SQLite.DBHelper;
 
 import java.util.ArrayList;
 
@@ -23,7 +21,7 @@ import java.util.ArrayList;
  */
 public class FavFragment extends Fragment {
 
-    RecyclerView flexBoxRecyclerView;
+    RecyclerView recyclerView;
     ArrayList<Recipes> recipeList;
 
     public FavFragment() {
@@ -35,26 +33,16 @@ public class FavFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_fav, container, false);
 
-        flexBoxRecyclerView = view.findViewById(R.id.favFlexRecyclerView);
+        recyclerView = view.findViewById(R.id.favRecyclerView);
 
-        recipeList = new ArrayList<>();
+        recipeList = new DBHelper(getContext()).getAllRecipes();
 
-        recipeList.add(new Recipes(5,"hey","adfasdf","dsaf",3,5,7));
+        //recipeList.add(new Recipes(5,"hey","adfasdf","dsaf",3,5,7));
 
-        flexbox(recipeList);
+        FavRecyclerAdapter favAdapter = new FavRecyclerAdapter(recipeList);
+        recyclerView.setAdapter(favAdapter);
 
         return view;
-    }
-
-    private void flexbox(ArrayList<Recipes> recipeList) {
-        FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(getContext());
-        layoutManager.setFlexDirection(FlexDirection.ROW);
-        layoutManager.setJustifyContent(JustifyContent.FLEX_START);
-        flexBoxRecyclerView.setLayoutManager(layoutManager);
-
-        RecyclerView.Adapter adapter = new FavFlexRecyclerAdapter(recipeList);
-        flexBoxRecyclerView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
     }
 
 }

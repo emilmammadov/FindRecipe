@@ -11,6 +11,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.gilas.findrecipe.SQLite.DBHelper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -193,6 +194,58 @@ public class DatabaseOperations {
 
     public interface VolleyCallback {
         void onSuccess(ArrayList<Recipes> result);
+    }
+
+
+    /**
+     * After here is SQLite database operations
+     */
+
+    public void getFavRecipe(final Context context, final int id) {
+        String url = "http://" + ip + "/get_fav_recipe.php";
+
+
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,
+                url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+
+                try {
+                    JSONObject obj = new JSONObject(response);
+                    Recipes recipe = new Recipes(
+                            Integer.parseInt(obj.get("id").toString()),
+                            obj.get("title").toString(),
+                            obj.get("ingredient_list").toString(),
+                            obj.get("body").toString(),
+                            Integer.parseInt(obj.get("person_count").toString()),
+                            Integer.parseInt(obj.get("prep_time_sec").toString()),
+                            Integer.parseInt(obj.get("cook_time_sec").toString())
+                    );
+
+                    new DBHelper(context).insertRecipeTbl(recipe);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "onError: " + error);
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("id", id + "");
+
+                return params;
+            }
+        };
+
+        requestQueue.add(stringRequest);
     }
 
 

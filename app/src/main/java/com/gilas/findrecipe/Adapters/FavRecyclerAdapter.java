@@ -14,19 +14,19 @@ import com.gilas.findrecipe.R;
 
 import java.util.ArrayList;
 
-public class FavFlexRecyclerAdapter extends RecyclerView.Adapter<FavFlexRecyclerAdapter.MyViewHolder>{
+public class FavRecyclerAdapter extends RecyclerView.Adapter<FavRecyclerAdapter.MyViewHolder>{
 
     ArrayList<Recipes> recipeList;
 
-    public FavFlexRecyclerAdapter(ArrayList<Recipes> recipeList) {
+    public FavRecyclerAdapter(ArrayList<Recipes> recipeList) {
         this.recipeList = recipeList;
     }
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fav_flexbox_item, parent, false);
-        return new FavFlexRecyclerAdapter.MyViewHolder(view);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fav_recycler_item, parent, false);
+        return new FavRecyclerAdapter.MyViewHolder(view);
     }
 
     @Override
