@@ -44,7 +44,6 @@ public class DBHelper extends SQLiteOpenHelper {
         return recipes;
     }
 
-
     public void insertRecipeTbl(Recipes recipe) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -86,7 +85,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         String createTagTable = "CREATE TABLE 'tagtbl' (" +
                 "  'id' INTEGER NOT NULL," +
-                "  'name' TEXT COLLATE utf8_bin NOT NULL" +
+                "  'name' TEXT COLLATE NOCASE NOT NULL" +
                 ");";
 
 
