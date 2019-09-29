@@ -21,6 +21,19 @@ public class DBHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, 1);
     }
 
+    public boolean isRecipeExists(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String Query = "Select * from recipetbl where id = " + id;
+        Cursor cursor = db.rawQuery(Query, null);
+        if(cursor.getCount() <= 0){
+            cursor.close();
+            return false;
+        }
+        cursor.close();
+        return true;
+    }
+
     public ArrayList<Recipes> getAllRecipes() {
         ArrayList<Recipes> recipes = new ArrayList<>();
         SQLiteDatabase db = this.getWritableDatabase();
