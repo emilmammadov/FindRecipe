@@ -1,14 +1,11 @@
 package com.gilas.findrecipe;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.gilas.findrecipe.Database.DatabaseOperations;
 import com.gilas.findrecipe.Database.Recipes;
@@ -33,31 +30,36 @@ public class RecipeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
 
+        final Recipes recipeExtra = (Recipes) getIntent().getSerializableExtra(HomeFragment.RECIPE_OBJECT_EXTRA);
+        id = recipeExtra.getId();
+
         tvTitle = findViewById(R.id.titleRecipeActivity);
         tvBody = findViewById(R.id.bodyRecipeActivity);
         bookmark = findViewById(R.id.bkmrkCheckbox);
 
-        final Recipes recipeExtra = (Recipes) getIntent().getSerializableExtra(HomeFragment.RECIPE_OBJECT_EXTRA);
-
-        id = recipeExtra.getId();
-
         tvTitle.setText(recipeExtra.getTitle());
         tvBody.setText(recipeExtra.getBody());
+
+        if (new DBHelper(getApplicationContext()).isRecipeExists(id)) {
+            bookmark.setChecked(true);
+        }
+
 
         bookmark.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked) {
-                    new DatabaseOperations().getFavRecipe(getApplicationContext(), id);
-                }else {
+
+                    new DatabaseOperations().setFavRecipe(getApplicationContext(), id);
+
+                } else {
+
                     new DBHelper(getApplicationContext()).deleteRecipe(id);
+
+
                 }
             }
         });
-
-
-
-
 
 
     }

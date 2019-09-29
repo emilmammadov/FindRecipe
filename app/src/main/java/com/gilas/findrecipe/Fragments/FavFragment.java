@@ -21,17 +21,23 @@ import java.util.ArrayList;
 
 import static com.gilas.findrecipe.Fragments.HomeFragment.RECIPE_OBJECT_EXTRA;
 
-/**
- * A simple {@link Fragment} subclass.
- */
+
 public class FavFragment extends Fragment {
 
-    RecyclerView recyclerView;
+    static RecyclerView recyclerView;
     ArrayList<Recipes> recipeList;
 
     public FavFragment() {
     }
 
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        recipeList = new DBHelper(getContext()).getAllRecipes();
+        FavRecyclerAdapter favAdapter = new FavRecyclerAdapter(recipeList);
+        recyclerView.setAdapter(favAdapter);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,8 +52,6 @@ public class FavFragment extends Fragment {
         recyclerView.setAdapter(favAdapter);
 
         recyclerClick(recipeList);
-
-
 
 
         return view;
