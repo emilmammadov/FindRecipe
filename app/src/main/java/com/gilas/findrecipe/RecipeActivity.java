@@ -36,7 +36,7 @@ public class RecipeActivity extends AppCompatActivity {
         tvBody = findViewById(R.id.bodyRecipeActivity);
         bookmark = findViewById(R.id.bkmrkCheckbox);
 
-        Recipes recipeExtra = (Recipes) getIntent().getSerializableExtra(HomeFragment.RECIPE_OBJECT_EXTRA);
+        final Recipes recipeExtra = (Recipes) getIntent().getSerializableExtra(HomeFragment.RECIPE_OBJECT_EXTRA);
 
         tvTitle.setText(recipeExtra.getTitle());
         tvBody.setText(recipeExtra.getBody());
@@ -45,7 +45,7 @@ public class RecipeActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked) {
-                    new DatabaseOperations().getFavRecipe(getApplicationContext(), 1);
+                    new DatabaseOperations().getFavRecipe(getApplicationContext(), recipeExtra.getId());
                 }else {
 
                 }

@@ -159,8 +159,8 @@ public class DatabaseOperations {
                         String ingredientList = obj.get("ingredient_list").toString();
                         String body = obj.get("body").toString();
                         int personCount = Integer.parseInt(obj.get("person_count").toString());
-                        int prepTime = Integer.parseInt(obj.get("prep_time").toString());
-                        int cookTime = Integer.parseInt(obj.get("cook_time").toString());
+                        int prepTime = Integer.parseInt(obj.get("prep_time_sec").toString());
+                        int cookTime = Integer.parseInt(obj.get("cook_time_sec").toString());
 
                         recipesArrayList.add(new Recipes(id, title, ingredientList, body,
                                 personCount, prepTime, cookTime));
@@ -211,24 +211,28 @@ public class DatabaseOperations {
             @Override
             public void onResponse(String response) {
 
+                if (!(new DBHelper(context).isRecipeExists(id))) {
+                    try {
+                        JSONObject obj = new JSONObject(response);
+                        Log.e(TAG, "onResponse: " + obj.get("title").toString());
+                        Recipes recipe = new Recipes(
+                                Integer.parseInt(obj.get("id").toString()),
+                                obj.get("title").toString(),
+                                obj.get("ingredient_list").toString(),
+                                obj.get("body").toString(),
+                                Integer.parseInt(obj.get("person_count").toString()),
+                                Integer.parseInt(obj.get("prep_time_sec").toString()),
+                                Integer.parseInt(obj.get("cook_time_sec").toString())
+                        );
 
-                try {
-                    JSONObject obj = new JSONObject(response);
-                    Recipes recipe = new Recipes(
-                            Integer.parseInt(obj.get("id").toString()),
-                            obj.get("title").toString(),
-                            obj.get("ingredient_list").toString(),
-                            obj.get("body").toString(),
-                            Integer.parseInt(obj.get("person_count").toString()),
-                            Integer.parseInt(obj.get("prep_time_sec").toString()),
-                            Integer.parseInt(obj.get("cook_time_sec").toString())
-                    );
 
-                    new DBHelper(context).insertRecipeTbl(recipe);
+                        new DBHelper(context).insertRecipeTbl(recipe);
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
+
             }
         }, new Response.ErrorListener() {
             @Override
