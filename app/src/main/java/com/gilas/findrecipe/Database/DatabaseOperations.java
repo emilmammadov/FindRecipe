@@ -201,7 +201,7 @@ public class DatabaseOperations {
      * After here is SQLite database operations
      */
 
-    public void getFavRecipe(final Context context, final int id) {
+    public void setFavRecipe(final Context context, final int id) {
         String url = "http://" + ip + "/get_fav_recipe.php";
 
 
