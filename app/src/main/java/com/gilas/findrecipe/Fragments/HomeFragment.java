@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,6 +39,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private SearchView searchView;
     private View view;
     private Button btnSearchRecipe;
+    private TextView tvTable;
 
 
     @Override
@@ -48,6 +50,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         view = inflater.inflate(R.layout.fragment_home, container, false);
 
+        tvTable = view.findViewById(R.id.tvTable);
         searchRecyclerView = view.findViewById(R.id.searchRecyclerView);
         flexBoxRecyclerView = view.findViewById(R.id.tagFlexRecyclerView);
         recipeRecyclerView = view.findViewById(R.id.recipeRecyclerView);
@@ -85,6 +88,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             public void onItemClicked(RecyclerView recyclerView, int i, View view) {
 
                 if (!listSelectedTags.contains(listSearchedTags.get(i))) {
+                    tvTable.setVisibility(View.INVISIBLE);
                     listSelectedTags.add(listSearchedTags.get(i));
                     flexBox();
                 }
@@ -105,6 +109,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             public void onItemClick(int position) {
 
                 listSelectedTags.remove(position);
+                if (listSelectedTags.size() == 0) tvTable.setVisibility(View.VISIBLE);
                 flexBox();
             }
         });

@@ -1,5 +1,6 @@
 package com.gilas.findrecipe.Adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +17,12 @@ import java.util.ArrayList;
 
 public class FavRecyclerAdapter extends RecyclerView.Adapter<FavRecyclerAdapter.MyViewHolder>{
 
+    private Context context;
     ArrayList<Recipes> recipeList;
 
-    public FavRecyclerAdapter(ArrayList<Recipes> recipeList) {
+    public FavRecyclerAdapter(Context context, ArrayList<Recipes> recipeList) {
         this.recipeList = recipeList;
+        this.context = context;
     }
 
     @NonNull
@@ -31,7 +34,19 @@ public class FavRecyclerAdapter extends RecyclerView.Adapter<FavRecyclerAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+
+        Recipes recipe = recipeList.get(position);
+
+        String personCount = recipe.getPersonCount()
+                + " " + context.getResources().getString(R.string.person);
+
+        double timeMin = (recipe.getCookTimeSec() + recipe.getPrepTimeSec()) / 60.0;
+        String time = (int) timeMin + " " + context.getResources().getString(R.string.minute);
+
+
         holder.tvTitle.setText(recipeList.get(position).getTitle());
+        holder.tvPersonCount.setText(personCount);
+        holder.tvTime.setText(time);
     }
 
     @Override
@@ -44,12 +59,15 @@ public class FavRecyclerAdapter extends RecyclerView.Adapter<FavRecyclerAdapter.
 
         TextView tvTitle;
         ImageView imgFav;
+        TextView tvPersonCount, tvTime;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             imgFav = itemView.findViewById(R.id.imgFav);
             tvTitle = itemView.findViewById(R.id.tvTitleFav);
+            tvPersonCount = itemView.findViewById(R.id.tvPersonCount);
+            tvTime = itemView.findViewById(R.id.tvTime);
 
         }
     }
