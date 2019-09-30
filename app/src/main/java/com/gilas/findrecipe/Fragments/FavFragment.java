@@ -35,7 +35,7 @@ public class FavFragment extends Fragment {
     public void onStart() {
         super.onStart();
         recipeList = new DBHelper(getContext()).getAllRecipes();
-        FavRecyclerAdapter favAdapter = new FavRecyclerAdapter(recipeList);
+        FavRecyclerAdapter favAdapter = new FavRecyclerAdapter(getContext(), recipeList);
         recyclerView.setAdapter(favAdapter);
     }
 
@@ -48,7 +48,7 @@ public class FavFragment extends Fragment {
 
         recipeList = new DBHelper(getContext()).getAllRecipes();
 
-        FavRecyclerAdapter favAdapter = new FavRecyclerAdapter(recipeList);
+        FavRecyclerAdapter favAdapter = new FavRecyclerAdapter(getContext(), recipeList);
         recyclerView.setAdapter(favAdapter);
 
         recyclerClick(recipeList);
