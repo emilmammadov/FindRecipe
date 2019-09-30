@@ -14,5 +14,7 @@
     <string name="search">Search</string>
     <string name="person">kişi</string>
     <string name="minute">dk</string>
+    <string name="searchHintHome">Malzeme ile ara</string>
+    <string name="searchHintRecipe">Tarif ara</string>
 
 </resources>

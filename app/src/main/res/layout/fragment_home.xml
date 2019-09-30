@@ -13,7 +13,7 @@
 
 
         <SearchView
-            android:id="@+id/searchView"
+            android:id="@+id/searchViewHome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
@@ -25,10 +25,11 @@
             android:focusableInTouchMode="false"
             android:focusedByDefault="false"
             android:iconifiedByDefault="false"
-            android:queryBackground="@android:color/transparent" />
+            android:queryBackground="@android:color/transparent"
+            android:queryHint="@string/searchHintHome" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/searchRecyclerView"
+            android:id="@+id/searchRecyclerHome"
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:layout_marginLeft="20dp"
@@ -76,7 +77,7 @@
             android:textColor="#ffffff" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recipeRecyclerView"
+            android:id="@+id/recipeRecyclerHome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"

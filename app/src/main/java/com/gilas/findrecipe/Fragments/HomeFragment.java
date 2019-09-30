@@ -51,10 +51,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         view = inflater.inflate(R.layout.fragment_home, container, false);
 
         tvTable = view.findViewById(R.id.tvTable);
-        searchRecyclerView = view.findViewById(R.id.searchRecyclerView);
+        searchRecyclerView = view.findViewById(R.id.searchRecyclerHome);
         flexBoxRecyclerView = view.findViewById(R.id.tagFlexRecyclerView);
-        recipeRecyclerView = view.findViewById(R.id.recipeRecyclerView);
-        searchView = view.findViewById(R.id.searchView);
+        recipeRecyclerView = view.findViewById(R.id.recipeRecyclerHome);
+        searchView = view.findViewById(R.id.searchViewHome);
         btnSearchRecipe = view.findViewById(R.id.btnSearch);
         searchView.setOnClickListener(this);
         btnSearchRecipe.setOnClickListener(this);

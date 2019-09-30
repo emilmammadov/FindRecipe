@@ -26,10 +26,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/imgFav"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
             android:textColor="#fff"
             android:textSize="15sp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginBottom="10dp"/>
+            android:textStyle="bold" />
 
 
     </RelativeLayout>
@@ -62,7 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/fav_recycler_info_background"
-            android:drawableLeft="@drawable/ic_group_black_24dp"
+            android:drawableLeft="@drawable/ic_time_icon_24dp"
             android:drawablePadding="3dp"
             android:layout_weight="1"
             android:text="4"
