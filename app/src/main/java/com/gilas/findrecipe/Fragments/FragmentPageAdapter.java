@@ -22,8 +22,6 @@ public class FragmentPageAdapter extends FragmentPagerAdapter {
             case 0:
                 return new HomeFragment();
             case 1:
-                return new RecipeFragment();
-            case 2:
                 return new FavFragment();
             default:
                 return null;

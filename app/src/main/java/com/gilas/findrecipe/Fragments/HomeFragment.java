@@ -14,9 +14,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chootdev.recycleclick.RecycleClick;
-import com.gilas.findrecipe.Adapters.TagFlexRecyclerAdapter;
 import com.gilas.findrecipe.Adapters.RecipeRecyclerAdapter;
 import com.gilas.findrecipe.Adapters.SearchRecyclerAdapter;
+import com.gilas.findrecipe.Adapters.TagFlexRecyclerAdapter;
 import com.gilas.findrecipe.Database.DatabaseOperations;
 import com.gilas.findrecipe.Database.Recipes;
 import com.gilas.findrecipe.Database.Tags;
