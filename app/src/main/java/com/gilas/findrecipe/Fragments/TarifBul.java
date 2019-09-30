@@ -12,7 +12,7 @@ import com.google.android.material.tabs.TabLayout;
 public class TarifBul extends AppCompatActivity {
 
     TabLayout tabLayout;
-    TabItem tabHome, tabRecipe, tabFav;
+    TabItem tabHome, tabFav;
     ViewPager viewPager;
     FragmentPageAdapter fragmentPageAdapter;
 
@@ -23,7 +23,6 @@ public class TarifBul extends AppCompatActivity {
 
         tabLayout = findViewById(R.id.tablayout);
         tabHome = findViewById(R.id.tabHome);
-        tabRecipe = findViewById(R.id.tabRecipe);
         tabFav = findViewById(R.id.tabFav);
         viewPager = findViewById(R.id.viewPager);
 
