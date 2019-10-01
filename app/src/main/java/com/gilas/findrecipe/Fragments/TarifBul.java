@@ -1,6 +1,8 @@
 package com.gilas.findrecipe.Fragments;
 
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
@@ -15,6 +17,7 @@ public class TarifBul extends AppCompatActivity {
     TabItem tabHome, tabRecipe, tabFav;
     ViewPager viewPager;
     FragmentPageAdapter fragmentPageAdapter;
+    View firstTab, secondTab, thirdTab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +30,17 @@ public class TarifBul extends AppCompatActivity {
         tabFav = findViewById(R.id.tabFav);
         viewPager = findViewById(R.id.viewPager);
 
+        firstTab = ((ViewGroup) tabLayout.getChildAt(0)).getChildAt(0);
+        secondTab = ((ViewGroup) tabLayout.getChildAt(0)).getChildAt(1);
+        thirdTab = ((ViewGroup) tabLayout.getChildAt(0)).getChildAt(2);
+
 
         fragmentPageAdapter = new FragmentPageAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(fragmentPageAdapter);
+
+        firstTab.setBackground(getDrawable(R.drawable.selected_tab_left));
+        secondTab.setBackground(getDrawable(R.drawable.selected_tab));
+        thirdTab.setBackground(getDrawable(R.drawable.selected_tab_right));
 
         tabLayoutListener();
     }
@@ -40,6 +51,11 @@ public class TarifBul extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
+
+                firstTab.setBackground(getDrawable(R.drawable.selected_tab_left));
+                secondTab.setBackground(getDrawable(R.drawable.selected_tab));
+                thirdTab.setBackground(getDrawable(R.drawable.selected_tab_right));
+
             }
 
             @Override

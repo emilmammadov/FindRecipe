@@ -11,8 +11,8 @@
         android:id="@+id/tablayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/left_tab_back">
+        android:layout_margin="10dp"
+        style="@style/MyCustomTabLayout">
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tabHome"
@@ -24,13 +24,13 @@
             android:id="@+id/tabRecipe"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="RECIPES" />
+            android:text="RECIPES"/>
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tabFav"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="FAVOURITES" />
+            android:text="FAVOURITES"/>
 
     </com.google.android.material.tabs.TabLayout>
 
