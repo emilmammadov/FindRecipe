@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="5dp"
             android:background="@drawable/searchview_rounded"
@@ -43,12 +43,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="100dp">
+            android:layout_marginTop="70dp">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/tagFlexRecyclerView"
-                android:layout_width="280dp"
-                android:layout_height="180dp"
+                android:layout_width="300dp"
+                android:layout_height="200dp"
                 android:background="@drawable/flex_recycler_background"
                 android:fadeScrollbars="true"
                 android:scrollbars="vertical"

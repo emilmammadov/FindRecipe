@@ -137,7 +137,7 @@ public class DatabaseOperations {
 
         final ArrayList<Recipes> recipesArrayList = new ArrayList<>();
 
-        String url = "http://" + ip + "/get_recipe.php";
+        String url = "http://" + ip + "/get_recipe_with_tag.php";
         final Object[] selectedTagsArray = selectedTags.toArray();
 
         RequestQueue requestQueue = Volley.newRequestQueue(context);
@@ -192,16 +192,64 @@ public class DatabaseOperations {
         requestQueue.add(stringRequest);
     }
 
+    public void getAllRecipeTitles(final Context context, final VolleyCallback callbackTitle) {
+
+        String url = "http://" + ip + "/get_all_recipe_titles.php";
+        final ArrayList<Recipes> titlesArrayList = new ArrayList<>();
+
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
+                url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+
+
+                try {
+                    JSONArray array = response.getJSONArray("titles");
+
+                    for (int i = 0; i < array.length(); i++) {
+                        JSONObject obj = (JSONObject) array.getJSONObject(i).get("title");
+
+                        int id = Integer.parseInt(obj.get("id").toString());
+                        String title = obj.get("title").toString();
+
+                        titlesArrayList.add(new Recipes(id, title));
+                    }
+
+                    callbackTitle.onSuccess(titlesArrayList);
+                } catch (JSONException e) {
+                    Log.e(TAG, "onError: " + e);
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "onErrorResponse: " + error);
+            }
+        });
+
+        requestQueue.add(jsonObjectRequest);
+    }
+
+
     public interface VolleyCallback {
         void onSuccess(ArrayList<Recipes> result);
+
     }
+
+    public interface RecipeCallback {
+        void onSuccess(Recipes result);
+    }
+
 
 
     /**
      * After here is SQLite database operations
      */
 
-    public void setFavRecipe(final Context context, final int id) {
+    public void getFavRecipe(final Context context, final int id, final RecipeCallback callback) {
         String url = "http://" + ip + "/get_fav_recipe.php";
 
 
@@ -225,12 +273,13 @@ public class DatabaseOperations {
                                 Integer.parseInt(obj.get("cook_time_sec").toString())
                         );
 
-
-                        new DBHelper(context).insertRecipeTbl(recipe);
+                        callback.onSuccess(recipe);
 
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                } else {
+                    callback.onSuccess(new DBHelper(context).getRecipe(id));
                 }
 
             }
@@ -251,6 +300,8 @@ public class DatabaseOperations {
 
         requestQueue.add(stringRequest);
     }
+
+
 
 
 }
