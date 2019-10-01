@@ -39,6 +39,23 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
+    public Recipes getRecipe(int id) {
+        Recipes recipe = new Recipes();
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+         String sqlQuery = "SELECT  * FROM " + TABLE_RECIPE + " where id=" + id;
+         Cursor cursor = db.rawQuery(sqlQuery, null);
+
+
+        while (cursor.moveToNext()) {
+                recipe = new Recipes(cursor.getInt(0), cursor.getString(1),
+                    cursor.getString(2),cursor.getString(3), cursor.getInt(4),
+                    cursor.getInt(5), cursor.getInt(6));
+        }
+        return recipe;
+    }
+
     public ArrayList<Recipes> getAllRecipes() {
         ArrayList<Recipes> recipes = new ArrayList<>();
         SQLiteDatabase db = this.getWritableDatabase();
