@@ -168,13 +168,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             searchView.clearFocus();
 
             ArrayList<Integer> listSelectedTagID = new ArrayList<>();
-            /*for (Tags tag : listSelectedTags) {
+            for (Tags tag : listSelectedTags) {
                 listSelectedTagID.add(tag.getId());
-            }*/
+            }
 
-            listSelectedTagID.add(10);
-            listSelectedTagID.add(7);
-            listSelectedTagID.add(5);
+            //listSelectedTagID.add(10);
+            //listSelectedTagID.add(7);
+            //listSelectedTagID.add(5);
 
 
             new DatabaseOperations().getRecipes(getContext(), listSelectedTagID, new DatabaseOperations.VolleyCallback() {

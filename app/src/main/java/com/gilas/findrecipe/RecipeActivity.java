@@ -23,6 +23,7 @@ public class RecipeActivity extends AppCompatActivity {
 //    private int cookTimeSec = -1;
 
     TextView tvTitle, tvBody;
+    TextView tvPerson, tvPrep, tvCook;
     CheckBox bookmark;
 
     @Override
@@ -32,13 +33,22 @@ public class RecipeActivity extends AppCompatActivity {
 
         final Recipes recipeExtra = (Recipes) getIntent().getSerializableExtra(HomeFragment.RECIPE_OBJECT_EXTRA);
         id = recipeExtra.getId();
+        String personText = recipeExtra.getPersonCount() + " " + getResources().getString(R.string.person);
+        String prepText = recipeExtra.getPrepTimeSec() + " " + getResources().getString(R.string.minute);
+        String cookText = recipeExtra.getCookTimeSec() + " " + getResources().getString(R.string.minute);
 
+        tvPerson = findViewById(R.id.personCountRecipeActivity);
+        tvPrep = findViewById(R.id.prepTimeRecipeActivity);
+        tvCook = findViewById(R.id.cookTimeRecipeActivity);
         tvTitle = findViewById(R.id.titleRecipeActivity);
         tvBody = findViewById(R.id.bodyRecipeActivity);
         bookmark = findViewById(R.id.bkmrkCheckbox);
 
         tvTitle.setText(recipeExtra.getTitle());
         tvBody.setText(recipeExtra.getBody());
+        tvPerson.setText(personText);
+        tvPrep.setText(prepText);
+        tvCook.setText(cookText);
 
         if (new DBHelper(getApplicationContext()).isRecipeExists(id)) {
             bookmark.setChecked(true);
