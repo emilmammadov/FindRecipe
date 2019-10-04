@@ -25,7 +25,7 @@ import java.util.Map;
 public class DatabaseOperations {
 
     private static final String TAG = "TAG";
-    private static final String ip = "192.168.0.11";
+    private static final String ip = "192.168.137.1";
 
     public void login(final Context context, final String username, final String password) {
 
