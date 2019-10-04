@@ -22,7 +22,7 @@ public class RecipeActivity extends AppCompatActivity {
 //    private int prepTimeSec = -1;
 //    private int cookTimeSec = -1;
 
-    TextView tvTitle, tvBody;
+    TextView tvTitle, tvIng, tvBody;
     TextView tvPerson, tvPrep, tvCook;
     CheckBox bookmark;
 
@@ -41,10 +41,12 @@ public class RecipeActivity extends AppCompatActivity {
         tvPrep = findViewById(R.id.prepTimeRecipeActivity);
         tvCook = findViewById(R.id.cookTimeRecipeActivity);
         tvTitle = findViewById(R.id.titleRecipeActivity);
+        tvIng = findViewById(R.id.ingredientRecipeActivity);
         tvBody = findViewById(R.id.bodyRecipeActivity);
         bookmark = findViewById(R.id.bkmrkCheckbox);
 
         tvTitle.setText(recipeExtra.getTitle());
+        tvIng.setText(recipeExtra.getIngredientList());
         tvBody.setText(recipeExtra.getBody());
         tvPerson.setText(personText);
         tvPrep.setText(prepText);
