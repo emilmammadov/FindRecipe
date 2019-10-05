@@ -25,10 +25,10 @@ import static com.gilas.findrecipe.Fragments.HomeFragment.RECIPE_OBJECT_EXTRA;
 public class RecipeFragment extends Fragment implements View.OnClickListener {
 
 
-    View view;
-    SearchView searchView;
-    RecyclerView recyclerView;
-    ArrayList<Recipes> listRecipes, listSearchedRecipes;
+    private View view;
+    private SearchView searchView;
+    private RecyclerView recyclerView;
+    private ArrayList<Recipes> listRecipes, listSearchedRecipes;
 
     public RecipeFragment() {
     }
