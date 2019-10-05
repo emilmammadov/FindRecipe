@@ -25,7 +25,7 @@ import static com.gilas.findrecipe.Fragments.HomeFragment.RECIPE_OBJECT_EXTRA;
 public class FavFragment extends Fragment {
 
     static RecyclerView recyclerView;
-    ArrayList<Recipes> recipeList;
+    static ArrayList<Recipes> recipeList;
 
     public FavFragment() {
     }
@@ -51,14 +51,14 @@ public class FavFragment extends Fragment {
         FavRecyclerAdapter favAdapter = new FavRecyclerAdapter(getContext(), recipeList);
         recyclerView.setAdapter(favAdapter);
 
-        recyclerClick(recipeList);
+        recyclerClick();
 
 
         return view;
 
     }
 
-    private void recyclerClick(final ArrayList<Recipes> recipeList) {
+    private void recyclerClick() {
         RecycleClick.addTo(recyclerView).setOnItemClickListener(new RecycleClick.OnItemClickListener() {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int i, View view) {
