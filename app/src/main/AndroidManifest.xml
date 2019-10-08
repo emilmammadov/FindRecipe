@@ -13,7 +13,7 @@
         <activity android:name=".RecipeActivity"></activity>
         <activity android:name=".LoginActivity" />
         <activity android:name=".SignUpActivity" />
-        <activity android:name=".Fragments.TarifBul">
+        <activity android:name=".fragments.TarifBul">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

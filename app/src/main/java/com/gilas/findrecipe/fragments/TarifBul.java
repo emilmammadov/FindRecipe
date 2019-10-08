@@ -1,4 +1,4 @@
-package com.gilas.findrecipe.Fragments;
+package com.gilas.findrecipe.fragments;
 
 import android.os.Bundle;
 import android.view.View;
