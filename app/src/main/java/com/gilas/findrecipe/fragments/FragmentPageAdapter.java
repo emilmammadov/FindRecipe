@@ -1,4 +1,4 @@
-package com.gilas.findrecipe.Fragments;
+package com.gilas.findrecipe.fragments;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

@@ -1,4 +1,4 @@
-package com.gilas.findrecipe.Database;
+package com.gilas.findrecipe.dboperations;
 
 import android.content.Context;
 import android.util.Log;
@@ -11,7 +11,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.gilas.findrecipe.SQLite.DBHelper;
+import com.gilas.findrecipe.Entities.Recipes;
+import com.gilas.findrecipe.Entities.Tags;
 
 import org.json.JSONArray;
 import org.json.JSONException;

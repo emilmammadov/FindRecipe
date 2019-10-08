@@ -1,4 +1,4 @@
-package com.gilas.findrecipe.Adapters;
+package com.gilas.findrecipe.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.gilas.findrecipe.Database.Tags;
+import com.gilas.findrecipe.Entities.Tags;
 import com.gilas.findrecipe.R;
 
 import java.util.ArrayList;

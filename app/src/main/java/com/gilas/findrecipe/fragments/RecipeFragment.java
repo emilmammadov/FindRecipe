@@ -1,4 +1,4 @@
-package com.gilas.findrecipe.Fragments;
+package com.gilas.findrecipe.fragments;
 
 
 import android.content.Intent;
@@ -12,15 +12,15 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chootdev.recycleclick.RecycleClick;
-import com.gilas.findrecipe.Adapters.RecipeSearchRecAdapter;
-import com.gilas.findrecipe.Database.DatabaseOperations;
-import com.gilas.findrecipe.Database.Recipes;
+import com.gilas.findrecipe.adapters.RecipeSearchRecAdapter;
+import com.gilas.findrecipe.dboperations.DatabaseOperations;
+import com.gilas.findrecipe.Entities.Recipes;
 import com.gilas.findrecipe.R;
 import com.gilas.findrecipe.RecipeActivity;
 
 import java.util.ArrayList;
 
-import static com.gilas.findrecipe.Fragments.HomeFragment.RECIPE_OBJECT_EXTRA;
+import static com.gilas.findrecipe.fragments.HomeFragment.RECIPE_OBJECT_EXTRA;
 
 public class RecipeFragment extends Fragment implements View.OnClickListener {
 

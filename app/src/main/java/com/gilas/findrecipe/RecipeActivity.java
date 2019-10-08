@@ -7,10 +7,10 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.gilas.findrecipe.Database.DatabaseOperations;
-import com.gilas.findrecipe.Database.Recipes;
-import com.gilas.findrecipe.Fragments.HomeFragment;
-import com.gilas.findrecipe.SQLite.DBHelper;
+import com.gilas.findrecipe.dboperations.DatabaseOperations;
+import com.gilas.findrecipe.Entities.Recipes;
+import com.gilas.findrecipe.fragments.HomeFragment;
+import com.gilas.findrecipe.dboperations.DBHelper;
 
 public class RecipeActivity extends AppCompatActivity {
 

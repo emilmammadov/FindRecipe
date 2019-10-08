@@ -1,4 +1,4 @@
-package com.gilas.findrecipe.Database;
+package com.gilas.findrecipe.Entities;
 
 import java.io.Serializable;
 

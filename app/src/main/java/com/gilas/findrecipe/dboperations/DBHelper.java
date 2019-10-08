@@ -1,4 +1,4 @@
-package com.gilas.findrecipe.SQLite;
+package com.gilas.findrecipe.dboperations;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.gilas.findrecipe.Database.Recipes;
+import com.gilas.findrecipe.Entities.Recipes;
 
 import java.util.ArrayList;
 

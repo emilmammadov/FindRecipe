@@ -1,4 +1,4 @@
-package com.gilas.findrecipe.Fragments;
+package com.gilas.findrecipe.fragments;
 
 
 import android.content.Intent;
@@ -10,17 +10,16 @@ import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chootdev.recycleclick.RecycleClick;
-import com.gilas.findrecipe.Adapters.RecipeRecyclerAdapter;
-import com.gilas.findrecipe.Adapters.SearchRecyclerAdapter;
-import com.gilas.findrecipe.Adapters.TagFlexRecyclerAdapter;
-import com.gilas.findrecipe.Database.DatabaseOperations;
-import com.gilas.findrecipe.Database.Recipes;
-import com.gilas.findrecipe.Database.Tags;
+import com.gilas.findrecipe.adapters.RecipeRecyclerAdapter;
+import com.gilas.findrecipe.adapters.SearchRecyclerAdapter;
+import com.gilas.findrecipe.adapters.TagFlexRecyclerAdapter;
+import com.gilas.findrecipe.dboperations.DatabaseOperations;
+import com.gilas.findrecipe.Entities.Recipes;
+import com.gilas.findrecipe.Entities.Tags;
 import com.gilas.findrecipe.R;
 import com.gilas.findrecipe.RecipeActivity;
 import com.google.android.flexbox.FlexDirection;

@@ -8,7 +8,7 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.gilas.findrecipe.Database.DatabaseOperations;
+import com.gilas.findrecipe.dboperations.DatabaseOperations;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
