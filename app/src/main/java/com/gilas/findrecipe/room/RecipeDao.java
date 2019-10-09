@@ -7,7 +7,6 @@ import androidx.room.Query;
 
 import com.gilas.findrecipe.Entities.Recipe;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Dao
