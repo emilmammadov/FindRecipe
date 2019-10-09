@@ -2,6 +2,7 @@ package com.gilas.findrecipe.Entities;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
@@ -32,6 +33,7 @@ public class Recipe implements Serializable {
         this.cookTimeSec = cookTimeSec;
     }
 
+    @Ignore
     public Recipe(int id, String title) {
         this.id = id;
         this.title = title;
