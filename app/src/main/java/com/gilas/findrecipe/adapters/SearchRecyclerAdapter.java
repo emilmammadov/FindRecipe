@@ -8,16 +8,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.gilas.findrecipe.Entities.Tags;
+import com.gilas.findrecipe.Entities.Tag;
 import com.gilas.findrecipe.R;
 
 import java.util.ArrayList;
 
 public class SearchRecyclerAdapter extends RecyclerView.Adapter<SearchRecyclerAdapter.MyViewHolder> {
 
-    ArrayList<Tags> tags;
+    ArrayList<Tag> tags;
 
-    public SearchRecyclerAdapter(ArrayList<Tags> tags) {
+    public SearchRecyclerAdapter(ArrayList<Tag> tags) {
         this.tags = tags;
     }
 

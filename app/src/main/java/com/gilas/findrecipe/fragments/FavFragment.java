@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chootdev.recycleclick.RecycleClick;
 import com.gilas.findrecipe.adapters.FavRecyclerAdapter;
-import com.gilas.findrecipe.Entities.Recipes;
+import com.gilas.findrecipe.Entities.Recipe;
 import com.gilas.findrecipe.R;
 import com.gilas.findrecipe.RecipeActivity;
 import com.gilas.findrecipe.dboperations.DBHelper;
@@ -25,7 +25,7 @@ import static com.gilas.findrecipe.fragments.HomeFragment.RECIPE_OBJECT_EXTRA;
 public class FavFragment extends Fragment {
 
     static RecyclerView recyclerView;
-    static ArrayList<Recipes> recipeList;
+    static ArrayList<Recipe> recipeList;
 
     public FavFragment() {
     }

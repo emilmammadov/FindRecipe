@@ -1,20 +1,28 @@
 package com.gilas.findrecipe.Entities;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.io.Serializable;
 
-public class Recipes implements Serializable {
+@Entity(tableName = "recipetbl")
+public class Recipe implements Serializable {
+
+    @PrimaryKey
     private int id;
     private String title;
+    @ColumnInfo(name = "ingredient_list")
     private String ingredientList;
     private String body;
+    @ColumnInfo(name = "person_count")
     private int personCount;
+    @ColumnInfo(name = "prep_time")
     private int prepTimeSec;
+    @ColumnInfo(name = "cook_time")
     private int cookTimeSec;
 
-    public Recipes() {
-    }
-
-    public Recipes(int id, String title, String ingredientList, String body, int personCount, int prepTimeSec, int cookTimeSec) {
+    public Recipe(int id, String title, String ingredientList, String body, int personCount, int prepTimeSec, int cookTimeSec) {
         this.id = id;
         this.title = title;
         this.ingredientList = ingredientList;
@@ -24,9 +32,14 @@ public class Recipes implements Serializable {
         this.cookTimeSec = cookTimeSec;
     }
 
-    public Recipes(int id, String title) {
+    public Recipe(int id, String title) {
         this.id = id;
         this.title = title;
+        ingredientList = null;
+        body = null;
+        personCount = 0;
+        prepTimeSec = 0;
+        cookTimeSec = 0;
     }
 
     public int getId() {
@@ -41,47 +54,23 @@ public class Recipes implements Serializable {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public String getIngredientList() {
         return ingredientList;
-    }
-
-    public void setIngredientList(String ingredientList) {
-        this.ingredientList = ingredientList;
     }
 
     public String getBody() {
         return body;
     }
 
-    public void setBody(String body) {
-        this.body = body;
-    }
-
     public int getPersonCount() {
         return personCount;
-    }
-
-    public void setPersonCount(int personCount) {
-        this.personCount = personCount;
     }
 
     public int getPrepTimeSec() {
         return prepTimeSec;
     }
 
-    public void setPrepTimeSec(int prepTimeSec) {
-        this.prepTimeSec = prepTimeSec;
-    }
-
     public int getCookTimeSec() {
         return cookTimeSec;
-    }
-
-    public void setCookTimeSec(int cookTimeSec) {
-        this.cookTimeSec = cookTimeSec;
     }
 }

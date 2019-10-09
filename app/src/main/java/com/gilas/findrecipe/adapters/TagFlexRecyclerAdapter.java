@@ -9,14 +9,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.gilas.findrecipe.Entities.Tags;
+import com.gilas.findrecipe.Entities.Tag;
 import com.gilas.findrecipe.R;
 
 import java.util.ArrayList;
 
 public class TagFlexRecyclerAdapter extends RecyclerView.Adapter<TagFlexRecyclerAdapter.MyViewHolder> {
 
-    ArrayList<Tags> tags;
+    ArrayList<Tag> tags;
 
 
     private OnItemClickListener mOnItemClickListener;
@@ -27,7 +27,7 @@ public class TagFlexRecyclerAdapter extends RecyclerView.Adapter<TagFlexRecycler
     }
 
     // constructor'ımıza listener koyalım
-    public TagFlexRecyclerAdapter(ArrayList<Tags> tags, OnItemClickListener onItemClickListener) {
+    public TagFlexRecyclerAdapter(ArrayList<Tag> tags, OnItemClickListener onItemClickListener) {
         mOnItemClickListener = onItemClickListener;
         this.tags = tags;
     }
