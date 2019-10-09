@@ -8,7 +8,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.gilas.findrecipe.dboperations.DatabaseOperations;
-import com.gilas.findrecipe.Entities.Recipes;
+import com.gilas.findrecipe.Entities.Recipe;
 import com.gilas.findrecipe.fragments.HomeFragment;
 import com.gilas.findrecipe.dboperations.DBHelper;
 
@@ -31,7 +31,7 @@ public class RecipeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
 
-        final Recipes recipeExtra = (Recipes) getIntent().getSerializableExtra(HomeFragment.RECIPE_OBJECT_EXTRA);
+        final Recipe recipeExtra = (Recipe) getIntent().getSerializableExtra(HomeFragment.RECIPE_OBJECT_EXTRA);
         id = recipeExtra.getId();
         String personText = recipeExtra.getPersonCount() + " " + getResources().getString(R.string.person);
         String prepText = (recipeExtra.getPrepTimeSec()/60) + " " + getResources().getString(R.string.minute);
@@ -64,7 +64,7 @@ public class RecipeActivity extends AppCompatActivity {
 
                     new DatabaseOperations().getFavRecipe(getApplicationContext(), id, new DatabaseOperations.RecipeCallback() {
                         @Override
-                        public void onSuccess(Recipes result) {
+                        public void onSuccess(Recipe result) {
                             new DBHelper(getApplicationContext()).insertRecipeTbl(result);
                         }
                     });

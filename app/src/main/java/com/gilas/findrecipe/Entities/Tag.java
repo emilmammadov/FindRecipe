@@ -1,10 +1,15 @@
 package com.gilas.findrecipe.Entities;
 
-public class Tags {
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "tagtbl")
+public class Tag {
+    @PrimaryKey
     private int id;
     private String name;
 
-    public Tags(int id, String name) {
+    public Tag(int id, String name) {
         this.id = id;
         this.name = name;
     }

@@ -14,14 +14,14 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chootdev.recycleclick.RecycleClick;
+import com.gilas.findrecipe.Entities.Recipe;
+import com.gilas.findrecipe.Entities.Tag;
+import com.gilas.findrecipe.R;
+import com.gilas.findrecipe.RecipeActivity;
 import com.gilas.findrecipe.adapters.RecipeRecyclerAdapter;
 import com.gilas.findrecipe.adapters.SearchRecyclerAdapter;
 import com.gilas.findrecipe.adapters.TagFlexRecyclerAdapter;
 import com.gilas.findrecipe.dboperations.DatabaseOperations;
-import com.gilas.findrecipe.Entities.Recipes;
-import com.gilas.findrecipe.Entities.Tags;
-import com.gilas.findrecipe.R;
-import com.gilas.findrecipe.RecipeActivity;
 import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexboxLayoutManager;
 import com.google.android.flexbox.JustifyContent;
@@ -33,8 +33,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private static String TAG = "HomeFragment";
     public static String RECIPE_OBJECT_EXTRA = "recipe_object";
 
-    private static ArrayList<Tags> listTags, listSearchedTags, listSelectedTags;
-    private static ArrayList<Recipes> listRecipes;
+    private static ArrayList<Tag> listTags, listSearchedTags, listSelectedTags;
+    private static ArrayList<Recipe> listRecipes;
     private RecyclerView searchRecyclerView, flexBoxRecyclerView, recipeRecyclerView;
     private SearchView searchView;
     private View view;
@@ -69,7 +69,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         return view;
     }
 
-    private void recipeRecycleClick(final ArrayList<Recipes> listRecipes) {
+    private void recipeRecycleClick(final ArrayList<Recipe> listRecipes) {
         RecycleClick.addTo(recipeRecyclerView).setOnItemClickListener(new RecycleClick.OnItemClickListener() {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int i, View view) {
@@ -145,7 +145,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         listSearchedTags = new ArrayList<>();
 
         if (listTags != null) {
-            for (Tags object : listTags) {
+            for (Tag object : listTags) {
                 String tagName = object.getName().toLowerCase();
                 if (tagName.contains(str.toLowerCase()) && str.length() != 0) {
                     listSearchedTags.add(object);
@@ -167,7 +167,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             searchView.clearFocus();
 
             ArrayList<Integer> listSelectedTagID = new ArrayList<>();
-            for (Tags tag : listSelectedTags) {
+            for (Tag tag : listSelectedTags) {
                 listSelectedTagID.add(tag.getId());
             }
 
@@ -178,7 +178,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
             new DatabaseOperations().getRecipes(getContext(), listSelectedTagID, new DatabaseOperations.VolleyCallback() {
                 @Override
-                public void onSuccess(ArrayList<Recipes> result) {
+                public void onSuccess(ArrayList<Recipe> result) {
 
                     listRecipes = result;
                     recipeRecycleClick(listRecipes);

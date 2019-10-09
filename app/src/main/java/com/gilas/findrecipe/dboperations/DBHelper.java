@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.gilas.findrecipe.Entities.Recipes;
+import com.gilas.findrecipe.Entities.Recipe;
 
 import java.util.ArrayList;
 
@@ -39,8 +39,8 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public Recipes getRecipe(int id) {
-        Recipes recipe = new Recipes();
+    public Recipe getRecipe(int id) {
+        Recipe recipe = new Recipe(0, null, null, null, 0, 0,0);
 
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -49,15 +49,15 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
         while (cursor.moveToNext()) {
-                recipe = new Recipes(cursor.getInt(0), cursor.getString(1),
+                recipe = new Recipe(cursor.getInt(0), cursor.getString(1),
                     cursor.getString(2),cursor.getString(3), cursor.getInt(4),
                     cursor.getInt(5), cursor.getInt(6));
         }
         return recipe;
     }
 
-    public ArrayList<Recipes> getAllRecipes() {
-        ArrayList<Recipes> recipes = new ArrayList<>();
+    public ArrayList<Recipe> getAllRecipes() {
+        ArrayList<Recipe> recipes = new ArrayList<>();
         SQLiteDatabase db = this.getWritableDatabase();
 
         // String sqlQuery = "SELECT  * FROM " + TABLE_COUNTRIES;
@@ -69,7 +69,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
         while (cursor.moveToNext()) {
-            Recipes recipe = new Recipes(cursor.getInt(0), cursor.getString(1),
+            Recipe recipe = new Recipe(cursor.getInt(0), cursor.getString(1),
                     cursor.getString(2),cursor.getString(3), cursor.getInt(4),
                     cursor.getInt(5), cursor.getInt(6));
 
@@ -79,7 +79,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return recipes;
     }
 
-    public void insertRecipeTbl(Recipes recipe) {
+    public void insertRecipeTbl(Recipe recipe) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();

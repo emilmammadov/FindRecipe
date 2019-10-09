@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.gilas.findrecipe.Entities.Recipes;
+import com.gilas.findrecipe.Entities.Recipe;
 import com.gilas.findrecipe.R;
 
 import java.util.ArrayList;
@@ -18,9 +18,9 @@ import java.util.ArrayList;
 public class FavRecyclerAdapter extends RecyclerView.Adapter<FavRecyclerAdapter.MyViewHolder>{
 
     private Context context;
-    ArrayList<Recipes> recipeList;
+    ArrayList<Recipe> recipeList;
 
-    public FavRecyclerAdapter(Context context, ArrayList<Recipes> recipeList) {
+    public FavRecyclerAdapter(Context context, ArrayList<Recipe> recipeList) {
         this.recipeList = recipeList;
         this.context = context;
     }
@@ -35,7 +35,7 @@ public class FavRecyclerAdapter extends RecyclerView.Adapter<FavRecyclerAdapter.
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-        Recipes recipe = recipeList.get(position);
+        Recipe recipe = recipeList.get(position);
 
         String personCount = recipe.getPersonCount()
                 + " " + context.getResources().getString(R.string.person);

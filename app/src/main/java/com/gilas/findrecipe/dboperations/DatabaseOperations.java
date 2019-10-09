@@ -11,8 +11,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.gilas.findrecipe.Entities.Recipes;
-import com.gilas.findrecipe.Entities.Tags;
+import com.gilas.findrecipe.Entities.Recipe;
+import com.gilas.findrecipe.Entities.Tag;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -93,9 +93,9 @@ public class DatabaseOperations {
     }
 
 
-    public ArrayList<Tags> getAllTags(final Context context) {
+    public ArrayList<Tag> getAllTags(final Context context) {
         String url = "http://" + ip + "/get_all_tags.php";
-        final ArrayList<Tags> tagsArrayList = new ArrayList<>();
+        final ArrayList<Tag> tagArrayList = new ArrayList<>();
 
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
@@ -111,7 +111,7 @@ public class DatabaseOperations {
                         JSONObject obj = (JSONObject) array.getJSONObject(i).get("tag");
                         int id = Integer.parseInt(obj.get("id").toString());
                         String name = obj.get("name").toString();
-                        tagsArrayList.add(new Tags(id, name));
+                        tagArrayList.add(new Tag(id, name));
 
 
                     }
@@ -130,13 +130,13 @@ public class DatabaseOperations {
 
         requestQueue.add(jsonObjectRequest);
 
-        return tagsArrayList;
+        return tagArrayList;
     }
 
 
     public void getRecipes(final Context context, ArrayList<Integer> selectedTags, final VolleyCallback callback) {
 
-        final ArrayList<Recipes> recipesArrayList = new ArrayList<>();
+        final ArrayList<Recipe> recipeArrayList = new ArrayList<>();
 
         String url = "http://" + ip + "/get_recipe_with_tag.php";
         final Object[] selectedTagsArray = selectedTags.toArray();
@@ -163,12 +163,12 @@ public class DatabaseOperations {
                         int prepTime = Integer.parseInt(obj.get("prep_time_sec").toString());
                         int cookTime = Integer.parseInt(obj.get("cook_time_sec").toString());
 
-                        recipesArrayList.add(new Recipes(id, title, ingredientList, body,
+                        recipeArrayList.add(new Recipe(id, title, ingredientList, body,
                                 personCount, prepTime, cookTime));
 
                     }
 
-                    callback.onSuccess(recipesArrayList);
+                    callback.onSuccess(recipeArrayList);
 
                 } catch (JSONException e) {
                     Log.e(TAG, "onERR: " + e);
@@ -196,7 +196,7 @@ public class DatabaseOperations {
     public void getAllRecipeTitles(final Context context, final VolleyCallback callbackTitle) {
 
         String url = "http://" + ip + "/get_all_recipe_titles.php";
-        final ArrayList<Recipes> titlesArrayList = new ArrayList<>();
+        final ArrayList<Recipe> titlesArrayList = new ArrayList<>();
 
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
@@ -214,7 +214,7 @@ public class DatabaseOperations {
                         int id = Integer.parseInt(obj.get("id").toString());
                         String title = obj.get("title").toString();
 
-                        titlesArrayList.add(new Recipes(id, title));
+                        titlesArrayList.add(new Recipe(id, title, null, null, 0, 0, 0));
                     }
 
                     callbackTitle.onSuccess(titlesArrayList);
@@ -236,12 +236,12 @@ public class DatabaseOperations {
 
 
     public interface VolleyCallback {
-        void onSuccess(ArrayList<Recipes> result);
+        void onSuccess(ArrayList<Recipe> result);
 
     }
 
     public interface RecipeCallback {
-        void onSuccess(Recipes result);
+        void onSuccess(Recipe result);
     }
 
 
@@ -264,7 +264,7 @@ public class DatabaseOperations {
                     try {
                         JSONObject obj = new JSONObject(response);
                         Log.e(TAG, "onResponse: " + obj.get("title").toString());
-                        Recipes recipe = new Recipes(
+                        Recipe recipe = new Recipe(
                                 Integer.parseInt(obj.get("id").toString()),
                                 obj.get("title").toString(),
                                 obj.get("ingredient_list").toString(),

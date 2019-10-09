@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chootdev.recycleclick.RecycleClick;
 import com.gilas.findrecipe.adapters.RecipeSearchRecAdapter;
 import com.gilas.findrecipe.dboperations.DatabaseOperations;
-import com.gilas.findrecipe.Entities.Recipes;
+import com.gilas.findrecipe.Entities.Recipe;
 import com.gilas.findrecipe.R;
 import com.gilas.findrecipe.RecipeActivity;
 
@@ -28,7 +28,7 @@ public class RecipeFragment extends Fragment implements View.OnClickListener {
     private View view;
     private SearchView searchView;
     private RecyclerView recyclerView;
-    private ArrayList<Recipes> listRecipes, listSearchedRecipes;
+    private ArrayList<Recipe> listRecipes, listSearchedRecipes;
 
     public RecipeFragment() {
     }
@@ -42,7 +42,7 @@ public class RecipeFragment extends Fragment implements View.OnClickListener {
 
         new DatabaseOperations().getAllRecipeTitles(getContext(), new DatabaseOperations.VolleyCallback() {
             @Override
-            public void onSuccess(ArrayList<Recipes> result) {
+            public void onSuccess(ArrayList<Recipe> result) {
                 listRecipes = result;
             }
         });
@@ -72,7 +72,7 @@ public class RecipeFragment extends Fragment implements View.OnClickListener {
                 new DatabaseOperations().getFavRecipe(getContext(), listSearchedRecipes.get(i).getId(),
                         new DatabaseOperations.RecipeCallback() {
                             @Override
-                            public void onSuccess(Recipes result) {
+                            public void onSuccess(Recipe result) {
                                 Intent intent = new Intent(getContext(), RecipeActivity.class);
                                 intent.putExtra(RECIPE_OBJECT_EXTRA, result);
                                 startActivity(intent);
@@ -117,10 +117,10 @@ public class RecipeFragment extends Fragment implements View.OnClickListener {
         ArrayList<String> listSearchedTitles = new ArrayList<>();
 
         if (listRecipes != null) {
-            for (Recipes object : listRecipes) {
+            for (Recipe object : listRecipes) {
                 String tagName = object.getTitle().toLowerCase();
                 if (tagName.contains(str.toLowerCase()) && str.length() != 0) {
-                    listSearchedRecipes.add(new Recipes(object.getId(),tagName));
+                    listSearchedRecipes.add(new Recipe(object.getId(),tagName));
                     listSearchedTitles.add(tagName);
                 }
             }
