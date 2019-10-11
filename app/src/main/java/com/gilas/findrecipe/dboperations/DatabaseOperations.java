@@ -11,8 +11,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.gilas.findrecipe.Entities.Recipe;
-import com.gilas.findrecipe.Entities.Tag;
+import com.gilas.findrecipe.data.Recipe;
+import com.gilas.findrecipe.data.Tag;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -21,12 +21,13 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class DatabaseOperations {
 
     private static final String TAG = "TAG";
-    private static final String ip = "192.168.137.1";
+    private static final String ip = "192.168.0.11";
 
     public void login(final Context context, final String username, final String password) {
 
@@ -93,9 +94,9 @@ public class DatabaseOperations {
     }
 
 
-    public ArrayList<Tag> getAllTags(final Context context) {
+    public List<Tag> getAllTags(final Context context) {
         String url = "http://" + ip + "/get_all_tags.php";
-        final ArrayList<Tag> tagArrayList = new ArrayList<>();
+        final List<Tag> tagArrayList = new ArrayList<>();
 
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
@@ -134,9 +135,9 @@ public class DatabaseOperations {
     }
 
 
-    public void getRecipes(final Context context, ArrayList<Integer> selectedTags, final VolleyCallback callback) {
+    public void getRecipes(final Context context, List<Integer> selectedTags, final VolleyCallback callback) {
 
-        final ArrayList<Recipe> recipeArrayList = new ArrayList<>();
+        final List<Recipe> recipeArrayList = new ArrayList<>();
 
         String url = "http://" + ip + "/get_recipe_with_tag.php";
         final Object[] selectedTagsArray = selectedTags.toArray();
@@ -196,7 +197,7 @@ public class DatabaseOperations {
     public void getAllRecipeTitles(final Context context, final VolleyCallback callbackTitle) {
 
         String url = "http://" + ip + "/get_all_recipe_titles.php";
-        final ArrayList<Recipe> titlesArrayList = new ArrayList<>();
+        final List<Recipe> titlesArrayList = new ArrayList<>();
 
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
@@ -236,7 +237,7 @@ public class DatabaseOperations {
 
 
     public interface VolleyCallback {
-        void onSuccess(ArrayList<Recipe> result);
+        void onSuccess(List<Recipe> result);
 
     }
 

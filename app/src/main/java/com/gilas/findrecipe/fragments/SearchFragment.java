@@ -14,23 +14,24 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chootdev.recycleclick.RecycleClick;
 import com.gilas.findrecipe.adapters.RecipeSearchRecAdapter;
 import com.gilas.findrecipe.dboperations.DatabaseOperations;
-import com.gilas.findrecipe.Entities.Recipe;
+import com.gilas.findrecipe.data.Recipe;
 import com.gilas.findrecipe.R;
 import com.gilas.findrecipe.RecipeActivity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.gilas.findrecipe.fragments.HomeFragment.RECIPE_OBJECT_EXTRA;
 
-public class RecipeFragment extends Fragment implements View.OnClickListener {
+public class SearchFragment extends Fragment implements View.OnClickListener {
 
 
     private View view;
     private SearchView searchView;
     private RecyclerView recyclerView;
-    private ArrayList<Recipe> listRecipes, listSearchedRecipes;
+    private List<Recipe> listRecipes, listSearchedRecipes;
 
-    public RecipeFragment() {
+    public SearchFragment() {
     }
 
 
@@ -42,7 +43,7 @@ public class RecipeFragment extends Fragment implements View.OnClickListener {
 
         new DatabaseOperations().getAllRecipeTitles(getContext(), new DatabaseOperations.VolleyCallback() {
             @Override
-            public void onSuccess(ArrayList<Recipe> result) {
+            public void onSuccess(List<Recipe> result) {
                 listRecipes = result;
             }
         });
@@ -114,7 +115,7 @@ public class RecipeFragment extends Fragment implements View.OnClickListener {
 
     private void search(String str) {
         listSearchedRecipes = new ArrayList<>();
-        ArrayList<String> listSearchedTitles = new ArrayList<>();
+        List<String> listSearchedTitles = new ArrayList<>();
 
         if (listRecipes != null) {
             for (Recipe object : listRecipes) {

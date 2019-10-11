@@ -7,20 +7,15 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.gilas.findrecipe.dboperations.DatabaseOperations;
-import com.gilas.findrecipe.Entities.Recipe;
-import com.gilas.findrecipe.fragments.HomeFragment;
+import com.gilas.findrecipe.data.Recipe;
 import com.gilas.findrecipe.dboperations.DBHelper;
+import com.gilas.findrecipe.dboperations.DatabaseOperations;
+import com.gilas.findrecipe.fragments.HomeFragment;
+import com.gilas.findrecipe.viewmodels.RecipeViewModel;
 
 public class RecipeActivity extends AppCompatActivity {
 
     private int id;
-//    private String title;
-//    private String ingredientList;
-//    private String body;
-//    private int personCount = -1;
-//    private int prepTimeSec = -1;
-//    private int cookTimeSec = -1;
 
     TextView tvTitle, tvIng, tvBody;
     TextView tvPerson, tvPrep, tvCook;
@@ -34,8 +29,8 @@ public class RecipeActivity extends AppCompatActivity {
         final Recipe recipeExtra = (Recipe) getIntent().getSerializableExtra(HomeFragment.RECIPE_OBJECT_EXTRA);
         id = recipeExtra.getId();
         String personText = recipeExtra.getPersonCount() + " " + getResources().getString(R.string.person);
-        String prepText = (recipeExtra.getPrepTimeSec()/60) + " " + getResources().getString(R.string.minute);
-        String cookText = (recipeExtra.getCookTimeSec()/60) + " " + getResources().getString(R.string.minute);
+        String prepText = (recipeExtra.getPrepTimeSec() / 60) + " " + getResources().getString(R.string.minute);
+        String cookText = (recipeExtra.getCookTimeSec() / 60) + " " + getResources().getString(R.string.minute);
 
         tvPerson = findViewById(R.id.personCountRecipeActivity);
         tvPrep = findViewById(R.id.prepTimeRecipeActivity);
@@ -57,6 +52,11 @@ public class RecipeActivity extends AppCompatActivity {
         }
 
 
+        bookmarkListener();
+
+    }
+
+    private void bookmarkListener() {
         bookmark.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
@@ -65,19 +65,19 @@ public class RecipeActivity extends AppCompatActivity {
                     new DatabaseOperations().getFavRecipe(getApplicationContext(), id, new DatabaseOperations.RecipeCallback() {
                         @Override
                         public void onSuccess(Recipe result) {
-                            new DBHelper(getApplicationContext()).insertRecipeTbl(result);
+                            //new DBHelper(getApplicationContext()).insertRecipeTbl(result);
+                            new RecipeViewModel(getApplication()).insertRecipeTbl(result);
                         }
                     });
 
                 } else {
 
-                    new DBHelper(getApplicationContext()).deleteRecipe(id);
-
+                    //new DBHelper(getApplicationContext()).deleteRecipe(id);
+                    new RecipeViewModel(getApplication()).deleteRecipe(id);
 
                 }
             }
         });
-
 
     }
 }

@@ -14,8 +14,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chootdev.recycleclick.RecycleClick;
-import com.gilas.findrecipe.Entities.Recipe;
-import com.gilas.findrecipe.Entities.Tag;
+import com.gilas.findrecipe.data.Recipe;
+import com.gilas.findrecipe.data.Tag;
 import com.gilas.findrecipe.R;
 import com.gilas.findrecipe.RecipeActivity;
 import com.gilas.findrecipe.adapters.RecipeRecyclerAdapter;
@@ -27,14 +27,16 @@ import com.google.android.flexbox.FlexboxLayoutManager;
 import com.google.android.flexbox.JustifyContent;
 
 import java.util.ArrayList;
+import java.util.List;
+
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
 
     private static String TAG = "HomeFragment";
     public static String RECIPE_OBJECT_EXTRA = "recipe_object";
 
-    private static ArrayList<Tag> listTags, listSearchedTags, listSelectedTags;
-    private static ArrayList<Recipe> listRecipes;
+    private static List<Tag> listTags, listSearchedTags, listSelectedTags;
+    private static List<Recipe> listRecipes;
     private RecyclerView searchRecyclerView, flexBoxRecyclerView, recipeRecyclerView;
     private SearchView searchView;
     private View view;
@@ -69,7 +71,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         return view;
     }
 
-    private void recipeRecycleClick(final ArrayList<Recipe> listRecipes) {
+    private void recipeRecycleClick(final List<Recipe> listRecipes) {
         RecycleClick.addTo(recipeRecyclerView).setOnItemClickListener(new RecycleClick.OnItemClickListener() {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int i, View view) {
@@ -166,7 +168,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         if (view == btnSearchRecipe) {
             searchView.clearFocus();
 
-            ArrayList<Integer> listSelectedTagID = new ArrayList<>();
+            List<Integer> listSelectedTagID = new ArrayList<>();
             for (Tag tag : listSelectedTags) {
                 listSelectedTagID.add(tag.getId());
             }
@@ -178,7 +180,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
             new DatabaseOperations().getRecipes(getContext(), listSelectedTagID, new DatabaseOperations.VolleyCallback() {
                 @Override
-                public void onSuccess(ArrayList<Recipe> result) {
+                public void onSuccess(List<Recipe> result) {
 
                     listRecipes = result;
                     recipeRecycleClick(listRecipes);
