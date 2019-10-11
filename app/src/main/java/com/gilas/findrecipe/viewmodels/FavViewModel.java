@@ -2,6 +2,7 @@ package com.gilas.findrecipe.viewmodels;
 
 import android.app.Application;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
@@ -14,7 +15,7 @@ public class FavViewModel extends AndroidViewModel {
 
     private RecipeRepository repository;
 
-    public FavViewModel(Application application) {
+    public FavViewModel(@NonNull Application application) {
         super(application);
 
         repository = new RecipeRepository(application);

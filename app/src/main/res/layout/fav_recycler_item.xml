@@ -1,76 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="5dp"
-    android:layout_marginTop="10dp"
-    android:layout_marginRight="5dp"
-    android:background="@drawable/fav_recycler_item_background"
-    android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="3">
-
-        <ImageView
-            android:id="@+id/imgFav"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/back_recipe" />
-
-
-        <TextView
-            android:id="@+id/tvTitleFav"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/imgFav"
-            android:layout_marginLeft="10dp"
-            android:layout_marginBottom="10dp"
-            android:textColor="#fff"
-            android:textSize="15sp"
-            android:textStyle="bold" />
-
-
-    </RelativeLayout>
-
+    <data>
+        <variable
+            name="favItem"
+            type="com.gilas.findrecipe.data.Recipe" />
+    </data>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="2dp"
-        android:layout_marginLeft="2dp"
-        android:layout_marginRight="2dp"
-        android:layout_weight="1">
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/fav_recycler_item_background"
+        android:orientation="vertical">
 
-
-        <TextView
-            android:id="@+id/tvPersonCount"
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/fav_recycler_info_background"
-            android:drawableLeft="@drawable/ic_group_black_24dp"
-            android:drawablePadding="3dp"
-            android:layout_weight="1"
-            android:text="4"
-            android:layout_marginRight="3dp"/>
+            android:layout_weight="3">
 
-        <TextView
-            android:id="@+id/tvTime"
+            <ImageView
+                android:id="@+id/imgFav"
+                android:layout_width="200dp"
+                android:layout_height="100dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/back_recipe" />
+
+
+            <TextView
+                android:id="@+id/tvTitleFav"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/imgFav"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="10dp"
+                android:textColor="#fff"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:text="@{favItem.title}"/>
+
+
+        </RelativeLayout>
+
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/fav_recycler_info_background"
-            android:drawableLeft="@drawable/ic_time_icon_24dp"
-            android:drawablePadding="3dp"
-            android:layout_weight="1"
-            android:text="4"
-            android:layout_marginLeft="3dp"/>
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="2dp"
+            android:layout_marginBottom="2dp"
+            android:layout_weight="1">
+
+
+            <TextView
+                android:id="@+id/tvPersonCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="3dp"
+                android:layout_weight="1"
+                android:background="@drawable/fav_recycler_info_background"
+                android:drawableStart="@drawable/ic_group_black_24dp"
+                android:drawablePadding="3dp"
+                android:text="@{@string/person(favItem.personCountString)}" />
+
+            <TextView
+                android:id="@+id/tvTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:layout_weight="1"
+                android:background="@drawable/fav_recycler_info_background"
+                android:drawableStart="@drawable/ic_time_icon_24dp"
+                android:drawablePadding="3dp"
+                android:text="@{@string/minute(favItem.timeSumMin)}" />
+
+
+        </LinearLayout>
 
 
     </LinearLayout>
-
-
-</LinearLayout>
+</layout>
