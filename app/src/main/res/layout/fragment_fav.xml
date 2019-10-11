@@ -16,6 +16,7 @@
             android:layout_gravity="center_horizontal"
             android:fadeScrollbars="true"
             android:scrollbars="vertical"
+
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
 
             app:spanCount="2" />
