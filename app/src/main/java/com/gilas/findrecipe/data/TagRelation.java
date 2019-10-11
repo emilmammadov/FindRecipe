@@ -1,4 +1,4 @@
-package com.gilas.findrecipe.Entities;
+package com.gilas.findrecipe.data;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;

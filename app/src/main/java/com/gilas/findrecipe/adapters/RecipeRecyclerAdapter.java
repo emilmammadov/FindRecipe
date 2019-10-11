@@ -8,16 +8,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.gilas.findrecipe.Entities.Recipe;
+import com.gilas.findrecipe.data.Recipe;
 import com.gilas.findrecipe.R;
 
-import java.util.ArrayList;
+import java.util.List;
+
 
 public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecipeRecyclerAdapter.MyViewHolder> {
 
-    ArrayList<Recipe> recipes;
+    List<Recipe> recipes;
 
-    public RecipeRecyclerAdapter(ArrayList<Recipe> recipes) {
+    public RecipeRecyclerAdapter(List<Recipe> recipes) {
         this.recipes = recipes;
     }
 

@@ -5,49 +5,51 @@ import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 
-import com.gilas.findrecipe.Entities.Recipe;
-import com.gilas.findrecipe.room.RecipeDao;
-import com.gilas.findrecipe.room.RecipeDb;
+import com.gilas.findrecipe.data.Recipe;
+import com.gilas.findrecipe.data.RecipeDao;
+import com.gilas.findrecipe.data.RecipeDb;
 
 import java.util.List;
 
 public class RecipeRepository {
     private RecipeDao recipeDao;
-    private LiveData<List<Recipe>> allRecipes;
 
     public RecipeRepository(Application application) {
-        RecipeDb recipeDb = RecipeDb.getInstance(application);
-        recipeDao = recipeDb.recipeDao();
-        //allRecipes = recipeDao.getAllRecipes();
+        recipeDao = RecipeDb.getDatabase(application).recipeDao();
     }
 
     public void deleteRecipe(int id) {
-        new DeleteRecipeAync(recipeDao).doInBackground(id);
+        new DeleteRecipeAsync(recipeDao).execute(id);
     }
 
     public boolean isRecipeExists(int id) {
-        return new IsRecipeExistsAync(recipeDao).doInBackground(id);
+        return new IsRecipeExistsAsync(recipeDao).doInBackground(id);
     }
 
     public Recipe getRecipe(int id) {
-        return new GetRecipeAync(recipeDao).doInBackground(id);
+        return new GetRecipeAsync(recipeDao).doInBackground(id);
     }
 
     public LiveData<List<Recipe>> getAllRecipes() {
-        return new GetAllRecipeAync(recipeDao).doInBackground();
+        return new GetAllRecipeAsync(recipeDao).doInBackground();
     }
 
     public void insertRecipeTbl(Recipe recipe) {
-        new InsertRecipeAync(recipeDao).doInBackground(recipe);
+        new InsertRecipeAsync(recipeDao).execute(recipe);
     }
 
 
 
 
-    private static class DeleteRecipeAync extends AsyncTask<Integer, Void, Void> {
+
+
+
+
+
+    private static class DeleteRecipeAsync extends AsyncTask<Integer, Void, Void> {
         private RecipeDao recipeDao;
 
-        public DeleteRecipeAync(RecipeDao recipeDao) {
+        DeleteRecipeAsync(RecipeDao recipeDao) {
             this.recipeDao = recipeDao;
         }
 
@@ -58,10 +60,10 @@ public class RecipeRepository {
         }
     }
 
-    private static class IsRecipeExistsAync extends AsyncTask<Integer, Void, Boolean> {
+    private static class IsRecipeExistsAsync extends AsyncTask<Integer, Void, Boolean> {
         private RecipeDao recipeDao;
 
-        public IsRecipeExistsAync(RecipeDao recipeDao) {
+        IsRecipeExistsAsync(RecipeDao recipeDao) {
             this.recipeDao = recipeDao;
         }
 
@@ -72,10 +74,10 @@ public class RecipeRepository {
         }
     }
 
-    private static class GetRecipeAync extends AsyncTask<Integer, Void, Recipe> {
+    private static class GetRecipeAsync extends AsyncTask<Integer, Void, Recipe> {
         private RecipeDao recipeDao;
 
-        public GetRecipeAync(RecipeDao recipeDao) {
+        GetRecipeAsync(RecipeDao recipeDao) {
             this.recipeDao = recipeDao;
         }
 
@@ -86,10 +88,10 @@ public class RecipeRepository {
         }
     }
 
-    private static class GetAllRecipeAync extends AsyncTask<Void, Void, LiveData<List<Recipe>>> {
+    private static class GetAllRecipeAsync extends AsyncTask<Void, Void, LiveData<List<Recipe>>> {
         private RecipeDao recipeDao;
 
-        public GetAllRecipeAync(RecipeDao recipeDao) {
+        GetAllRecipeAsync(RecipeDao recipeDao) {
             this.recipeDao = recipeDao;
         }
 
@@ -98,13 +100,14 @@ public class RecipeRepository {
 
             return recipeDao.getAllRecipes();
         }
+
     }
 
 
-    private static class InsertRecipeAync extends AsyncTask<Recipe, Void, Void> {
+    private static class InsertRecipeAsync extends AsyncTask<Recipe, Void, Void> {
         private RecipeDao recipeDao;
 
-        public InsertRecipeAync(RecipeDao recipeDao) {
+        InsertRecipeAsync(RecipeDao recipeDao) {
             this.recipeDao = recipeDao;
         }
 

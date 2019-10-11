@@ -10,17 +10,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.gilas.findrecipe.Entities.Recipe;
+import com.gilas.findrecipe.data.Recipe;
 import com.gilas.findrecipe.R;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class FavRecyclerAdapter extends RecyclerView.Adapter<FavRecyclerAdapter.MyViewHolder>{
 
     private Context context;
-    ArrayList<Recipe> recipeList;
+    List<Recipe> recipeList;
 
-    public FavRecyclerAdapter(Context context, ArrayList<Recipe> recipeList) {
+    public FavRecyclerAdapter(Context context, List<Recipe> recipeList) {
         this.recipeList = recipeList;
         this.context = context;
     }
@@ -51,6 +51,7 @@ public class FavRecyclerAdapter extends RecyclerView.Adapter<FavRecyclerAdapter.
 
     @Override
     public int getItemCount() {
+        if (recipeList == null) return 0;
         return recipeList.size();
     }
 

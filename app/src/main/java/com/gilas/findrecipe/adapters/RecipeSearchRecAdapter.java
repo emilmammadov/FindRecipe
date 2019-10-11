@@ -10,13 +10,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.gilas.findrecipe.R;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class RecipeSearchRecAdapter extends RecyclerView.Adapter<RecipeSearchRecAdapter.MyViewHolder>{
 
-    ArrayList<String> listTitles;
+    List<String> listTitles;
 
-    public RecipeSearchRecAdapter(ArrayList<String> listTitles) {
+    public RecipeSearchRecAdapter(List<String> listTitles) {
         this.listTitles = listTitles;
     }
 

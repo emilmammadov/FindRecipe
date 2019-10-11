@@ -1,11 +1,9 @@
-package com.gilas.findrecipe.room;
+package com.gilas.findrecipe.data;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
-
-import com.gilas.findrecipe.Entities.Recipe;
 
 import java.util.List;
 

@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.gilas.findrecipe.Entities.Recipe;
+import com.gilas.findrecipe.data.Recipe;
 
 import java.util.ArrayList;
 
