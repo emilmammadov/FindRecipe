@@ -5,6 +5,8 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import com.gilas.findrecipe.R;
+
 import java.io.Serializable;
 
 @Entity(tableName = "recipetbl")
@@ -22,6 +24,10 @@ public class Recipe implements Serializable {
     private int prepTimeSec;
     @ColumnInfo(name = "cook_time")
     private int cookTimeSec;
+    @Ignore
+    private String timeSumMin;
+    @Ignore
+    private String personCountString;
 
     public Recipe(int id, String title, String ingredientList, String body, int personCount, int prepTimeSec, int cookTimeSec) {
         this.id = id;
@@ -31,6 +37,8 @@ public class Recipe implements Serializable {
         this.personCount = personCount;
         this.prepTimeSec = prepTimeSec;
         this.cookTimeSec = cookTimeSec;
+        timeSumMin = ((prepTimeSec+cookTimeSec)/60)+"";
+        personCountString = personCount+"";
     }
 
     @Ignore
@@ -42,6 +50,14 @@ public class Recipe implements Serializable {
         personCount = 0;
         prepTimeSec = 0;
         cookTimeSec = 0;
+    }
+
+    public String getPersonCountString() {
+        return personCountString;
+    }
+
+    public String getTimeSumMin() {
+        return timeSumMin;
     }
 
     public int getId() {

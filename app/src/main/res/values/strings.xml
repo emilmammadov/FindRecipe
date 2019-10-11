@@ -12,8 +12,8 @@
     <string name="tab_text_2">Tab 2</string>
     <string name="tab_text_3">Tab 3</string>
     <string name="search">Search</string>
-    <string name="person">kişi</string>
-    <string name="minute">dk</string>
+    <string name="person">%s kişi</string>
+    <string name="minute">%s dk</string>
     <string name="searchHintHome">Malzeme ile ara</string>
     <string name="searchHintRecipe">Tarif ara</string>
 

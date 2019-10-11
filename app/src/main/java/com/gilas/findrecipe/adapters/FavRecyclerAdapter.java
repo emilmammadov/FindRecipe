@@ -1,43 +1,39 @@
 package com.gilas.findrecipe.adapters;
 
-import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.gilas.findrecipe.data.Recipe;
-import com.gilas.findrecipe.R;
+import com.gilas.findrecipe.databinding.FavRecyclerItemBinding;
 
 import java.util.List;
 
-public class FavRecyclerAdapter extends RecyclerView.Adapter<FavRecyclerAdapter.MyViewHolder>{
+public class FavRecyclerAdapter extends RecyclerView.Adapter<FavRecyclerAdapter.ViewHolder> {
 
-    private Context context;
     List<Recipe> recipeList;
 
-    public FavRecyclerAdapter(Context context, List<Recipe> recipeList) {
+    public FavRecyclerAdapter(List<Recipe> recipeList) {
         this.recipeList = recipeList;
-        this.context = context;
     }
 
     @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fav_recycler_item, parent, false);
-        return new FavRecyclerAdapter.MyViewHolder(view);
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        FavRecyclerItemBinding binding = FavRecyclerItemBinding.inflate(inflater, parent, false);
+        return new ViewHolder(binding);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
         Recipe recipe = recipeList.get(position);
+        holder.bind(recipe);
 
-        String personCount = recipe.getPersonCount()
+        /*String personCount = recipe.getPersonCount()
                 + " " + context.getResources().getString(R.string.person);
 
         double timeMin = (recipe.getCookTimeSec() + recipe.getPrepTimeSec()) / 60.0;
@@ -46,30 +42,26 @@ public class FavRecyclerAdapter extends RecyclerView.Adapter<FavRecyclerAdapter.
 
         holder.tvTitle.setText(recipeList.get(position).getTitle());
         holder.tvPersonCount.setText(personCount);
-        holder.tvTime.setText(time);
+        holder.tvTime.setText(time);*/
     }
 
     @Override
     public int getItemCount() {
-        if (recipeList == null) return 0;
-        return recipeList.size();
+        return recipeList != null ? recipeList.size() : 0;
     }
 
 
-    class MyViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
+        private FavRecyclerItemBinding binding;
 
-        TextView tvTitle;
-        ImageView imgFav;
-        TextView tvPersonCount, tvTime;
+        public ViewHolder(FavRecyclerItemBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
+        }
 
-        public MyViewHolder(@NonNull View itemView) {
-            super(itemView);
-
-            imgFav = itemView.findViewById(R.id.imgFav);
-            tvTitle = itemView.findViewById(R.id.tvTitleFav);
-            tvPersonCount = itemView.findViewById(R.id.tvPersonCount);
-            tvTime = itemView.findViewById(R.id.tvTime);
-
+        public void bind(Recipe recipe) {
+            binding.setFavItem(recipe);
+            binding.executePendingBindings();
         }
     }
 }
