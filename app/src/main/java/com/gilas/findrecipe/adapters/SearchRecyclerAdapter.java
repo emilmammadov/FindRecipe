@@ -21,6 +21,9 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<SearchRecyclerAd
         this.tags = tags;
     }
 
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
+    }
 
     @NonNull
     @Override

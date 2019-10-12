@@ -9,19 +9,26 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chootdev.recycleclick.RecycleClick;
-import com.gilas.findrecipe.data.Recipe;
-import com.gilas.findrecipe.data.Tag;
-import com.gilas.findrecipe.R;
+import com.gilas.findrecipe.FragmentBusinessLogic;
 import com.gilas.findrecipe.RecipeActivity;
 import com.gilas.findrecipe.adapters.RecipeRecyclerAdapter;
 import com.gilas.findrecipe.adapters.SearchRecyclerAdapter;
 import com.gilas.findrecipe.adapters.TagFlexRecyclerAdapter;
+import com.gilas.findrecipe.data.Recipe;
+import com.gilas.findrecipe.data.Tag;
+import com.gilas.findrecipe.databinding.FragmentHomeBinding;
 import com.gilas.findrecipe.dboperations.DatabaseOperations;
+import com.gilas.findrecipe.viewmodels.HomeViewModel;
 import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexboxLayoutManager;
 import com.google.android.flexbox.JustifyContent;
@@ -32,43 +39,104 @@ import java.util.List;
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
 
-    private static String TAG = "HomeFragment";
+    //    private static String TAG = "HomeFragment";
     public static String RECIPE_OBJECT_EXTRA = "recipe_object";
 
-    private static List<Tag> listTags, listSearchedTags, listSelectedTags;
+    private static List<Tag> listTags, listSearchedTags;
     private static List<Recipe> listRecipes;
     private RecyclerView searchRecyclerView, flexBoxRecyclerView, recipeRecyclerView;
     private SearchView searchView;
-    private View view;
     private Button btnSearchRecipe;
     private TextView tvTable;
+    private HomeViewModel homeViewModel;
+    private TagFlexRecyclerAdapter flexRecyclerAdapter;
+    private SearchRecyclerAdapter searchRecyclerAdapter;
+    private RecipeRecyclerAdapter recipeRecyclerAdapter;
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         listTags = new DatabaseOperations().getAllTags(getContext());
 
-        view = inflater.inflate(R.layout.fragment_home, container, false);
+        FragmentHomeBinding binding = FragmentHomeBinding.inflate(inflater, container, false);
 
-        tvTable = view.findViewById(R.id.tvTable);
-        searchRecyclerView = view.findViewById(R.id.searchRecyclerHome);
-        flexBoxRecyclerView = view.findViewById(R.id.tagFlexRecyclerView);
-        recipeRecyclerView = view.findViewById(R.id.recipeRecyclerHome);
-        searchView = view.findViewById(R.id.searchViewHome);
-        btnSearchRecipe = view.findViewById(R.id.btnSearch);
-        searchView.setOnClickListener(this);
+        tvTable = binding.tvTable;
+        searchRecyclerView = binding.searchRecyclerHome;
+        flexBoxRecyclerView = binding.tagFlexRecyclerView;
+        recipeRecyclerView = binding.recipeRecyclerHome;
+        searchView = binding.searchViewHome;
+        btnSearchRecipe = binding.btnSearch;
+
         btnSearchRecipe.setOnClickListener(this);
 
-        listSelectedTags = new ArrayList<>();
+        recycler();
+
+
+        return binding.getRoot();
+    }
+
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        homeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
+
+        homeViewModel.getListTags().observe(getViewLifecycleOwner(), new Observer<List<Tag>>() {
+            @Override
+            public void onChanged(List<Tag> tags) {
+                Toast.makeText(getContext(), "deneme", Toast.LENGTH_SHORT).show();
+                flexRecyclerAdapter.setTags(tags);
+                flexRecyclerAdapter.notifyDataSetChanged();
+            }
+        });
+
+        homeViewModel.getIsFlexEmpty().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                tvTable.setVisibility(((aBoolean) ? View.VISIBLE : View.INVISIBLE));
+            }
+        });
+
+        homeViewModel.getListRecipes().observe(getViewLifecycleOwner(), new Observer<List<Recipe>>() {
+            @Override
+            public void onChanged(List<Recipe> recipeList) {
+                recipeRecyclerAdapter.setRecipes(recipeList);
+                recipeRecyclerAdapter.notifyDataSetChanged();
+            }
+        });
+
+        if (searchView != null) {
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String s) {
+                    return false;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String s) {
+                    listSearchedTags = FragmentBusinessLogic.search(listTags, s);
+                    searchRecyclerAdapter.setTags(listSearchedTags);
+                    searchRecyclerAdapter.notifyDataSetChanged();
+                    return true;
+                }
+            });
+        }
 
         flexBox();
 
         searchRecycleClick();
 
+    }
 
-        return view;
+    private void recycler(){
+        searchRecyclerAdapter = new SearchRecyclerAdapter(new ArrayList<Tag>());
+        searchRecyclerView.setAdapter(searchRecyclerAdapter);
+
+        recipeRecyclerAdapter = new RecipeRecyclerAdapter(new ArrayList<Recipe>());
+        recipeRecyclerView.setAdapter(recipeRecyclerAdapter);
     }
 
     private void recipeRecycleClick(final List<Recipe> listRecipes) {
@@ -88,12 +156,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         RecycleClick.addTo(searchRecyclerView).setOnItemClickListener(new RecycleClick.OnItemClickListener() {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int i, View view) {
-
-                if (!listSelectedTags.contains(listSearchedTags.get(i))) {
-                    tvTable.setVisibility(View.INVISIBLE);
-                    listSelectedTags.add(listSearchedTags.get(i));
-                    flexBox();
-                }
+                homeViewModel.addListTags(listSearchedTags.get(i));
+                flexRecyclerAdapter.setTags(homeViewModel.getListTags().getValue());
+                flexRecyclerAdapter.notifyDataSetChanged();
 
             }
         });
@@ -106,93 +171,46 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         layoutManager.setJustifyContent(JustifyContent.FLEX_START);
         flexBoxRecyclerView.setLayoutManager(layoutManager);
 
-        RecyclerView.Adapter adapter = new TagFlexRecyclerAdapter(listSelectedTags, new TagFlexRecyclerAdapter.OnItemClickListener() {
+        flexRecyclerAdapter = new TagFlexRecyclerAdapter(homeViewModel.getListTags().getValue(), new TagFlexRecyclerAdapter.OnDeleteListener() {
             @Override
             public void onItemClick(int position) {
-
-                listSelectedTags.remove(position);
-                if (listSelectedTags.size() == 0) tvTable.setVisibility(View.VISIBLE);
-                flexBox();
+                homeViewModel.removeListTags(position);
             }
         });
-        flexBoxRecyclerView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+        flexBoxRecyclerView.setAdapter(flexRecyclerAdapter);
+        flexRecyclerAdapter.notifyDataSetChanged();
 
     }
 
+    private void searchButtonClick() {
+        searchView.clearFocus();
 
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        if (searchView != null) {
-            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                @Override
-                public boolean onQueryTextSubmit(String s) {
-                    return false;
-                }
-
-                @Override
-                public boolean onQueryTextChange(String s) {
-                    search(s);
-                    return true;
-                }
-            });
-        }
-
-    }
-
-
-    private void search(String str) {
-        listSearchedTags = new ArrayList<>();
-
-        if (listTags != null) {
-            for (Tag object : listTags) {
-                String tagName = object.getName().toLowerCase();
-                if (tagName.contains(str.toLowerCase()) && str.length() != 0) {
-                    listSearchedTags.add(object);
-                }
+        List<Integer> listSelectedTagID = new ArrayList<>();
+            for (Tag tag : homeViewModel.getListTags().getValue()) {
+                listSelectedTagID.add(tag.getId());
             }
-        }
 
-        SearchRecyclerAdapter searchRecyclerAdapter = new SearchRecyclerAdapter(listSearchedTags);
-        searchRecyclerView.setAdapter(searchRecyclerAdapter);
+//        listSelectedTagID.add(10);
+//        listSelectedTagID.add(7);
+//        listSelectedTagID.add(5);
+
+
+        new DatabaseOperations().getRecipes(getContext(), listSelectedTagID, new DatabaseOperations.VolleyCallback() {
+            @Override
+            public void onSuccess(List<Recipe> result) {
+
+                homeViewModel.setListRecipes(result);
+                recipeRecycleClick(result);
+            }
+        });
 
     }
 
     @Override
     public void onClick(View view) {
-        if (view == searchView) {
-            searchView.onActionViewExpanded();
-        }
         if (view == btnSearchRecipe) {
-            searchView.clearFocus();
-
-            List<Integer> listSelectedTagID = new ArrayList<>();
-            for (Tag tag : listSelectedTags) {
-                listSelectedTagID.add(tag.getId());
-            }
-
-            //listSelectedTagID.add(10);
-            //listSelectedTagID.add(7);
-            //listSelectedTagID.add(5);
-
-
-            new DatabaseOperations().getRecipes(getContext(), listSelectedTagID, new DatabaseOperations.VolleyCallback() {
-                @Override
-                public void onSuccess(List<Recipe> result) {
-
-                    listRecipes = result;
-                    recipeRecycleClick(listRecipes);
-                    RecipeRecyclerAdapter adapter = new RecipeRecyclerAdapter(result);
-                    recipeRecyclerView.setAdapter(adapter);
-                }
-            });
-
-
+            searchButtonClick();
         }
-
-
     }
 
 }

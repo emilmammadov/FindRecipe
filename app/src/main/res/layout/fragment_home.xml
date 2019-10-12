@@ -1,93 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".fragments.HomeFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        tools:context=".fragments.HomeFragment">
 
-
-        <SearchView
-            android:id="@+id/searchViewHome"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/searchview_rounded"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            android:focusedByDefault="false"
-            android:iconifiedByDefault="false"
-            android:queryBackground="@android:color/transparent"
-            android:queryHint="@string/searchHintHome" />
+            android:orientation="vertical">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/searchRecyclerHome"
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:fadeScrollbars="false"
-            android:scrollbars="vertical"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-        <RelativeLayout
-            android:id="@+id/layoutTable"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="70dp">
+            <SearchView
+                android:id="@+id/searchViewHome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/searchview_rounded"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:iconifiedByDefault="false"
+                android:queryBackground="@android:color/transparent"
+                android:queryHint="@string/searchHintHome" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/tagFlexRecyclerView"
-                android:layout_width="300dp"
-                android:layout_height="200dp"
-                android:background="@drawable/flex_recycler_background"
-                android:fadeScrollbars="true"
+                android:id="@+id/searchRecyclerHome"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:fadeScrollbars="false"
                 android:scrollbars="vertical"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-            <TextView
-                android:id="@+id/tvTable"
+            <RelativeLayout
+                android:id="@+id/layoutTable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="MASANIZ BOŞ"
-                android:textColor="@color/silver"
-                android:textSize="22sp"
-                android:textStyle="bold" />
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="70dp">
 
-        </RelativeLayout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/tagFlexRecyclerView"
+                    android:layout_width="300dp"
+                    android:layout_height="200dp"
+                    android:background="@drawable/flex_recycler_background"
+                    android:fadeScrollbars="true"
+                    android:scrollbars="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-        <Button
-            android:id="@+id/btnSearch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="30dp"
-            android:background="@drawable/round_button"
-            android:text="@string/search"
-            android:textColor="#ffffff" />
+                <TextView
+                    android:id="@+id/tvTable"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="@string/emptyTable"
+                    android:textColor="@color/silver"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recipeRecyclerHome"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="30dp"
-            android:overScrollMode="never"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+            </RelativeLayout>
 
-    </LinearLayout>
-</androidx.core.widget.NestedScrollView>
+            <Button
+                android:id="@+id/btnSearch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="30dp"
+                android:background="@drawable/round_button"
+                android:text="@string/search"
+                android:textColor="#ffffff" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recipeRecyclerHome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="30dp"
+                android:overScrollMode="never"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</layout>
