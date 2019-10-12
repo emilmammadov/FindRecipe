@@ -39,11 +39,10 @@ import java.util.List;
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
 
-    //    private static String TAG = "HomeFragment";
+//    private static String TAG = "HomeFragment";
     public static String RECIPE_OBJECT_EXTRA = "recipe_object";
 
     private static List<Tag> listTags, listSearchedTags;
-    private static List<Recipe> listRecipes;
     private RecyclerView searchRecyclerView, flexBoxRecyclerView, recipeRecyclerView;
     private SearchView searchView;
     private Button btnSearchRecipe;
@@ -131,7 +130,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     }
 
-    private void recycler(){
+    private void recycler() {
         searchRecyclerAdapter = new SearchRecyclerAdapter(new ArrayList<Tag>());
         searchRecyclerView.setAdapter(searchRecyclerAdapter);
 
@@ -186,9 +185,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         searchView.clearFocus();
 
         List<Integer> listSelectedTagID = new ArrayList<>();
-            for (Tag tag : homeViewModel.getListTags().getValue()) {
-                listSelectedTagID.add(tag.getId());
-            }
+        for (Tag tag : homeViewModel.getListTags().getValue()) {
+            listSelectedTagID.add(tag.getId());
+        }
 
 //        listSelectedTagID.add(10);
 //        listSelectedTagID.add(7);

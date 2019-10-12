@@ -17,5 +17,6 @@
     <string name="searchHintHome">Malzeme ile ara</string>
     <string name="searchHintRecipe">Tarif ara</string>
     <string name="emptyTable">MASANIZ BOŞ</string>
+    <string name="searhFragmentHint">Tarif ara</string>
 
 </resources>

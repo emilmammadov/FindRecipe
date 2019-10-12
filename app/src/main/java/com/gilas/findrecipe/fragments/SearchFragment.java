@@ -12,24 +12,25 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chootdev.recycleclick.RecycleClick;
-import com.gilas.findrecipe.adapters.RecipeSearchRecAdapter;
-import com.gilas.findrecipe.dboperations.DatabaseOperations;
-import com.gilas.findrecipe.data.Recipe;
 import com.gilas.findrecipe.R;
 import com.gilas.findrecipe.RecipeActivity;
+import com.gilas.findrecipe.adapters.RecipeSearchRecAdapter;
+import com.gilas.findrecipe.data.Recipe;
+import com.gilas.findrecipe.databinding.FragmentHomeBinding;
+import com.gilas.findrecipe.dboperations.DatabaseOperations;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.gilas.findrecipe.fragments.HomeFragment.RECIPE_OBJECT_EXTRA;
 
-public class SearchFragment extends Fragment implements View.OnClickListener {
+public class SearchFragment extends Fragment {
 
 
-    private View view;
     private SearchView searchView;
     private RecyclerView recyclerView;
     private List<Recipe> listRecipes, listSearchedRecipes;
+    FragmentHomeBinding binding;
 
     public SearchFragment() {
     }
@@ -39,7 +40,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_home, container, false);
+        FragmentHomeBinding binding = FragmentHomeBinding.inflate(inflater, container, false);
 
         new DatabaseOperations().getAllRecipeTitles(getContext(), new DatabaseOperations.VolleyCallback() {
             @Override
@@ -48,13 +49,13 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
             }
         });
 
-        view.findViewById(R.id.layoutTable).setVisibility(View.GONE);
-        view.findViewById(R.id.btnSearch).setVisibility(View.GONE);
+        binding.layoutTable.setVisibility(View.GONE);
+        binding.btnSearch.setVisibility(View.GONE);
 
-        searchView = view.findViewById(R.id.searchViewHome);
-        recyclerView = view.findViewById(R.id.searchRecyclerHome);
+        searchView = binding.searchViewHome;
+        recyclerView = binding.searchRecyclerHome;
 
-        searchView.setQueryHint("Tarif ara");
+        searchView.setQueryHint(getResources().getString(R.string.searhFragmentHint));
 
         ViewGroup.LayoutParams params = searchView.getLayoutParams();
         params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
@@ -62,7 +63,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
 
         searchRecycleClick();
 
-        return view;
+        return binding.getRoot();
     }
 
     private void searchRecycleClick() {
@@ -83,13 +84,6 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
 
             }
         });
-    }
-
-    @Override
-    public void onClick(View view) {
-        if (view == searchView) {
-
-        }
     }
 
     @Override
@@ -121,7 +115,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
             for (Recipe object : listRecipes) {
                 String tagName = object.getTitle().toLowerCase();
                 if (tagName.contains(str.toLowerCase()) && str.length() != 0) {
-                    listSearchedRecipes.add(new Recipe(object.getId(),tagName));
+                    listSearchedRecipes.add(new Recipe(object.getId(), tagName));
                     listSearchedTitles.add(tagName);
                 }
             }
