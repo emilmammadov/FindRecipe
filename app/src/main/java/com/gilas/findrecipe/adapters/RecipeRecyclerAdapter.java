@@ -1,54 +1,61 @@
 package com.gilas.findrecipe.adapters;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.gilas.findrecipe.data.Recipe;
-import com.gilas.findrecipe.R;
+import com.gilas.findrecipe.databinding.RecipeCardHolderBinding;
 
 import java.util.List;
 
 
-public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecipeRecyclerAdapter.MyViewHolder> {
+public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecipeRecyclerAdapter.ViewHolder> {
 
-    List<Recipe> recipes;
+    private List<Recipe> recipes;
+    private RecipeCardHolderBinding binding;
 
     public RecipeRecyclerAdapter(List<Recipe> recipes) {
         this.recipes = recipes;
     }
 
+    public void setRecipes(List<Recipe> recipes) {
+        this.recipes = recipes;
+    }
+
     @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recipe_card_holder, parent, false);
-
-        return new MyViewHolder(view);
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        binding = RecipeCardHolderBinding.inflate(inflater, parent, false);
+        return new ViewHolder(binding);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.tvTitle.setText(recipes.get(position).getTitle());
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.bind(recipes.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return recipes.size();
+        return recipes != null ? recipes.size() : 0;
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvTitle;
+        RecipeCardHolderBinding binding;
 
-        public MyViewHolder(@NonNull View itemView) {
-            super(itemView);
+        public ViewHolder(RecipeCardHolderBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
+        }
 
-            tvTitle = itemView.findViewById(R.id.tvTitle);
+        public void bind(Recipe recipe) {
+            binding.setRecipe(recipe);
+            binding.executePendingBindings();
         }
     }
 

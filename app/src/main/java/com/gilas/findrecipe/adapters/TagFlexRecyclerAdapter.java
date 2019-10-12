@@ -3,73 +3,81 @@ package com.gilas.findrecipe.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.gilas.findrecipe.data.Tag;
-import com.gilas.findrecipe.R;
+import com.gilas.findrecipe.databinding.TagFlexboxItemBinding;
 
 import java.util.List;
 
-public class TagFlexRecyclerAdapter extends RecyclerView.Adapter<TagFlexRecyclerAdapter.MyViewHolder> {
+public class TagFlexRecyclerAdapter extends RecyclerView.Adapter<TagFlexRecyclerAdapter.ViewHolder> {
 
-    List<Tag> tags;
+    private List<Tag> tags;
+    private TagFlexboxItemBinding binding;
 
 
-    private OnItemClickListener mOnItemClickListener;
+    private OnDeleteListener mOnDeleteListener;
 
-    public interface OnItemClickListener {
+    public interface OnDeleteListener {
         // Buradaki parametlere activity'ye göndermek istediklerinizi yazın
         void onItemClick(int position);
     }
 
     // constructor'ımıza listener koyalım
-    public TagFlexRecyclerAdapter(List<Tag> tags, OnItemClickListener onItemClickListener) {
-        mOnItemClickListener = onItemClickListener;
+    public TagFlexRecyclerAdapter(List<Tag> tags, OnDeleteListener onDeleteListener) {
+        mOnDeleteListener = onDeleteListener;
+        this.tags = tags;
+    }
+
+    public void setTags(List<Tag> tags) {
         this.tags = tags;
     }
 
     @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.tag_flexbox_item, parent, false);
-        return new TagFlexRecyclerAdapter.MyViewHolder(view);
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        binding = TagFlexboxItemBinding.inflate(inflater, parent, false);
+        return new ViewHolder(binding);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
-        holder.tvTag.setText(tags.get(position).getName());
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
+        //holder.tvTag.setText(tags.get(position).getName());
 
 
-        holder.btnDelete.setOnClickListener(new View.OnClickListener() {
+        binding.flexBoxDeleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mOnItemClickListener.onItemClick(position);
+                mOnDeleteListener.onItemClick(position);
             }
         });
+
+        Tag tag = tags.get(position);
+        holder.bind(tag);
     }
 
     @Override
     public int getItemCount() {
-        return tags.size();
+        return tags != null ? tags.size() : 0;
     }
 
 
-    class MyViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvTag;
-        Button btnDelete;
+        TagFlexboxItemBinding binding;
 
-        public MyViewHolder(@NonNull View itemView) {
+        public ViewHolder(TagFlexboxItemBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
+        }
 
-            super(itemView);
-            tvTag = itemView.findViewById(R.id.flexItemTextView);
-            btnDelete = itemView.findViewById(R.id.flexBoxDeleteButton);
-
+        public void bind(Tag tag) {
+            binding.setTag(tag);
+            binding.executePendingBindings();
         }
     }
 }
