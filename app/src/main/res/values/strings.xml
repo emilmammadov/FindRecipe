@@ -18,5 +18,10 @@
     <string name="searchHintRecipe">Tarif ara</string>
     <string name="emptyTable">MASANIZ BOŞ</string>
     <string name="searhFragmentHint">Tarif ara</string>
+    <string name="recipeHowManyPerson">Kaç Kişilik</string>
+    <string name="recipePrep">Hazırlama</string>
+    <string name="recipeCook">Pişirme</string>
+    <string name="recipeBodyIngredients">Malzemeler</string>
+    <string name="recipeBodyPrep">Hazırlanış</string>
 
 </resources>

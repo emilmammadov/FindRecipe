@@ -28,6 +28,10 @@ public class Recipe implements Serializable {
     private String timeSumMin;
     @Ignore
     private String personCountString;
+    @Ignore
+    private String prepTimeMin;
+    @Ignore
+    private String cookTimeMin;
 
     public Recipe(int id, String title, String ingredientList, String body, int personCount, int prepTimeSec, int cookTimeSec) {
         this.id = id;
@@ -37,8 +41,12 @@ public class Recipe implements Serializable {
         this.personCount = personCount;
         this.prepTimeSec = prepTimeSec;
         this.cookTimeSec = cookTimeSec;
+
         timeSumMin = ((prepTimeSec+cookTimeSec)/60)+"";
-        personCountString = personCount+"";
+        prepTimeMin = (prepTimeSec/60) + "";
+        cookTimeMin = (cookTimeSec/60) + "";
+        personCountString = personCount + "";
+
     }
 
     @Ignore
@@ -50,6 +58,14 @@ public class Recipe implements Serializable {
         personCount = 0;
         prepTimeSec = 0;
         cookTimeSec = 0;
+    }
+
+    public String getPrepTimeMin() {
+        return prepTimeMin;
+    }
+
+    public String getCookTimeMin() {
+        return cookTimeMin;
     }
 
     public String getPersonCountString() {
