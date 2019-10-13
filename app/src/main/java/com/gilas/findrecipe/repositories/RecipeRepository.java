@@ -2,7 +2,6 @@ package com.gilas.findrecipe.repositories;
 
 import android.app.Application;
 import android.os.AsyncTask;
-import android.telecom.Call;
 
 import androidx.lifecycle.LiveData;
 
@@ -30,8 +29,19 @@ public class RecipeRepository {
         return new IsRecipeExistsAsync(recipeDao).doInBackground(id);
     }
 
-    public Recipe getRecipe(int id) {
-        return new GetRecipeAsync(recipeDao).doInBackground(id);
+    public void getRecipe(int id, final CallbackRecipe callback) {
+        if (isRecipeExists(id)) {
+            callback.onSuccess(new GetRecipeAsync(recipeDao).doInBackground(id));
+        } else {
+            new DatabaseOperations(application).getRecipe(id, new DatabaseOperations.RecipeCallback() {
+                @Override
+                public void onSuccess(Recipe result) {
+                    callback.onSuccess(result);
+                }
+            });
+        }
+
+
     }
 
     public LiveData<List<Recipe>> getAllRecipes() {
@@ -42,7 +52,7 @@ public class RecipeRepository {
         new InsertRecipeAsync(recipeDao).execute(recipe);
     }
 
-    public void getHomeRecipeList(List<Integer> listSelectedTagID, final Callback callback) {
+    public void getHomeRecipeList(List<Integer> listSelectedTagID, final CallbackListRecipe callback) {
         new DatabaseOperations(application).getRecipes(listSelectedTagID, new DatabaseOperations.VolleyCallback() {
             @Override
             public void onSuccess(List<Recipe> result) {
@@ -51,9 +61,22 @@ public class RecipeRepository {
         });
     }
 
+    public void getAllRecipeTitles(final CallbackListRecipe callback) {
+        new DatabaseOperations(application).getAllRecipeTitles(new DatabaseOperations.VolleyCallback() {
+            @Override
+            public void onSuccess(List<Recipe> result) {
+                callback.onSuccess(result);
+            }
+        });
+    }
 
-    public interface Callback {
+
+    public interface CallbackListRecipe {
         void onSuccess(List<Recipe> recipes);
+    }
+
+    public interface CallbackRecipe {
+        void onSuccess(Recipe recipe);
     }
 
 

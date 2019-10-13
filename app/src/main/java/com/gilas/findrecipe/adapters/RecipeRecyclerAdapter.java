@@ -15,7 +15,6 @@ import java.util.List;
 public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecipeRecyclerAdapter.ViewHolder> {
 
     private List<Recipe> recipes;
-    private RecipeCardHolderBinding binding;
 
     public RecipeRecyclerAdapter(List<Recipe> recipes) {
         this.recipes = recipes;
@@ -30,7 +29,7 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecipeRecyclerAd
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        binding = RecipeCardHolderBinding.inflate(inflater, parent, false);
+        RecipeCardHolderBinding binding = RecipeCardHolderBinding.inflate(inflater, parent, false);
         return new ViewHolder(binding);
     }
 
@@ -48,12 +47,12 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecipeRecyclerAd
 
         RecipeCardHolderBinding binding;
 
-        public ViewHolder(RecipeCardHolderBinding binding) {
+        private ViewHolder(RecipeCardHolderBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }
 
-        public void bind(Recipe recipe) {
+        private void bind(Recipe recipe) {
             binding.setRecipe(recipe);
             binding.executePendingBindings();
         }

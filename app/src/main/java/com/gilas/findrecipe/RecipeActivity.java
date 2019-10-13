@@ -50,7 +50,7 @@ public class RecipeActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked) {
 
-                    new DatabaseOperations(getApplication()).getFavRecipe(id, new DatabaseOperations.RecipeCallback() {
+                    new DatabaseOperations(getApplication()).getRecipe(id, new DatabaseOperations.RecipeCallback() {
                         @Override
                         public void onSuccess(Recipe result) {
                             recipeViewModel.insertRecipeTbl(result);

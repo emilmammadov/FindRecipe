@@ -13,7 +13,7 @@ import java.util.List;
 
 public class FavRecyclerAdapter extends RecyclerView.Adapter<FavRecyclerAdapter.ViewHolder> {
 
-    List<Recipe> recipeList;
+    private List<Recipe> recipeList;
 
     public FavRecyclerAdapter(List<Recipe> recipeList) {
         this.recipeList = recipeList;
@@ -32,17 +32,6 @@ public class FavRecyclerAdapter extends RecyclerView.Adapter<FavRecyclerAdapter.
 
         Recipe recipe = recipeList.get(position);
         holder.bind(recipe);
-
-        /*String personCount = recipe.getPersonCount()
-                + " " + context.getResources().getString(R.string.person);
-
-        double timeMin = (recipe.getCookTimeSec() + recipe.getPrepTimeSec()) / 60.0;
-        String time = (int) timeMin + " " + context.getResources().getString(R.string.minute);
-
-
-        holder.tvTitle.setText(recipeList.get(position).getTitle());
-        holder.tvPersonCount.setText(personCount);
-        holder.tvTime.setText(time);*/
     }
 
     @Override
@@ -54,12 +43,12 @@ public class FavRecyclerAdapter extends RecyclerView.Adapter<FavRecyclerAdapter.
     class ViewHolder extends RecyclerView.ViewHolder {
         private FavRecyclerItemBinding binding;
 
-        public ViewHolder(FavRecyclerItemBinding binding) {
+        private ViewHolder(FavRecyclerItemBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }
 
-        public void bind(Recipe recipe) {
+        private void bind(Recipe recipe) {
             binding.setFavItem(recipe);
             binding.executePendingBindings();
         }

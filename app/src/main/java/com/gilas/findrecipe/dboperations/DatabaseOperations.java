@@ -28,7 +28,7 @@ public class DatabaseOperations {
 
     private static final String TAG = "TAG";
     private static final String ip = "192.168.0.11";
-    Context context;
+    private Context context;
 
     public DatabaseOperations(Context context) {
         this.context = context;
@@ -251,12 +251,11 @@ public class DatabaseOperations {
     }
 
 
-
     /**
      * After here is SQLite database operations
      */
 
-    public void getFavRecipe(final int id, final RecipeCallback callback) {
+    public void getRecipe(final int id, final RecipeCallback callback) {
         String url = "http://" + ip + "/get_fav_recipe.php";
 
 
@@ -265,28 +264,23 @@ public class DatabaseOperations {
                 url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                try {
+                    JSONObject obj = new JSONObject(response);
+                    Log.e(TAG, "onResponse: " + obj.get("title").toString());
+                    Recipe recipe = new Recipe(
+                            Integer.parseInt(obj.get("id").toString()),
+                            obj.get("title").toString(),
+                            obj.get("ingredient_list").toString(),
+                            obj.get("body").toString(),
+                            Integer.parseInt(obj.get("person_count").toString()),
+                            Integer.parseInt(obj.get("prep_time_sec").toString()),
+                            Integer.parseInt(obj.get("cook_time_sec").toString())
+                    );
 
-                if (!(new DBHelper(context).isRecipeExists(id))) {
-                    try {
-                        JSONObject obj = new JSONObject(response);
-                        Log.e(TAG, "onResponse: " + obj.get("title").toString());
-                        Recipe recipe = new Recipe(
-                                Integer.parseInt(obj.get("id").toString()),
-                                obj.get("title").toString(),
-                                obj.get("ingredient_list").toString(),
-                                obj.get("body").toString(),
-                                Integer.parseInt(obj.get("person_count").toString()),
-                                Integer.parseInt(obj.get("prep_time_sec").toString()),
-                                Integer.parseInt(obj.get("cook_time_sec").toString())
-                        );
+                    callback.onSuccess(recipe);
 
-                        callback.onSuccess(recipe);
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    callback.onSuccess(new DBHelper(context).getRecipe(id));
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
 
             }
@@ -307,8 +301,6 @@ public class DatabaseOperations {
 
         requestQueue.add(stringRequest);
     }
-
-
 
 
 }

@@ -8,14 +8,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.gilas.findrecipe.data.Tag;
 import com.gilas.findrecipe.R;
+import com.gilas.findrecipe.data.Tag;
 
 import java.util.List;
 
 public class SearchRecyclerAdapter extends RecyclerView.Adapter<SearchRecyclerAdapter.MyViewHolder> {
 
-    List<Tag> tags;
+    private List<Tag> tags;
 
     public SearchRecyclerAdapter(List<Tag> tags) {
         this.tags = tags;
@@ -49,7 +49,7 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<SearchRecyclerAd
 
         TextView tvTag;
 
-        public MyViewHolder(@NonNull View itemView) {
+        private MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             tvTag = itemView.findViewById(R.id.tvTag);

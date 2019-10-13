@@ -9,15 +9,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.gilas.findrecipe.R;
+import com.gilas.findrecipe.data.Recipe;
 
 import java.util.List;
 
-public class RecipeSearchRecAdapter extends RecyclerView.Adapter<RecipeSearchRecAdapter.MyViewHolder>{
+public class RecipeSearchRecAdapter extends RecyclerView.Adapter<RecipeSearchRecAdapter.MyViewHolder> {
 
-    List<String> listTitles;
+    private List<Recipe> listRecipe;
 
-    public RecipeSearchRecAdapter(List<String> listTitles) {
-        this.listTitles = listTitles;
+    public RecipeSearchRecAdapter(List<Recipe> listRecipe) {
+        this.listRecipe = listRecipe;
     }
 
     @NonNull
@@ -30,22 +31,20 @@ public class RecipeSearchRecAdapter extends RecyclerView.Adapter<RecipeSearchRec
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.tvTag.setText(listTitles.get(position));
+        holder.tvTag.setText(listRecipe.get(position).getTitle());
     }
 
     @Override
     public int getItemCount() {
-        return listTitles.size();
+        return listRecipe.size();
     }
-
-
 
 
     class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView tvTag;
 
-        public MyViewHolder(@NonNull View itemView) {
+        private MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             tvTag = itemView.findViewById(R.id.tvTag);

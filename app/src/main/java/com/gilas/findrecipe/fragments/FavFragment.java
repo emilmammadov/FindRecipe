@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -27,19 +28,18 @@ import static com.gilas.findrecipe.fragments.HomeFragment.RECIPE_OBJECT_EXTRA;
 public class FavFragment extends Fragment {
 
     private static RecyclerView recyclerView;
-    private FavViewModel favViewModel;
-    FragmentFavBinding binding;
+    private FragmentFavBinding binding;
 
     public FavFragment() {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         binding = FragmentFavBinding.inflate(inflater, container, false);
 
-        favViewModel = ViewModelProviders.of(this).get(FavViewModel.class);
+        FavViewModel favViewModel = ViewModelProviders.of(this).get(FavViewModel.class);
         favViewModel.getAllRecipes().observe(getViewLifecycleOwner(), new Observer<List<Recipe>>() {
             @Override
             public void onChanged(List<Recipe> recipes) {

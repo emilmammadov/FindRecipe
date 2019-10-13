@@ -74,7 +74,7 @@ public class HomeViewModel extends AndroidViewModel {
     }
 
     public void setHomeRecipeList(List<Integer> listSelectedTagID) {
-        recipeRepository.getHomeRecipeList(listSelectedTagID, new RecipeRepository.Callback() {
+        recipeRepository.getHomeRecipeList(listSelectedTagID, new RecipeRepository.CallbackListRecipe() {
             @Override
             public void onSuccess(List<Recipe> recipes) {
                 setListRecipes(recipes);

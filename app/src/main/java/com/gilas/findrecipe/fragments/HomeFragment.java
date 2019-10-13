@@ -38,7 +38,7 @@ import java.util.List;
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
 
-//    private static String TAG = "HomeFragment";
+    //    private static String TAG = "HomeFragment";
     public static String RECIPE_OBJECT_EXTRA = "recipe_object";
 
     private static List<Tag> listTags, listSearchedTags;
@@ -116,7 +116,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
                 @Override
                 public boolean onQueryTextChange(String s) {
-                    listSearchedTags = FragmentBusinessLogic.search(listTags, s);
+                    listSearchedTags = FragmentBusinessLogic.searchTag(listTags, s);
                     searchRecyclerAdapter.setTags(listSearchedTags);
                     searchRecyclerAdapter.notifyDataSetChanged();
                     return true;

@@ -70,12 +70,12 @@ public class TagFlexRecyclerAdapter extends RecyclerView.Adapter<TagFlexRecycler
 
         TagFlexboxItemBinding binding;
 
-        public ViewHolder(TagFlexboxItemBinding binding) {
+        private ViewHolder(TagFlexboxItemBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }
 
-        public void bind(Tag tag) {
+        private void bind(Tag tag) {
             binding.setTag(tag);
             binding.executePendingBindings();
         }

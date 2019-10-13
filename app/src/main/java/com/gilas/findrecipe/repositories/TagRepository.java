@@ -3,7 +3,6 @@ package com.gilas.findrecipe.repositories;
 import android.app.Application;
 import android.os.AsyncTask;
 
-import com.gilas.findrecipe.data.Recipe;
 import com.gilas.findrecipe.data.RecipeDb;
 import com.gilas.findrecipe.data.Tag;
 import com.gilas.findrecipe.data.TagDao;
