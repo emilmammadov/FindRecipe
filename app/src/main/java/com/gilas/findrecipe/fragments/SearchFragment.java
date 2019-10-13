@@ -42,7 +42,7 @@ public class SearchFragment extends Fragment {
         // Inflate the layout for this fragment
         FragmentHomeBinding binding = FragmentHomeBinding.inflate(inflater, container, false);
 
-        new DatabaseOperations().getAllRecipeTitles(getContext(), new DatabaseOperations.VolleyCallback() {
+        new DatabaseOperations(getContext()).getAllRecipeTitles(new DatabaseOperations.VolleyCallback() {
             @Override
             public void onSuccess(List<Recipe> result) {
                 listRecipes = result;
@@ -71,7 +71,7 @@ public class SearchFragment extends Fragment {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int i, View view) {
 
-                new DatabaseOperations().getFavRecipe(getContext(), listSearchedRecipes.get(i).getId(),
+                new DatabaseOperations(getContext()).getFavRecipe(listSearchedRecipes.get(i).getId(),
                         new DatabaseOperations.RecipeCallback() {
                             @Override
                             public void onSuccess(Recipe result) {

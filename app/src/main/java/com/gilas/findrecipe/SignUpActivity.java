@@ -36,7 +36,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         if (view == btnRegister) {
             String username = etUsername.getText().toString().trim();
             String password = etPassword.getText().toString().trim();
-            new DatabaseOperations().register(getApplicationContext(), username, password);
+            new DatabaseOperations(getApplication()).register(username, password);
 
         }
     }

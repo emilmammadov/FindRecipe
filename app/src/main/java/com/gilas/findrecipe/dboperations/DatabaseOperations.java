@@ -28,8 +28,13 @@ public class DatabaseOperations {
 
     private static final String TAG = "TAG";
     private static final String ip = "192.168.0.11";
+    Context context;
 
-    public void login(final Context context, final String username, final String password) {
+    public DatabaseOperations(Context context) {
+        this.context = context;
+    }
+
+    public void login(final String username, final String password) {
 
         String url = "http://" + ip + "/login.php";
 
@@ -63,7 +68,7 @@ public class DatabaseOperations {
     }
 
 
-    public void register(final Context context, final String username, final String password) {
+    public void register(final String username, final String password) {
 
         String url = "http://" + ip + "/register.php";
 
@@ -94,7 +99,7 @@ public class DatabaseOperations {
     }
 
 
-    public List<Tag> getAllTags(final Context context) {
+    public List<Tag> getAllTags() {
         String url = "http://" + ip + "/get_all_tags.php";
         final List<Tag> tagArrayList = new ArrayList<>();
 
@@ -135,7 +140,7 @@ public class DatabaseOperations {
     }
 
 
-    public void getRecipes(final Context context, List<Integer> selectedTags, final VolleyCallback callback) {
+    public void getRecipes(List<Integer> selectedTags, final VolleyCallback callback) {
 
         final List<Recipe> recipeArrayList = new ArrayList<>();
 
@@ -194,7 +199,7 @@ public class DatabaseOperations {
         requestQueue.add(stringRequest);
     }
 
-    public void getAllRecipeTitles(final Context context, final VolleyCallback callbackTitle) {
+    public void getAllRecipeTitles(final VolleyCallback callbackTitle) {
 
         String url = "http://" + ip + "/get_all_recipe_titles.php";
         final List<Recipe> titlesArrayList = new ArrayList<>();
@@ -251,7 +256,7 @@ public class DatabaseOperations {
      * After here is SQLite database operations
      */
 
-    public void getFavRecipe(final Context context, final int id, final RecipeCallback callback) {
+    public void getFavRecipe(final int id, final RecipeCallback callback) {
         String url = "http://" + ip + "/get_fav_recipe.php";
 
 

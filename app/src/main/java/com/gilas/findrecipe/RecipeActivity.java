@@ -3,7 +3,6 @@ package com.gilas.findrecipe;
 import android.os.Bundle;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -11,7 +10,6 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.gilas.findrecipe.data.Recipe;
 import com.gilas.findrecipe.databinding.ActivityRecipeBinding;
-import com.gilas.findrecipe.dboperations.DBHelper;
 import com.gilas.findrecipe.dboperations.DatabaseOperations;
 import com.gilas.findrecipe.fragments.HomeFragment;
 import com.gilas.findrecipe.viewmodels.RecipeViewModel;
@@ -52,7 +50,7 @@ public class RecipeActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked) {
 
-                    new DatabaseOperations().getFavRecipe(getApplicationContext(), id, new DatabaseOperations.RecipeCallback() {
+                    new DatabaseOperations(getApplication()).getFavRecipe(id, new DatabaseOperations.RecipeCallback() {
                         @Override
                         public void onSuccess(Recipe result) {
                             recipeViewModel.insertRecipeTbl(result);

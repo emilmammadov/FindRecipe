@@ -1,63 +1,84 @@
 package com.gilas.findrecipe.viewmodels;
 
+import android.app.Application;
+
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.gilas.findrecipe.data.Recipe;
 import com.gilas.findrecipe.data.Tag;
+import com.gilas.findrecipe.repositories.RecipeRepository;
+import com.gilas.findrecipe.repositories.TagRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeViewModel extends ViewModel {
-    private static MutableLiveData<List<Tag>> listTags;
+public class HomeViewModel extends AndroidViewModel {
+    private RecipeRepository recipeRepository;
+    private TagRepository tagRepository;
+    private static MutableLiveData<List<Tag>> flexListTags;
     private static MutableLiveData<List<Recipe>> listRecipes;
     private static MutableLiveData<Boolean> isFlexEmpty;
 
-
-    public HomeViewModel() {
-        listTags = new MutableLiveData<>();
+    public HomeViewModel(Application application) {
+        super(application);
+        recipeRepository = new RecipeRepository(application);
+        tagRepository = new TagRepository(application);
+        flexListTags = new MutableLiveData<>();
         listRecipes = new MutableLiveData<>();
         isFlexEmpty = new MutableLiveData<>();
         isFlexEmpty.setValue(true);
-        if (listTags.getValue() == null) listTags.setValue(new ArrayList<Tag>());
+        if (flexListTags.getValue() == null) flexListTags.setValue(new ArrayList<Tag>());
         if (listRecipes.getValue() == null) listRecipes.setValue(new ArrayList<Recipe>());
     }
 
     public LiveData<List<Tag>> getListTags() {
-        return listTags;
+        return flexListTags;
     }
 
-    public LiveData<Boolean> getIsFlexEmpty(){
+    public LiveData<Boolean> getIsFlexEmpty() {
         return isFlexEmpty;
     }
 
     public void addListTags(Tag input) {
-        List<Tag> temp = new ArrayList<>(listTags.getValue());
+        List<Tag> temp = new ArrayList<>(flexListTags.getValue());
         if (!temp.contains(input)) {
             temp.add(input);
-            listTags.setValue(temp);
+            flexListTags.setValue(temp);
             isFlexEmpty.setValue(false);
         }
     }
 
     public void removeListTags(int position) {
-        List<Tag> temp = new ArrayList<>(listTags.getValue());
+        List<Tag> temp = new ArrayList<>(flexListTags.getValue());
         temp.remove(position);
-        listTags.setValue(temp);
-        isFlexEmpty.setValue(isTagListEmpty());
+        flexListTags.setValue(temp);
+        isFlexEmpty.setValue(isFlexBoxEmpty());
     }
 
-    public boolean isTagListEmpty() {
-        return listTags.getValue().size() == 0;
+    private boolean isFlexBoxEmpty() {
+        return flexListTags.getValue().size() == 0;
     }
 
     public LiveData<List<Recipe>> getListRecipes() {
         return listRecipes;
     }
 
-    public void setListRecipes(List<Recipe> input) {
-        this.listRecipes.setValue(input);
+    private void setListRecipes(List<Recipe> input) {
+        listRecipes.setValue(input);
+    }
+
+    public List<Tag> getAllTags() {
+        return tagRepository.getAllTags();
+    }
+
+    public void setHomeRecipeList(List<Integer> listSelectedTagID) {
+        recipeRepository.getHomeRecipeList(listSelectedTagID, new RecipeRepository.Callback() {
+            @Override
+            public void onSuccess(List<Recipe> recipes) {
+                setListRecipes(recipes);
+            }
+        });
     }
 }

@@ -12,6 +12,7 @@ public abstract class RecipeDb extends RoomDatabase {
     private static RecipeDb instance;
 
     public abstract RecipeDao recipeDao();
+    public abstract TagDao tagDao();
 
     public static synchronized RecipeDb getDatabase(Application application) {
         if (instance == null) {

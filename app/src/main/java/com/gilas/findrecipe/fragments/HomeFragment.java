@@ -27,7 +27,6 @@ import com.gilas.findrecipe.adapters.TagFlexRecyclerAdapter;
 import com.gilas.findrecipe.data.Recipe;
 import com.gilas.findrecipe.data.Tag;
 import com.gilas.findrecipe.databinding.FragmentHomeBinding;
-import com.gilas.findrecipe.dboperations.DatabaseOperations;
 import com.gilas.findrecipe.viewmodels.HomeViewModel;
 import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexboxLayoutManager;
@@ -57,8 +56,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        listTags = new DatabaseOperations().getAllTags(getContext());
-
         FragmentHomeBinding binding = FragmentHomeBinding.inflate(inflater, container, false);
 
         tvTable = binding.tvTable;
@@ -83,6 +80,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         homeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
 
+        listTags = homeViewModel.getAllTags();
+
         homeViewModel.getListTags().observe(getViewLifecycleOwner(), new Observer<List<Tag>>() {
             @Override
             public void onChanged(List<Tag> tags) {
@@ -104,6 +103,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             public void onChanged(List<Recipe> recipeList) {
                 recipeRecyclerAdapter.setRecipes(recipeList);
                 recipeRecyclerAdapter.notifyDataSetChanged();
+                recipeRecycleClick(recipeList);
             }
         });
 
@@ -193,15 +193,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 //        listSelectedTagID.add(7);
 //        listSelectedTagID.add(5);
 
-
-        new DatabaseOperations().getRecipes(getContext(), listSelectedTagID, new DatabaseOperations.VolleyCallback() {
-            @Override
-            public void onSuccess(List<Recipe> result) {
-
-                homeViewModel.setListRecipes(result);
-                recipeRecycleClick(result);
-            }
-        });
+        homeViewModel.setHomeRecipeList(listSelectedTagID);
 
     }
 

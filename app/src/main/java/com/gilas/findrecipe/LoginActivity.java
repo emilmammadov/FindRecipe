@@ -37,7 +37,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (view == btnLogin) {
             String username = etLoginUsername.getText().toString().trim();
             String password = etLoginPassword.getText().toString().trim();
-            new DatabaseOperations().login(this, username, password);
+            new DatabaseOperations(this).login(username, password);
         } else if (view == btnSignUp) {
             Intent intent = new Intent(this, SignUpActivity.class);
             startActivity(intent);

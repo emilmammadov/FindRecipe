@@ -2,19 +2,23 @@ package com.gilas.findrecipe.repositories;
 
 import android.app.Application;
 import android.os.AsyncTask;
+import android.telecom.Call;
 
 import androidx.lifecycle.LiveData;
 
 import com.gilas.findrecipe.data.Recipe;
 import com.gilas.findrecipe.data.RecipeDao;
 import com.gilas.findrecipe.data.RecipeDb;
+import com.gilas.findrecipe.dboperations.DatabaseOperations;
 
 import java.util.List;
 
 public class RecipeRepository {
     private RecipeDao recipeDao;
+    private Application application;
 
     public RecipeRepository(Application application) {
+        this.application = application;
         recipeDao = RecipeDb.getDatabase(application).recipeDao();
     }
 
@@ -36,6 +40,20 @@ public class RecipeRepository {
 
     public void insertRecipeTbl(Recipe recipe) {
         new InsertRecipeAsync(recipeDao).execute(recipe);
+    }
+
+    public void getHomeRecipeList(List<Integer> listSelectedTagID, final Callback callback) {
+        new DatabaseOperations(application).getRecipes(listSelectedTagID, new DatabaseOperations.VolleyCallback() {
+            @Override
+            public void onSuccess(List<Recipe> result) {
+                callback.onSuccess(result);
+            }
+        });
+    }
+
+
+    public interface Callback {
+        void onSuccess(List<Recipe> recipes);
     }
 
 
