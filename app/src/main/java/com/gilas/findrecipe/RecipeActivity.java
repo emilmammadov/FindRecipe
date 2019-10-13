@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.gilas.findrecipe.data.Recipe;
 import com.gilas.findrecipe.databinding.ActivityRecipeBinding;
@@ -20,11 +21,14 @@ public class RecipeActivity extends AppCompatActivity {
     private int id;
     CheckBox bookmark;
     ActivityRecipeBinding binding;
+    RecipeViewModel recipeViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_recipe);
+
+        recipeViewModel = ViewModelProviders.of(this).get(RecipeViewModel.class);
 
         final Recipe recipeExtra = (Recipe) getIntent().getSerializableExtra(HomeFragment.RECIPE_OBJECT_EXTRA);
         binding.setRecipe(recipeExtra);
@@ -33,8 +37,7 @@ public class RecipeActivity extends AppCompatActivity {
 
         bookmark = binding.bkmrkCheckbox;
 
-
-        if (new DBHelper(getApplicationContext()).isRecipeExists(id)) {
+        if (recipeViewModel.isRecipeExists(id)) {
             bookmark.setChecked(true);
         }
 
@@ -52,12 +55,12 @@ public class RecipeActivity extends AppCompatActivity {
                     new DatabaseOperations().getFavRecipe(getApplicationContext(), id, new DatabaseOperations.RecipeCallback() {
                         @Override
                         public void onSuccess(Recipe result) {
-                            new RecipeViewModel(getApplication()).insertRecipeTbl(result);
+                            recipeViewModel.insertRecipeTbl(result);
                         }
                     });
 
                 } else {
-                    new RecipeViewModel(getApplication()).deleteRecipe(id);
+                    recipeViewModel.deleteRecipe(id);
 
                 }
             }

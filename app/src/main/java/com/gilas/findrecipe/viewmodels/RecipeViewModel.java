@@ -10,7 +10,7 @@ import com.gilas.findrecipe.repositories.RecipeRepository;
 
 public class RecipeViewModel extends AndroidViewModel {
 
-    RecipeRepository repository;
+    private RecipeRepository repository;
 
     public RecipeViewModel(@NonNull Application application) {
         super(application);
@@ -24,6 +24,10 @@ public class RecipeViewModel extends AndroidViewModel {
 
     public void insertRecipeTbl(Recipe recipe) {
         repository.insertRecipeTbl(recipe);
+    }
+
+    public boolean isRecipeExists(int id) {
+        return repository.isRecipeExists(id);
     }
 
 }

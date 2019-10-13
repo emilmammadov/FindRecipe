@@ -18,6 +18,7 @@ public abstract class RecipeDb extends RoomDatabase {
             instance = Room.databaseBuilder(application.getApplicationContext(),
                     RecipeDb.class, "recipedb")
                     .fallbackToDestructiveMigration()
+                    .allowMainThreadQueries()
                     .build();
         }
         return instance;

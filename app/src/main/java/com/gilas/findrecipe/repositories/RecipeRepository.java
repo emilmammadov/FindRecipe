@@ -39,13 +39,6 @@ public class RecipeRepository {
     }
 
 
-
-
-
-
-
-
-
     private static class DeleteRecipeAsync extends AsyncTask<Integer, Void, Void> {
         private RecipeDao recipeDao;
 
