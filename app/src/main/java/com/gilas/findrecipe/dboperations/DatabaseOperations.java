@@ -244,7 +244,7 @@ public class DatabaseOperations {
 
 
     public void getRecipe(final int id, final RecipeCallback callback) {
-        String url = "http://" + ip + "/get_fav_recipe.php";
+        String url = "http://" + ip + "/get_recipe.php";
 
 
         RequestQueue requestQueue = Volley.newRequestQueue(context);

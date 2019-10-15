@@ -18,7 +18,7 @@
 	if(mysqli_num_rows($result)) {
 		echo "basarili";
 	} else {
-		echo " ".$username." ".$password;
+		echo "basarisiz";
 	}
 
 
