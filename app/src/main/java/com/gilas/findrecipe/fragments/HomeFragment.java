@@ -130,6 +130,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     private void recycler() {
+        FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(getContext());
+        layoutManager.setFlexDirection(FlexDirection.ROW);
+        layoutManager.setJustifyContent(JustifyContent.CENTER);
+        searchRecyclerView.setLayoutManager(layoutManager);
         searchRecyclerAdapter = new SearchRecyclerAdapter(new ArrayList<Tag>());
         searchRecyclerView.setAdapter(searchRecyclerAdapter);
 
