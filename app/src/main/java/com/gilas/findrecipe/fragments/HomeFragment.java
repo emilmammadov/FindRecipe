@@ -85,7 +85,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         homeViewModel.getListTags().observe(getViewLifecycleOwner(), new Observer<List<Tag>>() {
             @Override
             public void onChanged(List<Tag> tags) {
-                Toast.makeText(getContext(), "deneme", Toast.LENGTH_SHORT).show();
                 flexRecyclerAdapter.setTags(tags);
                 flexRecyclerAdapter.notifyDataSetChanged();
             }

@@ -34,6 +34,7 @@ public class DatabaseOperations {
         this.context = context;
     }
 
+
     public void login(final String username, final String password) {
 
         String url = "http://" + ip + "/login.php";
@@ -199,6 +200,7 @@ public class DatabaseOperations {
         requestQueue.add(stringRequest);
     }
 
+
     public void getAllRecipeTitles(final VolleyCallback callbackTitle) {
 
         String url = "http://" + ip + "/get_all_recipe_titles.php";
@@ -240,20 +242,6 @@ public class DatabaseOperations {
         requestQueue.add(jsonObjectRequest);
     }
 
-
-    public interface VolleyCallback {
-        void onSuccess(List<Recipe> result);
-
-    }
-
-    public interface RecipeCallback {
-        void onSuccess(Recipe result);
-    }
-
-
-    /**
-     * After here is SQLite database operations
-     */
 
     public void getRecipe(final int id, final RecipeCallback callback) {
         String url = "http://" + ip + "/get_fav_recipe.php";
@@ -300,6 +288,16 @@ public class DatabaseOperations {
         };
 
         requestQueue.add(stringRequest);
+    }
+
+
+    public interface VolleyCallback {
+        void onSuccess(List<Recipe> result);
+
+    }
+
+    public interface RecipeCallback {
+        void onSuccess(Recipe result);
     }
 
 

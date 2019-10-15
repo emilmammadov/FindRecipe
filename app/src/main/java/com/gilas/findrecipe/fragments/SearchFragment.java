@@ -100,7 +100,7 @@ public class SearchFragment extends Fragment {
 
                 @Override
                 public boolean onQueryTextChange(String s) {
-                    listSearchedRecipes = FragmentBusinessLogic.searchRecipe(listRecipes, s);
+                    listSearchedRecipes = FragmentBusinessLogic.searchRecipeTitle(listRecipes, s);
                     searchRecyclerAdapter = new RecipeSearchRecAdapter(listSearchedRecipes);
                     recyclerView.setAdapter(searchRecyclerAdapter);
                     return true;
