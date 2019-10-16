@@ -1,14 +1,18 @@
 package com.gilas.findrecipe.fragments;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,7 +23,7 @@ import com.gilas.findrecipe.R;
 import com.gilas.findrecipe.RecipeActivity;
 import com.gilas.findrecipe.adapters.RecipeSearchRecAdapter;
 import com.gilas.findrecipe.data.Recipe;
-import com.gilas.findrecipe.databinding.FragmentHomeBinding;
+import com.gilas.findrecipe.databinding.FragmentSearchBinding;
 import com.gilas.findrecipe.viewmodels.SearchViewModel;
 
 import java.util.List;
@@ -34,14 +38,11 @@ public class SearchFragment extends Fragment {
     private List<Recipe> listRecipes, listSearchedRecipes;
     private SearchViewModel searchViewModel;
 
-    public SearchFragment() {
-    }
-
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        FragmentHomeBinding binding = FragmentHomeBinding.inflate(inflater, container, false);
+        FragmentSearchBinding binding = FragmentSearchBinding.inflate(inflater, container, false);
         searchViewModel = ViewModelProviders.of(this).get(SearchViewModel.class);
 
         searchViewModel.getAllRecipeTitles(new SearchViewModel.CallbackListRecipe() {
@@ -51,17 +52,8 @@ public class SearchFragment extends Fragment {
             }
         });
 
-        binding.layoutTable.setVisibility(View.GONE);
-        binding.btnSearch.setVisibility(View.GONE);
-
-        searchView = binding.searchViewHome;
-        recyclerView = binding.searchRecyclerHome;
-
-        searchView.setQueryHint(getResources().getString(R.string.searhFragmentHint));
-
-        ViewGroup.LayoutParams params = searchView.getLayoutParams();
-        params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-        searchView.setLayoutParams(params);
+        searchView = binding.searchViewSearch;
+        recyclerView = binding.searchRecyclerSearch;
 
         searchRecycleClick();
 

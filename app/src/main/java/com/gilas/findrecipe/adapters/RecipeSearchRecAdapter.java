@@ -24,7 +24,7 @@ public class RecipeSearchRecAdapter extends RecyclerView.Adapter<RecipeSearchRec
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.search_card_holder, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recipe_search_card_holder, parent, false);
 
         return new MyViewHolder(view);
     }

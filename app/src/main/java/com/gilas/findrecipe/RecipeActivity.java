@@ -1,10 +1,14 @@
 package com.gilas.findrecipe;
 
 import android.os.Bundle;
+import android.view.View;
+import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.FrameLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -54,6 +58,7 @@ public class RecipeActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(Recipe result) {
                             recipeViewModel.insertRecipeTbl(result);
+                            bookmark.animate();
                         }
                     });
 
