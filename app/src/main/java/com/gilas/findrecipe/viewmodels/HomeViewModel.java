@@ -18,7 +18,8 @@ public class HomeViewModel extends AndroidViewModel {
     private RecipeRepository recipeRepository;
     private TagRepository tagRepository;
     private static MutableLiveData<List<Tag>> flexListTags;
-    private static MutableLiveData<List<Recipe>> listRecipes;
+    private static MutableLiveData<List<Recipe>> justRecipes;
+    private static MutableLiveData<List<Recipe>> maybeRecipes;
     private static MutableLiveData<Boolean> isFlexEmpty;
 
     public HomeViewModel(Application application) {
@@ -26,11 +27,13 @@ public class HomeViewModel extends AndroidViewModel {
         recipeRepository = new RecipeRepository(application);
         tagRepository = new TagRepository(application);
         flexListTags = new MutableLiveData<>();
-        listRecipes = new MutableLiveData<>();
+        justRecipes = new MutableLiveData<>();
+        maybeRecipes = new MutableLiveData<>();
         isFlexEmpty = new MutableLiveData<>();
         isFlexEmpty.setValue(true);
         if (flexListTags.getValue() == null) flexListTags.setValue(new ArrayList<Tag>());
-        if (listRecipes.getValue() == null) listRecipes.setValue(new ArrayList<Recipe>());
+        if (justRecipes.getValue() == null) justRecipes.setValue(new ArrayList<Recipe>());
+        if (maybeRecipes.getValue() == null) maybeRecipes.setValue(new ArrayList<Recipe>());
     }
 
     public LiveData<List<Tag>> getListTags() {
@@ -61,12 +64,20 @@ public class HomeViewModel extends AndroidViewModel {
         return flexListTags.getValue().size() == 0;
     }
 
-    public LiveData<List<Recipe>> getListRecipes() {
-        return listRecipes;
+    public LiveData<List<Recipe>> getJustRecipes() {
+        return justRecipes;
     }
 
-    private void setListRecipes(List<Recipe> input) {
-        listRecipes.setValue(input);
+    private void setJustRecipes(List<Recipe> input) {
+        justRecipes.setValue(input);
+    }
+
+    public LiveData<List<Recipe>> getMaybeRecipes() {
+        return maybeRecipes;
+    }
+
+    private void setMaybeRecipes(List<Recipe> input) {
+        maybeRecipes.setValue(input);
     }
 
     public List<Tag> getAllTags() {
@@ -74,10 +85,11 @@ public class HomeViewModel extends AndroidViewModel {
     }
 
     public void setHomeRecipeList(List<Integer> listSelectedTagID) {
-        recipeRepository.getHomeRecipeList(listSelectedTagID, new RecipeRepository.CallbackListRecipe() {
+        recipeRepository.getHomeRecipeList(listSelectedTagID, new RecipeRepository.CallbackHomeRecipe() {
             @Override
-            public void onSuccess(List<Recipe> recipes) {
-                setListRecipes(recipes);
+            public void onSuccess(List<Recipe> justRecipes, List<Recipe> maybeRecipes) {
+                setJustRecipes(justRecipes);
+                setMaybeRecipes(maybeRecipes);
             }
         });
     }

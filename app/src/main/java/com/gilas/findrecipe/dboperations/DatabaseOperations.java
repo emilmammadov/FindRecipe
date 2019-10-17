@@ -141,9 +141,10 @@ public class DatabaseOperations {
     }
 
 
-    public void getRecipes(List<Integer> selectedTags, final VolleyCallback callback) {
+    public void getRecipes(List<Integer> selectedTags, final RecipeWithTagCallback callback) {
 
-        final List<Recipe> recipeArrayList = new ArrayList<>();
+        final List<Recipe> justRecipeList = new ArrayList<>();
+        final List<Recipe> maybeRecipeList = new ArrayList<>();
 
         String url = "http://" + ip + "/get_recipe_with_tag.php";
         final Object[] selectedTagsArray = selectedTags.toArray();
@@ -154,28 +155,39 @@ public class DatabaseOperations {
             @Override
             public void onResponse(String response) {
                 try {
+                    Log.e(TAG, "onResponse: " + response);
                     JSONObject jsonObject = new JSONObject(response);
 
                     JSONArray array = jsonObject.getJSONArray("recipes");
 
                     for (int i = 0; i < array.length(); i++) {
+                        Log.e(TAG, "onResponse: " + i);
 
-                        JSONObject obj = (JSONObject) array.getJSONObject(i).get("recipe");
-
-                        int id = Integer.parseInt(obj.get("id").toString());
-                        String title = obj.get("title").toString();
-                        String ingredientList = obj.get("ingredient_list").toString();
-                        String body = obj.get("body").toString();
-                        int personCount = Integer.parseInt(obj.get("person_count").toString());
-                        int prepTime = Integer.parseInt(obj.get("prep_time_sec").toString());
-                        int cookTime = Integer.parseInt(obj.get("cook_time_sec").toString());
-
-                        recipeArrayList.add(new Recipe(id, title, ingredientList, body,
-                                personCount, prepTime, cookTime));
+                        if (array.getJSONObject(i).has("recipe")) {
+                            jsonObject = array.getJSONObject(i).getJSONObject("recipe");
+                            justRecipeList.add(new Recipe(
+                                    jsonObject.getInt("id"),
+                                    jsonObject.getString("title"),
+                                    jsonObject.getString("ingredient_list"),
+                                    jsonObject.getString("body"),
+                                    jsonObject.getInt("person_count"),
+                                    jsonObject.getInt("prep_time_sec"),
+                                    jsonObject.getInt("cook_time_sec")));
+                        } else {
+                            jsonObject = array.getJSONObject(i).getJSONObject("deneme");
+                            maybeRecipeList.add(new Recipe(
+                                    jsonObject.getInt("id"),
+                                    jsonObject.getString("title"),
+                                    jsonObject.getString("ingredient_list"),
+                                    jsonObject.getString("body"),
+                                    jsonObject.getInt("person_count"),
+                                    jsonObject.getInt("prep_time_sec"),
+                                    jsonObject.getInt("cook_time_sec")));
+                        }
 
                     }
 
-                    callback.onSuccess(recipeArrayList);
+                    callback.onSuccess(justRecipeList, maybeRecipeList);
 
                 } catch (JSONException e) {
                     Log.e(TAG, "onERR: " + e);
@@ -293,7 +305,10 @@ public class DatabaseOperations {
 
     public interface VolleyCallback {
         void onSuccess(List<Recipe> result);
+    }
 
+    public interface RecipeWithTagCallback {
+        void onSuccess(List<Recipe> justRecipes, List<Recipe> maybeRecipes);
     }
 
     public interface RecipeCallback {

@@ -42,14 +42,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public static String RECIPE_OBJECT_EXTRA = "recipe_object";
 
     private static List<Tag> listTags, listSearchedTags;
-    private RecyclerView searchRecyclerView, flexBoxRecyclerView, recipeRecyclerView;
+    private RecyclerView searchRecyclerView, flexBoxRecyclerView,
+            justRecyclerView, maybeRecyclerView;
     private SearchView searchView;
     private Button btnSearchRecipe;
-    private TextView tvTable;
+    private TextView tvTable, tvJustExp, tvMaybeExp;
     private HomeViewModel homeViewModel;
     private TagFlexRecyclerAdapter flexRecyclerAdapter;
     private SearchRecyclerAdapter searchRecyclerAdapter;
-    private RecipeRecyclerAdapter recipeRecyclerAdapter;
+    private RecipeRecyclerAdapter justRecyclerAdapter, maybeRecyclerAdapter;
 
 
     @Override
@@ -59,9 +60,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         FragmentHomeBinding binding = FragmentHomeBinding.inflate(inflater, container, false);
 
         tvTable = binding.tvTable;
+        tvJustExp = binding.justExp;
+        tvMaybeExp = binding.maybeExp;
         searchRecyclerView = binding.searchRecyclerHome;
         flexBoxRecyclerView = binding.tagFlexRecyclerView;
-        recipeRecyclerView = binding.recipeRecyclerHome;
+        justRecyclerView = binding.justRecipeRecyclerHome;
+        maybeRecyclerView = binding.maybeRecipeRecyclerHome;
         searchView = binding.searchViewHome;
         btnSearchRecipe = binding.btnSearch;
 
@@ -97,12 +101,25 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             }
         });
 
-        homeViewModel.getListRecipes().observe(getViewLifecycleOwner(), new Observer<List<Recipe>>() {
+        homeViewModel.getJustRecipes().observe(getViewLifecycleOwner(), new Observer<List<Recipe>>() {
             @Override
-            public void onChanged(List<Recipe> recipeList) {
-                recipeRecyclerAdapter.setRecipes(recipeList);
-                recipeRecyclerAdapter.notifyDataSetChanged();
-                recipeRecycleClick(recipeList);
+            public void onChanged(List<Recipe> justRecipes) {
+                if (justRecipes.size() != 0) tvJustExp.setVisibility(View.VISIBLE);
+                else tvJustExp.setVisibility(View.GONE);
+                justRecyclerAdapter.setRecipes(justRecipes);
+                justRecyclerAdapter.notifyDataSetChanged();
+                recipeRecycleClick(justRecipes, justRecyclerView);
+            }
+        });
+
+        homeViewModel.getMaybeRecipes().observe(getViewLifecycleOwner(), new Observer<List<Recipe>>() {
+            @Override
+            public void onChanged(List<Recipe> maybeRecipes) {
+                if (maybeRecipes.size() != 0) tvMaybeExp.setVisibility(View.VISIBLE);
+                else tvMaybeExp.setVisibility(View.GONE);
+                maybeRecyclerAdapter.setRecipes(maybeRecipes);
+                maybeRecyclerAdapter.notifyDataSetChanged();
+                recipeRecycleClick(maybeRecipes, maybeRecyclerView);
             }
         });
 
@@ -137,12 +154,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         searchRecyclerAdapter = new SearchRecyclerAdapter(new ArrayList<Tag>());
         searchRecyclerView.setAdapter(searchRecyclerAdapter);
 
-        recipeRecyclerAdapter = new RecipeRecyclerAdapter(new ArrayList<Recipe>());
-        recipeRecyclerView.setAdapter(recipeRecyclerAdapter);
+        justRecyclerAdapter = new RecipeRecyclerAdapter(new ArrayList<Recipe>());
+        justRecyclerView.setAdapter(justRecyclerAdapter);
+
+        maybeRecyclerAdapter = new RecipeRecyclerAdapter(new ArrayList<Recipe>());
+        maybeRecyclerView.setAdapter(maybeRecyclerAdapter);
     }
 
-    private void recipeRecycleClick(final List<Recipe> listRecipes) {
-        RecycleClick.addTo(recipeRecyclerView).setOnItemClickListener(new RecycleClick.OnItemClickListener() {
+    private void recipeRecycleClick(final List<Recipe> listRecipes, RecyclerView recyclerView) {
+        RecycleClick.addTo(recyclerView).setOnItemClickListener(new RecycleClick.OnItemClickListener() {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int i, View view) {
                 Intent intent = new Intent(getContext(), RecipeActivity.class);

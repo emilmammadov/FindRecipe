@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 
+import com.gilas.findrecipe.R;
 import com.gilas.findrecipe.data.Recipe;
 import com.gilas.findrecipe.data.RecipeDao;
 import com.gilas.findrecipe.data.RecipeDb;
@@ -52,11 +53,11 @@ public class RecipeRepository {
         new InsertRecipeAsync(recipeDao).execute(recipe);
     }
 
-    public void getHomeRecipeList(List<Integer> listSelectedTagID, final CallbackListRecipe callback) {
-        new DatabaseOperations(application).getRecipes(listSelectedTagID, new DatabaseOperations.VolleyCallback() {
+    public void getHomeRecipeList(List<Integer> listSelectedTagID, final CallbackHomeRecipe callback) {
+        new DatabaseOperations(application).getRecipes(listSelectedTagID, new DatabaseOperations.RecipeWithTagCallback() {
             @Override
-            public void onSuccess(List<Recipe> result) {
-                callback.onSuccess(result);
+            public void onSuccess(List<Recipe> justRecipes, List<Recipe> maybeRecipes) {
+                callback.onSuccess(justRecipes, maybeRecipes);
             }
         });
     }
@@ -72,7 +73,11 @@ public class RecipeRepository {
 
 
     public interface CallbackListRecipe {
-        void onSuccess(List<Recipe> recipes);
+        void onSuccess(List<Recipe> result);
+    }
+
+    public interface CallbackHomeRecipe {
+        void onSuccess(List<Recipe> justRecipes, List<Recipe> maybeRecipes);
     }
 
     public interface CallbackRecipe {

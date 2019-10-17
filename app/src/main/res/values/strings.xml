@@ -23,5 +23,7 @@
     <string name="recipeCook">Pişirme</string>
     <string name="recipeBodyIngredients">Malzemeler</string>
     <string name="recipeBodyPrep">Hazırlanış</string>
+    <string name="justRecipeExp"><u><b><i>Sadece elinizdeki malzemeleri içeren tarifler</i></b></u></string>
+    <string name="maybeRecipeExp"><u><b><i>İçerisinde elinizdeki malzemeler olan tarifler</i></b></u></string>
 
 </resources>
