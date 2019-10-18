@@ -18,19 +18,19 @@
             android:id="@+id/tabHome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="HOME"/>
+            android:text="@string/tab1Title"/>
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tabRecipe"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="RECIPES"/>
+            android:text="@string/tab2Title"/>
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tabFav"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="FAVOURITES"/>
+            android:text="@string/tab3Title"/>
 
     </com.google.android.material.tabs.TabLayout>
 
