@@ -116,9 +116,11 @@ public class DatabaseOperations {
 
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject obj = (JSONObject) array.getJSONObject(i).get("tag");
-                        int id = Integer.parseInt(obj.get("id").toString());
-                        String name = obj.get("name").toString();
-                        tagArrayList.add(new Tag(id, name));
+
+                        tagArrayList.add(new Tag(
+                                obj.getInt("id"),
+                                obj.getString("name")
+                        ));
 
 
                     }
@@ -167,6 +169,7 @@ public class DatabaseOperations {
                             jsonObject = array.getJSONObject(i).getJSONObject("recipe");
                             justRecipeList.add(new Recipe(
                                     jsonObject.getInt("id"),
+                                    jsonObject.getInt("sharer_id"),
                                     jsonObject.getString("title"),
                                     jsonObject.getString("ingredient_list"),
                                     jsonObject.getString("body"),
@@ -177,6 +180,7 @@ public class DatabaseOperations {
                             jsonObject = array.getJSONObject(i).getJSONObject("deneme");
                             maybeRecipeList.add(new Recipe(
                                     jsonObject.getInt("id"),
+                                    jsonObject.getInt("sharer_id"),
                                     jsonObject.getString("title"),
                                     jsonObject.getString("ingredient_list"),
                                     jsonObject.getString("body"),
@@ -231,10 +235,10 @@ public class DatabaseOperations {
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject obj = (JSONObject) array.getJSONObject(i).get("title");
 
-                        int id = Integer.parseInt(obj.get("id").toString());
-                        String title = obj.get("title").toString();
-
-                        titlesArrayList.add(new Recipe(id, title, null, null, 0, 0, 0));
+                        titlesArrayList.add(new Recipe(
+                                obj.getInt("id"),
+                                obj.getString("title")
+                                ));
                     }
 
                     callbackTitle.onSuccess(titlesArrayList);
@@ -269,12 +273,13 @@ public class DatabaseOperations {
                     Log.e(TAG, "onResponse: " + obj.get("title").toString());
                     Recipe recipe = new Recipe(
                             Integer.parseInt(obj.get("id").toString()),
-                            obj.get("title").toString(),
-                            obj.get("ingredient_list").toString(),
-                            obj.get("body").toString(),
-                            Integer.parseInt(obj.get("person_count").toString()),
-                            Integer.parseInt(obj.get("prep_time_sec").toString()),
-                            Integer.parseInt(obj.get("cook_time_sec").toString())
+                            obj.getInt("sharer_id"),
+                            obj.getString("title"),
+                            obj.getString("ingredient_list"),
+                            obj.getString("body"),
+                            obj.getInt("person_count"),
+                            obj.getInt("prep_time_sec"),
+                            obj.getInt("cook_time_sec")
                     );
 
                     callback.onSuccess(recipe);

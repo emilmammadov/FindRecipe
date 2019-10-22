@@ -22,6 +22,8 @@ public class Recipe implements Serializable {
     private int prepTimeSec;
     @ColumnInfo(name = "cook_time")
     private int cookTimeSec;
+    @ColumnInfo(name = "sharer_id")
+    private int sharerId;
     @Ignore
     private String timeSumMin;
     @Ignore
@@ -31,7 +33,7 @@ public class Recipe implements Serializable {
     @Ignore
     private String cookTimeMin;
 
-    public Recipe(int id, String title, String ingredientList, String body, int personCount, int prepTimeSec, int cookTimeSec) {
+    public Recipe(int id, int sharerId, String title, String ingredientList, String body, int personCount, int prepTimeSec, int cookTimeSec) {
         this.id = id;
         this.title = title;
         this.ingredientList = ingredientList;
@@ -39,6 +41,7 @@ public class Recipe implements Serializable {
         this.personCount = personCount;
         this.prepTimeSec = prepTimeSec;
         this.cookTimeSec = cookTimeSec;
+        this.sharerId = sharerId;
 
         timeSumMin = ((prepTimeSec + cookTimeSec) / 60) + "";
         prepTimeMin = (prepTimeSec / 60) + "";
@@ -50,6 +53,7 @@ public class Recipe implements Serializable {
     @Ignore
     public Recipe(int id, String title) {
         this.id = id;
+        sharerId = 0;
         this.title = title;
         ingredientList = null;
         body = null;
@@ -104,5 +108,13 @@ public class Recipe implements Serializable {
 
     public int getCookTimeSec() {
         return cookTimeSec;
+    }
+
+    public int getSharerId() {
+        return sharerId;
+    }
+
+    public void setSharerId(int sharerId) {
+        this.sharerId = sharerId;
     }
 }
